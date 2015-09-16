@@ -5,7 +5,7 @@ angular.module 'homemademessClient'
       .state 'home',
         url: '/'
         templateUrl: 'app/main/main.html'
-        controller: 'MainController'
+        controller: 'MainCtrl'
         controllerAs: 'main'
 
     $urlRouterProvider.otherwise '/'

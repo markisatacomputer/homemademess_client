@@ -1,3 +1,2 @@
 angular.module('homemademessClient')
-  .constant 'malarkey', malarkey
-  .constant 'moment', moment
+  .constant 'apiUrl', 'http://api.homemademess.com'
