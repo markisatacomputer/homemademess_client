@@ -15,7 +15,6 @@
     "angular-ui-router": "~0.2.15",
     "animate.css": "~3.4.0",
     "dropzone": "~4.0.1",
-    "jquery": "~2.1.4",
     "lodash": "~3.10.1",
     "material-design-iconfont": "~0.0.2",
     "moment": "~2.10.6",
