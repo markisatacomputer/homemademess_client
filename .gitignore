@@ -5,3 +5,16 @@ coverage/
 .idea/
 .tmp/
 dist/
+src/
+gulp/
+e2e/
+.bowerrc
+.editorconfig
+.eslintrc
+.yo-rc.json
+bower.json
+coffeelint.json
+gulpfile.js
+karma.conf.js
+package.json
+protractor.conf.js
