@@ -3,7 +3,7 @@ div(ng-include='"/app/components/navbar/navbar.html"')
 .container.clearfix
   .deckgrid.center.clearfix.with-search(deckgrid, source='view.images')
     div.image(ng-class='{{card.tags}}')
-      img.img-responsive(src='{{card.derivative[0].uri}}' ng-click='mother.showSlide(card.$index)')
+      img.img-responsive(src='{{card.derivative[0].uri}}' width='{{card.derivative[0].width}}' height='{{card.derivative[0].height}}' ng-click='mother.showSlide(card.$index)')
 
 footer.footer
   .container
