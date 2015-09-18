@@ -3,7 +3,7 @@
 angular.module 'homemademessClient'
 .directive 'searchbar', ->
 
-  SearchCtrl =  ($scope, $resource, lodash, $q, $location, apiUrl) ->
+  SearchCtrl =  [ '$scope', '$resource', 'lodash', '$q', '$location', 'apiUrl', ($scope, $resource, lodash, $q, $location, apiUrl) ->
     $scope.tags = []
 
     $scope.isActive = (route) ->
@@ -25,6 +25,7 @@ angular.module 'homemademessClient'
     Auto = $resource apiUrl + '/auto'
     $scope.findTags = (value) ->
       return Auto.query({q:value}).$promise
+  ]
 
   directive =
     restrict: 'E'
