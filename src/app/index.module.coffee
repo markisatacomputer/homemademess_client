@@ -10,3 +10,6 @@ angular.module 'homemademessClient', [
   'ngTagsInput'
   'ngLodash'
 ]
+.filter 'taglink', () ->
+  (input) ->
+    input.replace /\s/g, '_'

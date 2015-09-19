@@ -1,4 +1,10 @@
 div.navvy(ng-class="{home: isActive('/')}")
   div#search
-    tags-input(ng-model="tags", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false", on-tag-added="redoSearch()", on-tag-removed="redoSearch()" ng-show="isActive('/')")
+    tags-input(ng-model="tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false", on-tag-added="redoSearch()", on-tag-removed="redoSearch()" ng-show="isActive('/')")
       auto-complete(source="findTags($query)" min-length="1")
+
+    script(type="text/ng-template" id="tag-temp.html")
+      span
+        a(ng-bind="$getDisplayText()" ng-href="/tagged/{{data['text'] | taglink }}" ng-init="console.log(data)")
+      a(class="remove-button", ng-click="$removeTag()", ng-bind="::$$removeTagSymbol")
+
