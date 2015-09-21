@@ -10,7 +10,7 @@ angular.module 'homemademessClient'
   if $stateParams.tag
     getURI = apiUrl + '/tagged/' + $stateParams.tag
     $scope.containerClass = 'tagged'
-    $scope.tag = $stateParams.tag.replace '_', ' '
+    $scope.tag = $stateParams.tag.replace /_/g, ' '
   else
     getURI = apiUrl + '/images'
     $scope.containerClass = 'main'
