@@ -6,17 +6,17 @@
     transition:         @transition; 
 }
 
-#banner {
-    border-bottom: none;
-    margin-top: -20px;
-}
-
-#banner h1 {
-    font-size: 60px;
+.tagged h1 {
+    font-size: 40px;
     line-height: 1;
     letter-spacing: -1px;
+    text-align: center;
 }
-
+@media screen and (min-width: 460px) {
+    .tagged h1 {
+        font-size: 60px;
+    }
+}
 .footer {
     text-align: center;
     padding: 30px 0;
@@ -48,7 +48,7 @@
         width: 900px;
     }
 }
-.deckgrid.with-search {
+.main .deckgrid {
     padding-top: 55px;
 }
 .deckgrid {

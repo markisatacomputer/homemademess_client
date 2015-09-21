@@ -7,5 +7,9 @@ angular.module 'homemademessClient'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
         controllerAs: 'main'
+      .state 'tagged',
+        url: '/tagged/:tag'
+        templateUrl: 'app/main/main.html'
+        controller: 'MainCtrl'
 
     $urlRouterProvider.otherwise '/'

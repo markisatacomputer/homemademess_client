@@ -1,14 +1,18 @@
-searchbar
+.container(ng-class='containerClass')
+  
+  h1 {{tag}}
+  
+  searchbar
 
-.container.clearfix
-  .deckgrid.center.clearfix.with-search(deckgrid, source='view.images')
-    div.image(ng-class='{{card.tags}}')
-      img.img-responsive(src='{{card.derivative[0].uri}}' width='{{card.derivative[0].width}}' height='{{card.derivative[0].height}}' ng-click='mother.showSlide(card.$index)')
+  .container.clearfix
+    .deckgrid.center.clearfix.with-search(deckgrid, source='view.images')
+      div.image(ng-class='{{card.tags}}')
+        img.img-responsive(src='{{card.derivative[0].uri}}' width='{{card.derivative[0].width}}' height='{{card.derivative[0].height}}' ng-click='mother.showSlide(card.$index)')
 
-footer.footer
-  .container
-    p
-      | homemademess.com
-      = ' | '
-      a(href='https://github.com/markisatacomputer/homemademess') github
+  footer.footer
+    .container
+      p
+        | homemademess.com
+        = ' | '
+        a(href='https://github.com/markisatacomputer/homemademess') github
      

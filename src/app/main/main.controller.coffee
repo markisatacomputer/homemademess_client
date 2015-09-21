@@ -1,12 +1,21 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.controller 'MainCtrl', ($scope, $http, apiUrl, $mdDialog, $document) ->
+.controller 'MainCtrl', ($scope, $http, $stateParams, apiUrl, $mdDialog, $document) ->
   # init view
   $scope.view = {}
   $scope.slide = {}
   
-  $http.get(apiUrl + '/images').success (result) ->
+  # which view are we in
+  if $stateParams.tag
+    getURI = apiUrl + '/tagged/' + $stateParams.tag
+    $scope.containerClass = 'tagged'
+    $scope.tag = $stateParams.tag.replace '_', ' '
+  else
+    getURI = apiUrl + '/images'
+    $scope.containerClass = 'main'
+  
+  $http.get(getURI).success (result) ->
     $scope.view.images = result.images
     $scope.view.tags = result.tags
     $scope.view.offset = 0
