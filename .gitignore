@@ -18,3 +18,5 @@ gulpfile.js
 karma.conf.js
 package.json
 protractor.conf.js
+.DS_Store
+
