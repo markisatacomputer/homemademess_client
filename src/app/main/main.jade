@@ -5,7 +5,11 @@
   searchbar
 
   .container.clearfix
-    .deckgrid.center.clearfix.with-search(deckgrid, source='view.images')
+    md-grid-list(md-cols='24', md-row-height='1:1', md-gutter="5px")
+      md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}')
+        div.img-container
+          img.img-responsive.img-rounded(src='{{image.derivative[0].uri}}')
+    //-.deckgrid.center.clearfix.with-search(deckgrid, source='view.images')
       div.image(ng-class='{{card.tags}}')
         img.img-responsive(src='{{card.derivative[0].uri}}' width='{{card.derivative[0].width}}' height='{{card.derivative[0].height}}' ng-click='mother.showSlide(card.$index)')
 
