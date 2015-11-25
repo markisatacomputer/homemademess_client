@@ -23,15 +23,14 @@ angular.module 'homemademessClient'
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal
     a = Math.round((img.width/img.height)*100)/100
-    console.log a
     #  There's a few different cases of how to proceed
     #  if ratio is less than 1 taller than wide
     if (a < 1)
       columns = switch
-        when a < 0.5 then 5
+        when a < 0.5 then 8
+        when a < 0.25 then 6
         when a < 0.25 then 4
-        when a < 0.25 then 3
-        else 6
+        else 12
       rows = Math.round columns*img.height/img.width
     #  if ratio > 1 wider than tall
     else
@@ -42,6 +41,7 @@ angular.module 'homemademessClient'
         else 8
       columns = Math.round rows*a
     aspect = [columns, rows]
+    # console.log aspect, a, img.height/img.width
     aspect[n]
 
   $scope.keydown = (e) ->
