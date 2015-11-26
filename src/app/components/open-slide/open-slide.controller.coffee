@@ -7,5 +7,5 @@ angular.module 'homemademessClient'
     link: (scope, element, attr) ->
       element.on 'click', (event) ->
         event.preventDefault()
-        scope.showSlide attr.openSlide
+        scope.showSlide Number attr.openSlide
 ]

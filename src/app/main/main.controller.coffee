@@ -4,7 +4,12 @@ angular.module 'homemademessClient'
 .controller 'MainCtrl', ($scope, $http, $stateParams, apiUrl, $mdDialog, $document) ->
   # init view
   $scope.view = {}
-  $scope.slide = {}
+  $scope.i = 0
+
+  # watch slide index for changes and update slide object
+  ###$scope.$watch 'i', (v, old) ->
+    console.log 'i change', old, v
+    $scope.slide = $scope.view.images[v]###
   
   # which view are we in
   if $stateParams.tag
@@ -44,44 +49,33 @@ angular.module 'homemademessClient'
     # console.log aspect, a, img.height/img.width
     aspect[n]
 
-  $scope.keydown = (e) ->
-    console.log e
-    if e.keyCode
-      i = $scope.slide.$index
-      switch e.keyCode
-        # Left
-        when 37
-          if i > 0
-            $scope.slide = $scope.view.images[i-1]
-        # Right
-        when 39
-          if i < $scope.view.images.length - 1
-            $scope.slide = $scope.view.images[i+1]
-        # Page Up
-        when 33
-          if i != 0
-            $scope.slide = $scope.view.images[0]
-        # Page Down
-        when 34
-          if i != $scope.view.images.length - 1
-            $scope.slide = $scope.view.images[$scope.view.images.length - 1]
-      $scope.$apply()
-
   $scope.showSlide = (slide) ->
     if window.innerWidth > 459
-      $scope.slide = $scope.view.images[slide]
+      # store slide index
+      locals =
+        i: Number slide
+        slides: $scope.view.images
+        slide: $scope.view.images[slide]
+        img: $scope.view.images[slide]slide.derivative[2].uri
       $mdDialog.show {
         clickOutsideToClose: true
-        scope: $scope
-        preserveScope: true
+        locals: locals,
         template: '<md-dialog aria-label="{{slide.filename}}" class="slide" ng-class="getOrientation()">' +
-                      '  <md-dialog-content>' +
-                      '     <img src="{{slide.derivative[2].uri}}" class="img-responsive" />' +
-                      '  </md-dialog-content>' +
-                      '</md-dialog>'
-        controller: ($scope, $mdDialog, $document) ->
-          $document.on 'keydown', $scope.keydown
-          $scope.lastpress = 0
+                  '  <md-dialog-content keyboard-next keyboard-prev keyboard-start keyboard-end>' +
+                  '     <img ng-src="{{img}}" class="img-responsive" />' +
+                  '  </md-dialog-content>' +
+                  '</md-dialog>'
+        controller: ($scope, $mdDialog, i, slides, slide, img) ->
+          $scope.slide = slide
+          $scope.slides = slides
+          $scope.i = i
+          $scope.img
+
+          # watch slide index for changes and update slide object
+          $scope.$watch 'i', (v, old) ->
+            $scope.slide = $scope.slides[v]
+            $scope.img = $scope.slides[v].derivative[2].uri
+
           $scope.getOrientation = () ->
             h = $scope.slide.derivative[2].height
             w = $scope.slide.derivative[2].width
