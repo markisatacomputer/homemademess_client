@@ -7,12 +7,16 @@ angular.module 'homemademessClient'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
         controllerAs: 'main'
-      .state 'tagged',
-        url: '/tagged/:tag'
+      .state 'home.slide',
+        url: '/slide/:slide'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
-      .state 'slide',
-        url: '/slide/:slide'
+      .state 'tagged',
+        url: '/tagged/:tag/'
+        templateUrl: 'app/main/main.html'
+        controller: 'MainCtrl'
+      .state 'tagged.slide',
+        url: '/tagged/:tag/slide/:slide'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
 
