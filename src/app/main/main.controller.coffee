@@ -1,15 +1,10 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.controller 'MainCtrl', ($scope, $http, $stateParams, apiUrl, $mdDialog, $document) ->
+.controller 'MainCtrl', ($scope, $http, $stateParams, apiUrl, $mdDialog, $state) ->
   # init view
   $scope.view = {}
   $scope.i = 0
-
-  # watch slide index for changes and update slide object
-  ###$scope.$watch 'i', (v, old) ->
-    console.log 'i change', old, v
-    $scope.slide = $scope.view.images[v]###
   
   # which view are we in
   if $stateParams.tag
@@ -24,6 +19,10 @@ angular.module 'homemademessClient'
     $scope.view.images = result.images
     $scope.view.tags = result.tags
     $scope.view.offset = 0
+    # if someone has navigated to an open slide, open it
+    if $stateParams.slide
+      $scope.i = Number $stateParams.slide
+      $scope.showSlide $scope.i
   
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal

@@ -6,6 +6,6 @@ angular.module 'homemademessClient'
     restrict: 'A'
     link: (scope, element, attr) ->
       element.on 'click', (event) ->
-        event.preventDefault()
+        #event.preventDefault()
         scope.showSlide Number attr.openSlide
 ]

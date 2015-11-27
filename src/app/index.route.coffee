@@ -11,5 +11,9 @@ angular.module 'homemademessClient'
         url: '/tagged/:tag'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
+      .state 'slide',
+        url: '/slide/:slide'
+        templateUrl: 'app/main/main.html'
+        controller: 'MainCtrl'
 
     $urlRouterProvider.otherwise '/'
