@@ -55,8 +55,6 @@ angular.module 'homemademessClient'
       locals =
         i: Number slide
         slides: $scope.view.images
-        slide: $scope.view.images[slide]
-        img: $scope.view.images[slide]slide.derivative[2].uri
       $mdDialog.show {
         clickOutsideToClose: true
         locals: locals,
@@ -65,14 +63,12 @@ angular.module 'homemademessClient'
                   '     <img ng-src="{{img}}" class="img-responsive" ng-style="{{stylez}}" />' +
                   '  </md-dialog-content>' +
                   '</md-dialog>'
-        controller: ($scope, $mdDialog, i, slides, slide, img) ->
-          $scope.slide = slide
+        controller: ($scope, $mdDialog, i, slides) ->
           $scope.slides = slides
           $scope.i = i
           $scope.img
 
           # watch slide index for changes and update slide object
           $scope.$watch 'i', (v, old) ->
-            $scope.slide = $scope.slides[v]
             $scope.img = $scope.slides[v].derivative[2].uri
       }
