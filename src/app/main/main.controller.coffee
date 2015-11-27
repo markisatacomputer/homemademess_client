@@ -60,9 +60,9 @@ angular.module 'homemademessClient'
       $mdDialog.show {
         clickOutsideToClose: true
         locals: locals,
-        template: '<md-dialog aria-label="{{slide.filename}}" class="slide" ng-class="getOrientation()">' +
+        template: '<md-dialog aria-label="{{slide.filename}}" class="slide">' +
                   '  <md-dialog-content keyboard-next keyboard-prev keyboard-start keyboard-end>' +
-                  '     <img ng-src="{{img}}" class="img-responsive" />' +
+                  '     <img ng-src="{{img}}" class="img-responsive" ng-style="{{stylez}}" />' +
                   '  </md-dialog-content>' +
                   '</md-dialog>'
         controller: ($scope, $mdDialog, i, slides, slide, img) ->
@@ -75,12 +75,4 @@ angular.module 'homemademessClient'
           $scope.$watch 'i', (v, old) ->
             $scope.slide = $scope.slides[v]
             $scope.img = $scope.slides[v].derivative[2].uri
-
-          $scope.getOrientation = () ->
-            h = $scope.slide.derivative[2].height
-            w = $scope.slide.derivative[2].width
-            if h > w
-              'portrait'
-            else
-              'landscape'
       }
