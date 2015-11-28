@@ -7,7 +7,7 @@
   md-grid-list(md-cols-sm='12', md-cols-md='24', md-cols-lg='48', md-cols-gt-lg='60' md-row-height='1:1', md-gutter="5px")
     md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}')
       div.img-container
-        a(href='#/slide/{{n}}', open-slide='{{n}}')
+        a(ui-sref='home.slide({slide: n})', open-slide='{{n}}')
           img.img-responsive(src='{{image.derivative[0].uri}}')
 
   footer.footer

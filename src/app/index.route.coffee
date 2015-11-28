@@ -8,7 +8,7 @@ angular.module 'homemademessClient'
         controller: 'MainCtrl'
         controllerAs: 'main'
       .state 'home.slide',
-        url: '/slide/:slide'
+        url: 'slide/:slide'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
       .state 'tagged',
