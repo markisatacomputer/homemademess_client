@@ -34,6 +34,7 @@ angular.module 'homemademessClient'
               $scope.img = $scope.slides[v].derivative[2].uri
               $scope.label = $scope.slides[v].filename
               $location.path scope.location+'slide/'+v
+              console.log $scope.img, scope.location+'slide/'+v, $location.path()
 
       element.on 'click', (event) ->
         if window.innerWidth > 459

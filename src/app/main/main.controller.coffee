@@ -20,7 +20,7 @@ angular.module 'homemademessClient'
     $scope.view.tags = result.tags
     $scope.view.offset = 0
     # if someone has navigated to an open slide, open it
-    console.log $stateParams
+    console.log $stateParams, $scope
     if $stateParams.slide
       console.log 'bla'
       $scope.i = Number $stateParams.slide

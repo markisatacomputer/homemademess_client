@@ -16,7 +16,7 @@ angular.module 'homemademessClient'
       scope.$on 'keyup:39', (n, e) ->
         if scope.i < scope.slides.length - 1
           scope.i = scope.i+1
-          scope.$digest()
+          scope.$apply()
 ]
 .directive 'keyboardPrev', [ ()->
   directive =
@@ -26,7 +26,7 @@ angular.module 'homemademessClient'
       scope.$on 'keyup:37', (n, e) ->
         if scope.i > 0
           scope.i = scope.i-1
-          scope.$digest()
+          scope.$apply()
 ]
 .directive 'keyboardStart', [ ()->
   directive =
@@ -36,7 +36,7 @@ angular.module 'homemademessClient'
       scope.$on 'keyup:38', (n, e) ->
         if scope.i != 0
           scope.i = 0
-          scope.$digest()
+          scope.$apply()
 ]
 .directive 'keyboardEnd', [ ()->
   directive =
@@ -46,5 +46,5 @@ angular.module 'homemademessClient'
       scope.$on 'keyup:40', (n, e) ->
         if scope.i != scope.slides.length - 1
           scope.i = scope.slides.length - 1
-          scope.$digest()
+          scope.$apply()
 ]
