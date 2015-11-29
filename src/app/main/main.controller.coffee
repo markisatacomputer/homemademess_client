@@ -4,7 +4,6 @@ angular.module 'homemademessClient'
 .controller 'MainCtrl', ($scope, $http, $stateParams, apiUrl, $state, $document) ->
   # init view
   $scope.view = {}
-  $scope.i = 0
   
   # which view are we in
   if $stateParams.tag
@@ -19,13 +18,8 @@ angular.module 'homemademessClient'
     $scope.view.images = result.images
     $scope.view.tags = result.tags
     $scope.view.offset = 0
-    # if someone has navigated to an open slide, open it
-    console.log $stateParams, $scope
-    if $stateParams.slide
-      console.log 'bla'
-      $scope.i = Number $stateParams.slide
-      #console.log angular.element($document).find('a[open-slide="'+$scope.i+'"]').triggerHandler 'click'
-      $scope.showSlide {i: $scope.i}
+    # send images to slideshow - this is a workaround
+    $scope.$broadcast 'images loaded', result.images
   
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal

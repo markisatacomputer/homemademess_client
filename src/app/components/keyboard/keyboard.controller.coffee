@@ -6,45 +6,12 @@ angular.module 'homemademessClient'
     restrict: 'A'
     link: (scope, element, attr) ->
       $document.bind 'keyup', (e) ->
-        $rootScope.$broadcast 'keyup:'+e.which, e
-]
-.directive 'keyboardNext', [ ()->
-  directive =
-    restrict: 'A'
-    scope: false
-    link: (scope, element, attr) ->
-      scope.$on 'keyup:39', (n, e) ->
-        if scope.i < scope.slides.length - 1
-          scope.i = scope.i+1
-          scope.$apply()
-]
-.directive 'keyboardPrev', [ ()->
-  directive =
-    restrict: 'A'
-    scope: false
-    link: (scope, element, attr) ->
-      scope.$on 'keyup:37', (n, e) ->
-        if scope.i > 0
-          scope.i = scope.i-1
-          scope.$apply()
-]
-.directive 'keyboardStart', [ ()->
-  directive =
-    restrict: 'A'
-    scope: false
-    link: (scope, element, attr) ->
-      scope.$on 'keyup:38', (n, e) ->
-        if scope.i != 0
-          scope.i = 0
-          scope.$apply()
-]
-.directive 'keyboardEnd', [ ()->
-  directive =
-    restrict: 'A'
-    scope: false
-    link: (scope, element, attr) ->
-      scope.$on 'keyup:40', (n, e) ->
-        if scope.i != scope.slides.length - 1
-          scope.i = scope.slides.length - 1
-          scope.$apply()
+        msg = switch e.which
+          when 39 then 'next'
+          when 37 then 'prev'
+          when 38 then 'start'
+          when 40 then 'end'
+          else false
+        if msg != false
+         $rootScope.$broadcast 'keyup:'+ msg, e
 ]
