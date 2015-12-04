@@ -1,6 +1,20 @@
 'use strict'
 
 angular.module 'homemademessClient'
+.directive 'keyboard', [ '$document', '$rootScope', ($document, $rootScope) ->
+  directive =
+    restrict: 'A'
+    link: (scope, element, attr) ->
+      $document.bind 'keyup', (e) ->
+        msg = switch e.which
+          when 39 then 'next'
+          when 37 then 'prev'
+          when 38 then 'start'
+          when 40 then 'end'
+          else false
+        if msg != false
+         $rootScope.$broadcast 'keyup:'+ msg, e
+]
 .directive 'slideshow', ->
   slideshowCtrl = [ '$scope', '$mdDialog', '$location', '$stateParams', '$state', ($scope, $mdDialog, $location, $stateParams, $state) ->
     $scope.open = false
@@ -68,8 +82,9 @@ angular.module 'homemademessClient'
           $scope.$on 'keyup:end', (e, msg) ->
             if $scope.i != $scope.slides.length - 1
               $scope.update $scope.slides.length - 1
-          $scope.$on '$locationChangeSuccess', (e) ->
-            console.log $stateParams.slide, $scope.i
+          # location path change - might have to debounce this...
+          $scope.$on '$locationChangeStart', (e) ->
+            console.log $stateParams.slide, $scope.i, e
   ]
   directive =
     restrict: 'E'
