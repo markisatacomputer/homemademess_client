@@ -22,11 +22,12 @@ angular.module 'homemademessClient'
     # watch location change and open/close dialog if needed
     $scope.$on '$locationChangeStart', (e) ->
       $scope.updateShowState()
-    # update slide on page load after slides resolve - janky workaround
-    $scope.$on 'images loaded', (e, slides) ->
-      if !$scope.slides
-        $scope.slides = slides
-      $scope.updateShowState()
+    
+    # update slide on page load
+    $scope.$watch 'slides', (nw, old) ->
+      if nw and !old
+        $scope.updateShowState()
+
     $scope.updateShowState = () ->
       # open if slide exists and no dialog
       if !$scope.open and $stateParams.slide and $scope.slides[$stateParams.slide]

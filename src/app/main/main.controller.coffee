@@ -18,8 +18,6 @@ angular.module 'homemademessClient'
     $scope.view.images = result.images
     $scope.view.tags = result.tags
     $scope.view.offset = 0
-    # send images to slideshow - this is a workaround
-    $scope.$broadcast 'images loaded', result.images
   
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal
