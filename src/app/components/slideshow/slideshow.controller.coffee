@@ -1,31 +1,34 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.directive 'keyboard', [ '$document', '$rootScope', ($document, $rootScope) ->
-  directive =
-    restrict: 'A'
-    link: (scope, element, attr) ->
-      $document.bind 'keyup', (e) ->
-        msg = switch e.which
-          when 39 then 'next'
-          when 37 then 'prev'
-          when 38 then 'start'
-          when 40 then 'end'
-          else false
-        if msg != false
-         $rootScope.$broadcast 'keyup:'+ msg, e
-]
 .directive 'slideshow', ->
-  slideshowCtrl = [ '$scope', '$mdDialog', '$location', '$stateParams', '$state', ($scope, $mdDialog, $location, $stateParams, $state) ->
+  slideshowCtrl = [ '$scope', '$mdDialog', '$location', '$stateParams', '$state', '$document',
+  ($scope, $mdDialog, $location, $stateParams, $state, $document) ->
     $scope.open = false
+
+    # add key shortcuts
+    $document.bind 'keyup', (e) ->
+        if $stateParams.slide and $scope.open
+          slide = Number $stateParams.slide
+          switch e.which
+            when 39
+              if $scope.slides.length > (slide + 1)
+                $state.go $state.current, {slide: slide + 1}
+            when 37
+              if (slide - 1) > -1
+                $state.go $state.current, {slide: slide - 1}
+            when 38
+              $state.go $state.current, {slide: 0}
+            when 40
+              $state.go $state.current, {slide: $scope.slides.length - 1}
 
     # watch location change and open/close dialog if needed
     $scope.$on '$locationChangeStart', (e) ->
       $scope.updateShowState()
     
-    # update slide on page load
+    # open slide on page load if needed
     $scope.$watch 'slides', (nw, old) ->
-      if nw and !old
+      if nw and !old and !$scope.open
         $scope.updateShowState()
 
     $scope.updateShowState = () ->
@@ -43,7 +46,7 @@ angular.module 'homemademessClient'
           slides: $scope.slides
           img: $scope.slides[i].derivative[2].uri
           label: $scope.slides[i].filename
-          location: $state.$current.parent.self.url
+          #location: $state.$current.parent.self.url
         preserveScope: true
         onRemoving: () ->
           $scope.open = false
@@ -52,40 +55,19 @@ angular.module 'homemademessClient'
                   '     <img ng-src="{{img}}" class="img-responsive" />' +
                   '  </md-dialog-content>' +
                   '</md-dialog>'
-        controller: ($scope, $mdDialog, $location, $stateParams, i, slides, img, label, location) ->
-          $scope.slides = slides
+        controller: ($scope, $mdDialog, $location, $stateParams, i, slides, img, label) ->
           $scope.i = i
+          $scope.slides = slides
           $scope.img = img
           $scope.label = label
-          $scope.location = location
 
           # update slide
-          $scope.update = (i) ->
-            if i != $scope.i
-              $scope.i = i
-              $scope.img = $scope.slides[i].derivative[2].uri
-              $scope.label = $scope.slides[i].filename
-              $location.path $scope.location+'slide/'+i
-              $scope.$apply()
-          # next
-          $scope.$on 'keyup:next', (e, msg) ->
-            if $scope.i < $scope.slides.length - 1
-              $scope.update $scope.i+1
-          # prev
-          $scope.$on 'keyup:prev', (e, msg) ->
-            if $scope.i > 0
-              $scope.update $scope.i-1
-          # first
-          $scope.$on 'keyup:start', (e, msg) ->
-            if $scope.i != 0
-              $scope.update 0
-          # last
-          $scope.$on 'keyup:end', (e, msg) ->
-            if $scope.i != $scope.slides.length - 1
-              $scope.update $scope.slides.length - 1
-          # location path change - might have to debounce this...
           $scope.$on '$locationChangeStart', (e) ->
-            console.log $stateParams.slide, $scope.i, e
+            $scope.update $stateParams.slide
+          $scope.update = (i) ->
+            $scope.i = i
+            $scope.img = $scope.slides[i].derivative[2].uri
+            $scope.label = $scope.slides[i].filename
   ]
   directive =
     restrict: 'E'
