@@ -8,24 +8,24 @@ angular.module 'homemademessClient'
 
     # add key shortcuts
     $document.bind 'keyup', (e) ->
-        if $stateParams.slide and $scope.open
-          slide = Number $stateParams.slide
-          switch e.which
-            when 39
-              if $scope.slides.length > (slide + 1)
-                $state.go $state.current, {slide: slide + 1}
-            when 37
-              if (slide - 1) > -1
-                $state.go $state.current, {slide: slide - 1}
-            when 38
-              $state.go $state.current, {slide: 0}
-            when 40
-              $state.go $state.current, {slide: $scope.slides.length - 1}
+      if $stateParams.slide and $scope.open
+        slide = Number $stateParams.slide
+        switch e.which
+          when 39
+            if $scope.slides.length > (slide + 1)
+              $state.go $state.current, {slide: slide + 1}
+          when 37
+            if (slide - 1) > -1
+              $state.go $state.current, {slide: slide - 1}
+          when 38
+            $state.go $state.current, {slide: 0}
+          when 40
+            $state.go $state.current, {slide: $scope.slides.length - 1}
 
     # watch location change and open/close dialog if needed
-    $scope.$on '$locationChangeStart', (e) ->
+    $scope.$on '$locationChangeSuccess', (e) ->
       $scope.updateShowState()
-    
+
     # open slide on page load if needed
     $scope.$watch 'slides', (nw, old) ->
       if nw and !old and !$scope.open
