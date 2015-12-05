@@ -46,7 +46,6 @@ angular.module 'homemademessClient'
           slides: $scope.slides
           img: $scope.slides[i].derivative[2].uri
           label: $scope.slides[i].filename
-          #location: $state.$current.parent.self.url
         preserveScope: true
         onRemoving: () ->
           $scope.open = false
@@ -63,11 +62,14 @@ angular.module 'homemademessClient'
 
           # update slide
           $scope.$on '$locationChangeStart', (e) ->
-            $scope.update $stateParams.slide
+            if $stateParams.slide
+              $scope.update $stateParams.slide
           $scope.update = (i) ->
             $scope.i = i
             $scope.img = $scope.slides[i].derivative[2].uri
             $scope.label = $scope.slides[i].filename
+      .then null, () ->
+        $state.go $state.$current.parent
   ]
   directive =
     restrict: 'E'
