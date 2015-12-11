@@ -43,9 +43,9 @@ angular.module 'homemademessClient'
         clickOutsideToClose: true
         locals:
           i: i
-          slides: $scope.slides
           img: $scope.slides[i].derivative[2].uri
           label: $scope.slides[i].filename
+        scope: $scope
         preserveScope: true
         onRemoving: () ->
           $scope.open = false
@@ -54,9 +54,8 @@ angular.module 'homemademessClient'
                   '     <img ng-src="{{img}}" class="img-responsive" ng-class="imgclasses" />' +
                   '  </md-dialog-content>' +
                   '</md-dialog>'
-        controller: ($scope, $mdDialog, $location, $stateParams, i, slides, img, label) ->
+        controller: ($scope, $mdDialog, $location, $stateParams, i, img, label) ->
           $scope.i = i
-          $scope.slides = slides
           $scope.img = img
           $scope.label = label
           $scope.imgclasses = {}
