@@ -2,8 +2,8 @@
 
 angular.module 'homemademessClient'
 .directive 'slideshow', ->
-  slideshowCtrl = [ '$scope', '$mdDialog', '$location', '$stateParams', '$state', '$document',
-  ($scope, $mdDialog, $location, $stateParams, $state, $document) ->
+  slideshowCtrl = [ '$scope', '$mdDialog', '$stateParams', '$state', '$document',
+  ($scope, $mdDialog, $stateParams, $state, $document) ->
     $scope.open = false
 
     # add key shortcuts
@@ -54,7 +54,7 @@ angular.module 'homemademessClient'
                   '     <img ng-src="{{img}}" class="img-responsive" ng-class="imgclasses" />' +
                   '  </md-dialog-content>' +
                   '</md-dialog>'
-        controller: ($scope, $mdDialog, $location, $stateParams, i, img, label) ->
+        controller: ($scope, $mdDialog, $stateParams, i, img, label) ->
           $scope.i = i
           $scope.img = img
           $scope.label = label
