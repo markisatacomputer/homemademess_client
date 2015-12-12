@@ -1,6 +1,6 @@
-div.navvy(ng-class="{home: isActive('/')}")
+div.navvy
   div#search
-    tags-input(ng-model="tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false", on-tag-added="redoSearch()", on-tag-removed="redoSearch()" ng-show="isActive('/')")
+    tags-input(ng-model="tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false", on-tag-added="redoSearch()", on-tag-removed="redoSearch()")
       auto-complete(source="findTags($query)" min-length="1")
 
     script(type="text/ng-template" id="tag-temp.html")

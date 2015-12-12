@@ -6,10 +6,6 @@ angular.module 'homemademessClient'
   SearchCtrl =  [ '$scope', '$resource', 'lodash', '$q', '$location', 'apiUrl', ($scope, $resource, lodash, $q, $location, apiUrl) ->
     $scope.tags = []
 
-    $scope.isActive = (route) ->
-      #console.log $location.path()
-      route is $location.path()
-
     #  Map tags to simple array
     $scope.mapTags = (tags) ->
       # return an array of unique values
