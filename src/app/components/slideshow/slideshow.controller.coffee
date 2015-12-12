@@ -53,6 +53,7 @@ angular.module 'homemademessClient'
         template: '<md-dialog aria-label="{{label}}" class="slide">' +
                   '  <md-dialog-content>' +
                   '     <img ng-src="{{img}}" class="img-responsive" ng-class="imgclasses" />' +
+                  '     <div class="loading-spinner"></div>' +
                   '  </md-dialog-content>' +
                   '</md-dialog>'
         controller: ($scope, $mdDialog, $stateParams, i, img, label) ->
@@ -91,7 +92,14 @@ angular.module 'homemademessClient'
 
           # determine transition direction
           $scope.toggleClass = (i)->
-            classes = {}
+            classes = {
+              up: false
+              down: false
+              left: false
+              leftagain: false
+              right: false
+              rightagain: false
+            }
             switch
               when i < $scope.i and (($scope.i - i) > 1) and i is 0
                 classes.up = true
