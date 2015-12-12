@@ -50,7 +50,7 @@ angular.module 'homemademessClient'
         preserveScope: true
         onRemoving: () ->
           $scope.open = false
-        template: '<md-dialog aria-label="{{label}}" class="slide">' +
+        template: '<md-dialog aria-label="{{label}}" class="slide" ng-class="{loading: transition}">' +
                   '  <md-dialog-content>' +
                   '     <img ng-src="{{img}}" class="img-responsive" ng-class="imgclasses" />' +
                   '     <div class="loading-spinner"></div>' +

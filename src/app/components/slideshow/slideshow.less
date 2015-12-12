@@ -74,7 +74,15 @@
   bottom: 0;
   left: 50%;
   margin: -15px 0 -15px;
-  z-index: -1;
+  display: none;
+}
+md-dialog.loading, {
+  md-dialog-content {
+    .loading-spinner {
+      display: inherit;
+      opacity: .7;
+    }
+  }
 }
 
 md-dialog {
