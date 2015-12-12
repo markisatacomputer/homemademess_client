@@ -5,10 +5,11 @@ angular.module 'homemademessClient'
   slideshowCtrl = [ '$scope', '$mdDialog', '$stateParams', '$state', '$document',
   ($scope, $mdDialog, $stateParams, $state, $document) ->
     $scope.open = false
+    $scope.transition = false
 
     # add key shortcuts
     $document.bind 'keyup', (e) ->
-      if $stateParams.slide and $scope.open
+      if $stateParams.slide and $scope.open and !$scope.transition
         slide = Number $stateParams.slide
         switch e.which
           when 39
@@ -60,23 +61,37 @@ angular.module 'homemademessClient'
           $scope.label = label
           $scope.imgclasses = {}
 
-          # update slide
-          $scope.$on '$locationChangeStart', (e) ->
+          # listen for location change to update slide
+          $scope.$on '$locationChangeSuccess', (e) ->
             if $stateParams.slide
               $scope.update $stateParams.slide
+          # update slide
           $scope.update = (i) ->
-            $scope.toggleClass Number i
-            $scope.i = Number i
-            $scope.img = $scope.slides[i].derivative[2].uri
-            $scope.label = $scope.slides[i].filename
+            # block further updates while we're waiting
+            $scope.transition = true
+            # set new url so we can preload
+            src = $scope.slides[i].derivative[2].uri
+            # on preload complete, finish update
+            loader = new Image()
+            loader.onload = () ->
+              # toggle classes for animation
+              $scope.imgclasses = $scope.toggleClass Number i
+              # store slide number
+              $scope.i = Number i
+              # update slide img src
+              $scope.img = src
+              # update slide img label
+              $scope.label = $scope.slides[i].filename
+              # unblock slide update
+              $scope.transition = false
+              # update view
+              $scope.$digest()
+            # trigger preload
+            loader.src = src
 
           # determine transition direction
           $scope.toggleClass = (i)->
-            classes =
-              up: false
-              down: false
-              left: false
-              right: false
+            classes = {}
             switch
               when i < $scope.i and (($scope.i - i) > 1) and i is 0
                 classes.up = true
@@ -92,7 +107,7 @@ angular.module 'homemademessClient'
                   classes.rightagain = true
                 else
                   classes.right = true
-            $scope.imgclasses = classes
+            classes
                   
       .then null, () ->
         $state.go $state.$current.parent
