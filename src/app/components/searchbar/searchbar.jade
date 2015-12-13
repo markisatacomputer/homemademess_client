@@ -5,6 +5,6 @@ div.searchy
 
     script(type="text/ng-template" id="tag-temp.html")
       span
-        a(ng-bind="$getDisplayText()" ui-sref="tagged({ tag : '{{ data['text'] | taglink }}' })")
+        a(ng-bind="$getDisplayText()" ui-sref="home.tagged({ tag : '{{ data['text'] | taglink }}' })")
       a(class="remove-button", ng-click="$removeTag()", ng-bind="::$$removeTagSymbol")
 

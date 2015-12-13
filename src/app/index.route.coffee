@@ -6,18 +6,19 @@ angular.module 'homemademessClient'
         url: '/'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
-        controllerAs: 'main'
+        resolve:
+          slides: ($http, apiUrl) ->
+            $http.get apiUrl + '/images'
       .state 'home.slide',
         url: 'slide/:slide'
-        templateUrl: 'app/main/main.html'
-        controller: 'MainCtrl'
-      .state 'tagged',
-        url: '/tagged/:tag/'
-        templateUrl: 'app/main/main.html'
-        controller: 'MainCtrl'
-      .state 'tagged.slide',
-        url: '/tagged/:tag/slide/:slide'
-        templateUrl: 'app/main/main.html'
-        controller: 'MainCtrl'
+      .state 'home.tagged',
+        url: 'tagged/:tag/'
+        templateUrl: 'app/main/tagged/tagged.html'
+        controller: 'TaggedCtrl'
+        resolve:
+          slides: ($http, apiUrl, $stateParams) ->
+            $http.get apiUrl + '/tagged/' + $stateParams.tag
+      .state 'home.tagged.slide',
+        url: 'tagged/:tag/slide/:slide'
 
     $urlRouterProvider.otherwise '/'

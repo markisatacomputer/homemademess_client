@@ -1,23 +1,9 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.controller 'MainCtrl', ($scope, $http, $stateParams, apiUrl, $state, $document) ->
+.controller 'MainCtrl', ['$scope', '$state', 'slides', ($scope, $state, slides) ->
   # init view
-  $scope.view = {}
-  
-  # which view are we in
-  if $stateParams.tag
-    getURI = apiUrl + '/tagged/' + $stateParams.tag
-    $scope.containerClass = 'tagged'
-    $scope.tag = $stateParams.tag.replace /_/g, ' '
-  else
-    getURI = apiUrl + '/images'
-    $scope.containerClass = 'main'
-  
-  $http.get(getURI).success (result) ->
-    $scope.view.images = result.images
-    $scope.view.tags = result.tags
-    $scope.view.offset = 0
+  $scope.view = slides.data
   
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal
@@ -41,3 +27,4 @@ angular.module 'homemademessClient'
       columns = Math.round rows*a
     aspect = [columns, rows]
     aspect[n]
+]
