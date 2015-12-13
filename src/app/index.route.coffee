@@ -19,6 +19,6 @@ angular.module 'homemademessClient'
           slides: ($http, apiUrl, $stateParams) ->
             $http.get apiUrl + '/tagged/' + $stateParams.tag
       .state 'home.tagged.slide',
-        url: 'tagged/:tag/slide/:slide'
+        url: 'slide/:slide'
 
     $urlRouterProvider.otherwise '/'
