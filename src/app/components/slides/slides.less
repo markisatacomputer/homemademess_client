@@ -1,0 +1,19 @@
+.slides {
+  md-grid-list {
+    div.img-container {
+      width: 100%;
+      height: 100%;
+      background-color: #666;
+      img {
+        .transition(.2s);
+        opacity: 1;
+        @media screen and (min-width: 460px) {
+          opacity: .7;
+        }
+      }
+      img:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -4,6 +4,11 @@ angular.module 'homemademessClient'
 .controller 'MainCtrl', ['$scope', '$state', 'slides', ($scope, $state, slides) ->
   # init view
   $scope.view = slides.data
+
+  # open slide on page load if needed
+  $scope.$on '$viewContentLoaded', (event) ->
+    console.log $state.params
+    #$scope.updateShowState()
   
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal

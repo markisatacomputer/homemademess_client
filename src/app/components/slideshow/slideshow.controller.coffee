@@ -24,17 +24,19 @@ angular.module 'homemademessClient'
             $state.go $state.current, {slide: $scope.slides.length - 1}
 
     # watch location change and open/close dialog if needed
-    $scope.$on '$locationChangeSuccess', (e) ->
-      $scope.updateShowState()
+    $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
+      console.log event, toState, toParams, fromState, fromParams
+      #$scope.updateShowState()
 
     # open slide on page load if needed
-    $scope.$watch 'slides', (nw, old) ->
-      if nw and !old and !$scope.open
-        $scope.updateShowState()
+    $scope.$on '$viewContentLoaded', (event) ->
+      console.log !$scope.open, $state.params, $stateParams
+      #$scope.updateShowState()
 
     $scope.updateShowState = () ->
       # open if slide exists and no dialog
-      if !$scope.open and $stateParams.slide and $scope.slides[$stateParams.slide]
+      console.log !$scope.open, $state.params, $scope.slides[$state.params.slide]
+      if !$scope.open
         $scope.open = true
         $scope.showSlide $stateParams.slide
 
@@ -63,7 +65,7 @@ angular.module 'homemademessClient'
           $scope.imgclasses = {}
 
           # listen for location change to update slide
-          $scope.$on '$locationChangeSuccess', (e) ->
+          $scope.$on '$locationChangeStart', (e) ->
             if $stateParams.slide
               $scope.update $stateParams.slide
           # update slide
