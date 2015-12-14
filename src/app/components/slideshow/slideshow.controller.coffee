@@ -13,7 +13,7 @@ angular.module 'homemademessClient'
         slide = Number $stateParams.slide
         switch e.which
           when 39
-            if $scope.slides.length > (slide + 1)
+            if  $scope.view.images.length > (slide + 1)
               $state.go $state.current, {slide: slide + 1}
           when 37
             if (slide - 1) > -1
@@ -21,7 +21,7 @@ angular.module 'homemademessClient'
           when 38
             $state.go $state.current, {slide: 0}
           when 40
-            $state.go $state.current, {slide: $scope.slides.length - 1}
+            $state.go $state.current, {slide:  $scope.view.images.length - 1}
 
     # open slide on page load if needed
     $scope.$on 'viewInit', (event, params) ->
@@ -30,7 +30,7 @@ angular.module 'homemademessClient'
 
     $scope.updateShowState = () ->
       # open if slide exists and no dialog
-      if !$scope.open and $scope.slides[$state.params.slide]
+      if !$scope.open and  $scope.view.images[$state.params.slide]
         $scope.open = true
         $scope.showSlide $stateParams.slide
 
@@ -40,8 +40,8 @@ angular.module 'homemademessClient'
         clickOutsideToClose: true
         locals:
           i: i
-          img: $scope.slides[i].derivative[2].uri
-          label: $scope.slides[i].filename
+          img:  $scope.view.images[i].derivative[2].uri
+          label:  $scope.view.images[i].filename
         scope: $scope
         preserveScope: true
         onRemoving: () ->
@@ -67,7 +67,7 @@ angular.module 'homemademessClient'
             # block further updates while we're waiting
             $scope.transition = true
             # set new url so we can preload
-            src = $scope.slides[i].derivative[2].uri
+            src =  $scope.view.images[i].derivative[2].uri
             # on preload complete, finish update
             loader = new Image()
             loader.onload = () ->
@@ -78,7 +78,7 @@ angular.module 'homemademessClient'
               # update slide img src
               $scope.img = src
               # update slide img label
-              $scope.label = $scope.slides[i].filename
+              $scope.label =  $scope.view.images[i].filename
               # unblock slide update
               $scope.transition = false
               # update view
@@ -99,7 +99,7 @@ angular.module 'homemademessClient'
             switch
               when i < $scope.i and (($scope.i - i) > 1) and i is 0
                 classes.up = true
-              when i > $scope.i and ((i - $scope.i) > 1) and i is ($scope.slides.length - 1)
+              when i > $scope.i and ((i - $scope.i) > 1) and i is ( $scope.view.images.length - 1)
                 classes.down = true
               when i < $scope.i and ($scope.i - i) is 1
                 if $scope.imgclasses.left
@@ -119,5 +119,3 @@ angular.module 'homemademessClient'
   directive =
     restrict: 'E'
     controller: slideshowCtrl
-    scope:
-      slides: '='
