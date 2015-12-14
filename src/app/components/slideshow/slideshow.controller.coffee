@@ -28,6 +28,11 @@ angular.module 'homemademessClient'
       if params.slide
         $scope.updateShowState()
 
+    # listen for location change to in case we need to close dialog
+    $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      if !toParams.slide and $scope.open
+        $mdDialog.hide()
+
     $scope.updateShowState = () ->
       # open if slide exists and no dialog
       if !$scope.open and  $scope.view.images[$state.params.slide]
@@ -59,9 +64,9 @@ angular.module 'homemademessClient'
           $scope.imgclasses = {}
 
           # listen for location change to update slide
-          $scope.$on '$locationChangeStart', (e) ->
-            if $stateParams.slide
-              $scope.update $stateParams.slide
+          $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+            if toParams.slide
+              $scope.update toParams.slide
           # update slide
           $scope.update = (i) ->
             # block further updates while we're waiting
