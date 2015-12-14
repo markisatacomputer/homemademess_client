@@ -3,9 +3,13 @@
 angular.module 'homemademessClient'
 .directive 'searchbar', ->
 
-  SearchCtrl =  [ '$scope', '$resource', 'lodash', '$q', '$location', 'apiUrl', ($scope, $resource, lodash, $q, $location, apiUrl) ->
-    $scope.tags = []
+  SearchCtrl =  [ '$scope', '$resource', 'lodash', '$q', 'apiUrl', '$state',
+  ($scope, $resource, lodash, $q, apiUrl, $state) ->
+    $scope.searchText = null
+    $scope.selectedItem = null
 
+    $scope.transformChip = (chip) ->
+      console.log 'chip', chip
     #  Map tags to simple array
     $scope.mapTags = (tags) ->
       # return an array of unique values
@@ -14,6 +18,7 @@ angular.module 'homemademessClient'
     #  Action to take when tags change
     Images = $resource apiUrl + '/images'
     $scope.redoSearch = () ->
+      console.log 'redoSearch', $scope.tags
       Images.get { tags: $scope.mapTags $scope.tags }, (result) ->
         $scope.view.images = result.images
 

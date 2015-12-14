@@ -4,10 +4,8 @@ angular.module 'homemademessClient', [
   'ngAria'
   'ngResource'
   'ui.router'
-  'akoenig.deckgrid'
   'ngMaterial'
   'ngDropzone'
-  'ngTagsInput'
   'ngLodash'
 ]
 .filter 'taglink', () ->

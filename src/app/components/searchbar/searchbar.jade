@@ -1,10 +1,9 @@
 div.searchy
   div#search
-    tags-input(ng-model="tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false", on-tag-added="redoSearch()", on-tag-removed="redoSearch()")
-      auto-complete(source="findTags($query)" min-length="1")
-
-    script(type="text/ng-template" id="tag-temp.html")
-      span
-        a(ng-bind="$getDisplayText()" ui-sref="home.tagged({ tag : '{{ data['text'] | taglink }}' })")
-      a(class="remove-button", ng-click="$removeTag()", ng-bind="::$$removeTagSymbol")
-
+    md-chips(ng-model="tags", md-require-match="true", secondary-placeholder="add more tags", md-on-add="redoSearch()", md-on-remove="redoSearch()", md-transform-chip="transformChip($chip)" md-autocomplete-snap)
+      md-autocomplete(md-selected-item="selectedTag", md-items="items in findTags(searchText)", md-item-text="item.text", placeholder="filter by tag")
+        span(md-highlight-text="searchText"){{item.text}}
+      md-chip-template
+        span
+          strong
+            a(ui-sref="home.tagged({ tag : '{{ $chip.text | taglink }}' })") {{$chip.text}}
