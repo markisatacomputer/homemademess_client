@@ -9,8 +9,8 @@ angular.module 'homemademessClient'
 
     # add key shortcuts
     $document.bind 'keyup', (e) ->
-      if $stateParams.slide and $scope.open and !$scope.transition
-        slide = Number $stateParams.slide
+      if $state.params.slide? and $scope.open and !$scope.transition
+        slide = Number $state.params.slide
         switch e.which
           when 39
             if  $scope.view.images.length > (slide + 1)
@@ -26,18 +26,20 @@ angular.module 'homemademessClient'
     # open slide on page load if needed
     $scope.$on 'viewInit', (event, params) ->
       if params.slide
-        $scope.updateShowState()
+        $scope.updateShowState(params.slide)
 
     # listen for location change to in case we need to close dialog
     $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      if !$scope.open and toParams.slide?
+        $scope.updateShowState(toParams.slide)
       if !toParams.slide and $scope.open
         $mdDialog.hide()
 
-    $scope.updateShowState = () ->
+    $scope.updateShowState = (i) ->
       # open if slide exists and no dialog
-      if !$scope.open and  $scope.view.images[$state.params.slide]
+      if !$scope.open and  $scope.view.images[i]
         $scope.open = true
-        $scope.showSlide $stateParams.slide
+        $scope.showSlide i
 
     $scope.showSlide = (i) ->
       i = Number i
@@ -65,7 +67,7 @@ angular.module 'homemademessClient'
 
           # listen for location change to update slide
           $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-            if toParams.slide
+            if toParams.slide?
               $scope.update toParams.slide
           # update slide
           $scope.update = (i) ->
