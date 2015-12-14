@@ -5,10 +5,9 @@ angular.module 'homemademessClient'
   # init view
   $scope.view = slides.data
 
-  # open slide on page load if needed
+  # broadcast view content complete for child directives
   $scope.$on '$viewContentLoaded', (event) ->
-    console.log $state.params
-    #$scope.updateShowState()
+    $scope.$broadcast 'viewInit', $state.params
   
   $scope.aspect = (img,n) ->
     #  Get aspect ratio as decimal

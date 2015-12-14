@@ -23,20 +23,14 @@ angular.module 'homemademessClient'
           when 40
             $state.go $state.current, {slide: $scope.slides.length - 1}
 
-    # watch location change and open/close dialog if needed
-    $scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
-      console.log event, toState, toParams, fromState, fromParams
-      #$scope.updateShowState()
-
     # open slide on page load if needed
-    $scope.$on '$viewContentLoaded', (event) ->
-      console.log !$scope.open, $state.params, $stateParams
-      #$scope.updateShowState()
+    $scope.$on 'viewInit', (event, params) ->
+      if params.slide
+        $scope.updateShowState()
 
     $scope.updateShowState = () ->
       # open if slide exists and no dialog
-      console.log !$scope.open, $state.params, $scope.slides[$state.params.slide]
-      if !$scope.open
+      if !$scope.open and $scope.slides[$state.params.slide]
         $scope.open = true
         $scope.showSlide $stateParams.slide
 
