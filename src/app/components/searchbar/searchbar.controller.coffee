@@ -3,9 +3,7 @@
 angular.module 'homemademessClient'
 .directive 'searchbar', ->
 
-  SearchCtrl =  [ '$scope', '$resource', 'lodash', '$q', '$location', 'apiUrl', ($scope, $resource, lodash, $q, $location, apiUrl) ->
-    $scope.tags = []
-
+  SearchCtrl =  [ '$scope', '$resource', 'lodash', 'apiUrl', ($scope, $resource, lodash, apiUrl) ->
     #  Map tags to simple array
     $scope.mapTags = (tags) ->
       # return an array of unique values
