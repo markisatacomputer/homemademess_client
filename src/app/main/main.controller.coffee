@@ -31,6 +31,5 @@ angular.module 'homemademessClient'
         else 12
       columns = (Math.round( Math.round(rows*img.width/img.height)/2 ) ) * 2
     aspect = [columns, rows]
-    console.log a, aspect
     aspect[n]
 ]
