@@ -1,5 +1,5 @@
 .slides
-  md-grid-list(md-cols-sm='12', md-cols-md='24', md-cols-lg='48', md-cols-gt-lg='60' md-row-height='1:1', md-gutter="5px")
+  md-grid-list(md-cols-sm='12', md-cols-md='24', md-cols-lg='48', md-cols-gt-lg='60' md-row-height='1:1', md-gutter="5px", md-on-layout="broadcastLayout()")
     md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}')
       div.img-container
         a(ng-href='{{getHref(n)}}' open-slide state='{{curSt}}' params='{{getParams(n)}}')

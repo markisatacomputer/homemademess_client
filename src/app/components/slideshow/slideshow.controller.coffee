@@ -24,9 +24,9 @@ angular.module 'homemademessClient'
             $state.go $state.current, {slide:  $scope.view.images.length - 1}
 
     # open slide on page load if needed
-    $scope.$on 'viewInit', (event, params) ->
-      if params.slide
-        $scope.updateShowState(params.slide)
+    $scope.$on 'slidesLayout', (event) ->
+      if $stateParams.slide
+        $scope.updateShowState($stateParams.slide)
 
     # listen for location change to in case we need to close dialog
     $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->

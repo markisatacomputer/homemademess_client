@@ -18,12 +18,14 @@ angular.module 'homemademessClient'
         return
 
 .directive 'slides', ->
-  slidesCtrl = [ '$scope', '$state', ($scope, $state) ->
+  slidesCtrl = [ '$scope', '$state', '$rootScope', ($scope, $state, $rootScope) ->
     $scope.curSt = $state.current.name + '.slide'
     $scope.getParams = (n) ->
       {slide: n}
     $scope.getHref = (i) ->
       $state.href '.slide', {slide: i}
+    $scope.broadcastLayout = () ->
+      $rootScope.$broadcast 'slidesLayout'
   ]
   directive =
     restrict: 'E'
