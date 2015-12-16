@@ -1,7 +1,7 @@
 div.searchy
   div#search
-    md-chips(ng-model="tags", md-require-match="true", secondary-placeholder="add more tags", md-on-add="redoSearch()", md-on-remove="redoSearch()", md-transform-chip="transformChip($chip)" md-autocomplete-snap)
-      md-autocomplete(md-selected-item="selectedTag", md-items="items in findTags(searchText)", md-item-text="item.text", placeholder="filter by tag")
+    md-chips(ng-model="tags", md-require-match="true", secondary-placeholder="add more tags", md-on-add="redoSearch()", md-on-remove="redoSearch()", md-transform-chip="transformChip($chip)", md-autocomplete-snap)
+      md-autocomplete(md-search-text="searchText" md-selected-item="selectedTag", md-items="item in findTags(searchText)", md-item-text="item.text", placeholder="filter by tag")
         span(md-highlight-text="searchText"){{item.text}}
       md-chip-template
         span

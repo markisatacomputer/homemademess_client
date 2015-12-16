@@ -25,7 +25,8 @@ angular.module 'homemademessClient'
     #  Autocomplete
     Auto = $resource apiUrl + '/auto'
     $scope.findTags = (value) ->
-      return Auto.query({q:value}).$promise
+      Auto.query {q:value}, (result) ->
+        result
   ]
 
   directive =
