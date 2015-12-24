@@ -6,8 +6,22 @@
   #search {
     width: 98%;
     margin: 0 1%;
-    tags-input .host {
-      margin: 0;
+    tags-input {
+      .host {
+        margin: 0;
+      }
+      .autocomplete {
+        ul.suggestion-list {
+          max-height: 304px;
+          li {
+            span.number {
+              font-size: 70%;
+              color: #666;
+              margin-left: 8px;
+            }
+          }
+        }
+      }
     }
   }
 }

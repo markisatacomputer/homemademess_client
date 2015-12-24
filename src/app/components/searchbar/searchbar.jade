@@ -1,10 +1,13 @@
 div.searchy
   div#search
     tags-input(ng-model="tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false", on-tag-added="redoSearch()", on-tag-removed="redoSearch()")
-      auto-complete(source="findTags($query)" min-length="1")
+      auto-complete(source="findTags($query)" min-length="1" template="result-temp.html")
 
     script(type="text/ng-template" id="tag-temp.html")
       span
         a(ng-bind="$getDisplayText()" ui-sref="home.tagged({ tag : '{{ data['text'] | taglink }}' })")
       a(class="remove-button", ng-click="$removeTag()", ng-bind="::$$removeTagSymbol")
 
+    script(type="text/ng-template" id="result-temp.html")
+      span.text(ng-bind-html="$highlight($getDisplayText())") {{data.text}}
+      span.number ({{data._sort.size}})
