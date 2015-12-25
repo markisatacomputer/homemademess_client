@@ -4,6 +4,7 @@ angular.module 'homemademessClient', [
   'ui.router'
   'ngMaterial'
   'ngTagsInput'
+  'hmTouchEvents'
   'ngLodash'
 ]
 .filter 'taglink', () ->
