@@ -23,6 +23,8 @@ angular.module 'homemademessClient'
           when 40
             $state.go $state.current, {slide:  $scope.view.images.length - 1}
 
+    # gestures
+
     # open slide on page load if needed
     $scope.$on 'slidesLayout', (event) ->
       if $stateParams.slide
@@ -53,7 +55,7 @@ angular.module 'homemademessClient'
         preserveScope: true
         onRemoving: () ->
           $scope.open = false
-        template: '<md-dialog aria-label="{{label}}" class="slide" ng-class="{loading: transition}">' +
+        template: '<md-dialog aria-label="{{label}}" class="slide" ng-class="{loading: transition}" hm-pinchin="pinchin">' +
                   '  <md-dialog-content>' +
                   '     <img ng-src="{{img}}" class="img-responsive" ng-class="imgclasses" />' +
                   '     <div class="loading-spinner"></div>' +
@@ -119,6 +121,10 @@ angular.module 'homemademessClient'
                 else
                   classes.right = true
             classes
+
+          $scope.pinchin = ()->
+            if $state.params.slide and $state.$current.parent?
+              $state.go $state.$current.parent
                   
       .then null, () ->
         $state.go $state.$current.parent
