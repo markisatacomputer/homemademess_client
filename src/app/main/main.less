@@ -45,8 +45,8 @@ md-dialog.slide {
 
 @media (max-width: 599px) {
     md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
-        background-color: #fff;
-        opacity: 1;
+        background-color: #000;
+        opacity: .75;
     }
     .md-dialog-container {
         width: 100%;
@@ -61,6 +61,9 @@ md-dialog.slide {
             md-dialog-content {
                 img {
                     max-height: 100vh;
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-50%);
                 }
             }
         }
