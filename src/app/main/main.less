@@ -42,3 +42,27 @@ md-dialog.slide {
         }
     }
 }
+
+@media (max-width: 599px) {
+    md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
+        background-color: #fff;
+        opacity: 1;
+    }
+    .md-dialog-container {
+        width: 100%;
+        md-dialog.slide {
+            width: 100%;
+            height: inherit;
+            max-height: 100vh;
+            max-width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            md-dialog-content {
+                img {
+                    max-height: 100vh;
+                }
+            }
+        }
+    }
+}
