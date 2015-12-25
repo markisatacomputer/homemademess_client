@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.controller 'MainCtrl', ['$scope', '$state', '$window', 'slides', ($scope, $state, $window, slides) ->
+.controller 'MainCtrl', ['$scope', '$state', 'slides', ($scope, $state, slides) ->
   # init view
   $scope.view = slides.data
   $scope.tags = []
