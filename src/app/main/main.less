@@ -52,7 +52,7 @@ md-dialog.slide {
         width: 100%;
         md-dialog.slide {
             width: 100%;
-            height: inherit;
+            height: 100%;
             max-height: 100vh;
             max-width: 100%;
             position: absolute;
@@ -63,7 +63,8 @@ md-dialog.slide {
                     max-height: 100vh;
                     position: relative;
                     top: 50%;
-                    transform: translateY(-50%);
+                    left: 50%;
+                    transform: translateY(-50%) translateX(-50%);
                 }
             }
         }
