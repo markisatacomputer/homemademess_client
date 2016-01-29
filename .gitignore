@@ -18,5 +18,6 @@ gulpfile.js
 karma.conf.js
 package.json
 protractor.conf.js
+deploy-gh.sh
 .DS_Store
 
