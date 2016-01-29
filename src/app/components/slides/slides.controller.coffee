@@ -18,7 +18,13 @@ angular.module 'homemademessClient'
         return
 
 .directive 'slides', ->
-  slidesCtrl = [ '$scope', '$state', '$rootScope', ($scope, $state, $rootScope) ->
+  slidesCtrl = [ '$scope', '$state', '$rootScope', '$mdMedia', ($scope, $state, $rootScope, $mdMedia) ->
+    $scope.cols =
+      sm: 24
+      md: 36
+      lg: 48
+      gt: 60
+    $scope.derivative = 0
     $scope.curSt = $state.current.name + '.slide'
     $scope.getParams = (n) ->
       {slide: n}
@@ -29,23 +35,28 @@ angular.module 'homemademessClient'
     $scope.aspect = (img,n) ->
       #  Get aspect ratio as decimal
       a = Math.round((img.height/img.width)*100)/100
-      #  There's a few different cases of how to proceed
-      #  if ratio is less than 1 - portrait
-      if (a < 1)
-        columns = switch
-          when a < 0.6 then 8
-          when a < 0.4 then 6
-          when a < 0.25 then 4
-          else 12
-        rows = Math.round columns*a
-      #  if ratio > 1 - landscape
-      else
-        rows = switch
-          when a > 1.34 then 16
-          when a > 2 then 24
-          when a > 3 then 36
-          else 12
-        columns = (Math.round( Math.round(rows*img.width/img.height)/2 ) ) * 2
+      #  Set columns/rows
+      columns = switch
+        #  If pano span page width
+        when a < 0.4
+          switch
+            when $mdMedia 'sm'
+              $scope.derivative = 0
+              $scope.cols.sm
+            when $mdMedia 'md'
+              $scope.derivative = 0
+              $scope.cols.md
+            when $mdMedia 'lg'
+              $scope.derivative = 1
+              $scope.cols.lg
+            when $mdMedia 'gt-lg'
+              $scope.derivative = 1
+              $scope.cols.gt
+        #  Default one column
+        else
+          $scope.derivative = 0
+          12
+      rows = Math.round columns*a
       aspect = [columns, rows]
       aspect[n]
   ]
