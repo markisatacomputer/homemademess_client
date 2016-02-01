@@ -15,9 +15,6 @@ angular.module 'homemademessClient'
         url: 'tagged/:tag/'
         templateUrl: 'app/main/tagged/tagged.html'
         controller: 'TaggedCtrl'
-        resolve:
-          slides: ($http, apiUrl, $stateParams) ->
-            $http.get apiUrl + '/tagged/' + $stateParams.tag
       .state 'home.tagged.slide',
         url: 'slide/:slide'
 

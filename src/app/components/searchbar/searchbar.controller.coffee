@@ -3,18 +3,7 @@
 angular.module 'homemademessClient'
 .directive 'searchbar', ->
 
-  SearchCtrl =  [ '$scope', '$resource', 'lodash', 'apiUrl', ($scope, $resource, lodash, apiUrl) ->
-    #  Map tags to simple array
-    $scope.mapTags = (tags) ->
-      # return an array of unique values
-      lodash.uniq lodash.map tags, '_id'
-    
-    #  Action to take when tags change
-    Images = $resource apiUrl + '/images'
-    $scope.redoSearch = () ->
-      Images.get { tags: $scope.mapTags $scope.tags }, (result) ->
-        $scope.view.images = result.images
-
+  SearchCtrl =  [ '$scope', '$resource', 'apiUrl', ($scope, $resource, apiUrl) ->
     #  Autocomplete
     Auto = $resource apiUrl + '/auto'
     $scope.findTags = (value) ->
