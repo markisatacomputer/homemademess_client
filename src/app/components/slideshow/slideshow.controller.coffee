@@ -7,21 +7,36 @@ angular.module 'homemademessClient'
     $scope.open = false
     $scope.transition = false
 
+    # navigation
+    showChange = ()->
+      if $state.params.slide? and $scope.open and !$scope.transition
+        Number $state.params.slide
+      else false
+    $scope.showClose = ()->
+      if showChange() != false
+        $state.go $state.$current.parent
+    $scope.showLeft = ()->
+      slide = showChange()
+      if slide != false and (slide - 1) > -1
+        $state.go $state.current, {slide: slide - 1}
+    $scope.showRight = ()->
+      slide = showChange()
+      if slide != false and $scope.view.images.length > (slide + 1)
+        $state.go $state.current, {slide: slide + 1}
+    $scope.showUp = ()->
+      if showChange() != false
+        $state.go $state.current, {slide: 0}
+    $scope.showDown = ()->
+      if showChange() != false
+        $state.go $state.current, {slide:  $scope.view.images.length - 1}
+
     # add key shortcuts
     $document.bind 'keyup', (e) ->
-      if $state.params.slide? and $scope.open and !$scope.transition
-        slide = Number $state.params.slide
-        switch e.which
-          when 39
-            if  $scope.view.images.length > (slide + 1)
-              $state.go $state.current, {slide: slide + 1}
-          when 37
-            if (slide - 1) > -1
-              $state.go $state.current, {slide: slide - 1}
-          when 38
-            $state.go $state.current, {slide: 0}
-          when 40
-            $state.go $state.current, {slide:  $scope.view.images.length - 1}
+      switch e.which
+        when 39 then $scope.showRight()
+        when 37 then $scope.showLeft()
+        when 38 then $scope.showUp()
+        when 40 then $scope.showDown()
 
     # open slide on page load if needed
     $scope.$on 'slidesLayout', (event) ->
@@ -53,7 +68,15 @@ angular.module 'homemademessClient'
         preserveScope: true
         onRemoving: () ->
           $scope.open = false
-        template: '<md-dialog aria-label="{{label}}" class="slide" ng-class="{loading: transition}">' +
+        template: '<md-dialog ' +
+                  '  aria-label="{{label}}"' +
+                  '  class="slide"' +
+                  '  ng-class="{loading: transition}"' +
+                  '  hm-pinchin="showClose"' +
+                  '  hm-swipeleft="showRight"' +
+                  '  hm-swiperight="showLeft"' +
+                  '  hm-swipeup="showDown"' +
+                  '  hm-swipedown="showUp">' +
                   '  <md-dialog-content>' +
                   '     <img ng-src="{{img}}" class="img-responsive" ng-class="imgclasses" />' +
                   '     <div class="loading-spinner"></div>' +
@@ -119,7 +142,7 @@ angular.module 'homemademessClient'
                 else
                   classes.right = true
             classes
-                  
+
       .then null, () ->
         $state.go $state.$current.parent
   ]
