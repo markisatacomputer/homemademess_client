@@ -1,2 +1,2 @@
 angular.module('homemademessClient')
-  .constant 'apiUrl', 'http://api.homemademess.com'
+  .constant 'apiUrl', 'http://localhost:8666'

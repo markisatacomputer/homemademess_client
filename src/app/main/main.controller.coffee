@@ -2,10 +2,13 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$state', 'slides', '$resource', 'lodash', 'apiUrl',
-  ($scope, $state, slides, $resource, lodash, apiUrl) ->
+  '$scope', '$state', 'slides', 'map', '$resource', 'lodash', 'apiUrl',
+  ($scope, $state, slides, map, $resource, lodash, apiUrl) ->
     # init view
     $scope.view = slides
+    # create map with ids as index
+    $scope.view.map = map
+    # filter
     $scope.view.filter =
       tag:
         tags: []
@@ -19,7 +22,7 @@ angular.module 'homemademessClient'
     mapTags = (tags) ->
       # return an array of unique values
       lodash.uniq lodash.map tags, '_id'
-    
+
     #  Action to take when tags change
     Images = $resource apiUrl + '/images'
     $scope.$watchCollection 'view.filter.tag.tags', (newTags) ->

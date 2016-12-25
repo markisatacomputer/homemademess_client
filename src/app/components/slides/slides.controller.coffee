@@ -1,22 +1,6 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.directive 'openSlide', () ->
-  restrict: 'A'
-  link: (scope, element, attrs) ->
-    element.bind "click", ($state, $timeout) ->
-      (e) ->
-        transition = $timeout(->
-          $state.go attrs.state, attrs.params
-          return
-        )
-        e.preventDefault()
-
-        e.preventDefault = ->
-        if ignorePreventDefaultCount-- <= 0
-          $timeout.cancel transition
-        return
-
 .directive 'slides', ->
   slidesCtrl = [ '$scope', '$state', '$rootScope', '$mdMedia', ($scope, $state, $rootScope, $mdMedia) ->
     $scope.cols =
@@ -25,13 +9,10 @@ angular.module 'homemademessClient'
       lg: 48
       gt: 60
     $scope.derivative = 0
-    $scope.curSt = $state.current.name + '.slide'
-    $scope.getParams = (n) ->
-      {slide: n}
-    $scope.getHref = (i) ->
-      $state.href '.slide', {slide: i}
+
     $scope.broadcastLayout = () ->
       $rootScope.$broadcast 'slidesLayout'
+
     $scope.aspect = (img,n) ->
       #  Get aspect ratio as decimal
       a = Math.round((img.height/img.width)*100)/100
