@@ -83,19 +83,9 @@
   bottom: 0;
   left: 50%;
   margin: -15px 0 0 -15px;
-  display: none;
+  z-index: 1;
 }
-.slideshow.loading, {
-  slide {
-    img {
-      display: none;
-    }
-    .loading-spinner {
-      display: inherit;
-      opacity: .7;
-    }
-  }
-}
+
 body.slideshow {
   overflow: hidden;
 }
@@ -116,19 +106,6 @@ div.slideshow {
     position: relative;
     overflow: auto; // stop content from leaking out of dialog parent and fix IE
     display: flex;
-    &.vert {
-      flex-direction: row;
-      img {
-        width: auto;
-        height: 100%;
-      }
-    }
-    &.horz {
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
     &.transition-in {
       opacity: 1;
       transition: @swift-ease-out;
@@ -145,6 +122,7 @@ div.slideshow {
       margin: auto;
       .transition(all linear .1s);
       position: relative;
+      z-index: 2;
     }
   }
 }

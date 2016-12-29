@@ -18,6 +18,12 @@ angular.module 'homemademessClient'
             controller: 'SettingsCtrl'
         }
         {
+          label: 'Search'
+          src: 'search'
+          action: 'go'
+          arg: 'home.search'
+        }
+        {
           label: 'Log Out'
           src:   'exit_to_app'
           action:  'logout'

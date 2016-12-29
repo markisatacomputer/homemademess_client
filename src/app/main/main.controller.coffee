@@ -5,7 +5,9 @@ angular.module 'homemademessClient'
   '$scope', '$state', 'slides', 'map', '$resource', 'lodash', 'apiUrl',
   ($scope, $state, slides, map, $resource, lodash, apiUrl) ->
     # init view
-    $scope.view = slides
+    $scope.view = {}
+    $scope.view.images = slides
+
     # create map with ids as index
     $scope.view.map = map
     # filter

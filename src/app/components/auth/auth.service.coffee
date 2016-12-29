@@ -2,7 +2,13 @@
 
 angular.module 'homemademessClient'
 .factory 'Auth', ($location, $http, User, $cookies, $q, apiUrl) ->
-  currentUser = if $cookies.get 'token' then User.get() else {}
+  currentUser = if $cookies.get 'token' then User.get(
+    {}
+    () ->
+      #console.log 'success'
+    () ->
+      $cookies.remove 'token'
+  ) else {}
 
   ###
   Authenticate user and save token
@@ -17,6 +23,7 @@ angular.module 'homemademessClient'
       password: user.password
 
     .then (res) ->
+      $cookies.remove 'token'
       $cookies.put 'token', res.data.token
       currentUser = User.get()
       callback? res, currentUser

@@ -13,8 +13,8 @@ angular.module 'homemademessClient'
         email: $scope.user.email
         password: $scope.user.password
 
-      .then ->
-        $location.path '/'
+      #.then ->
+        #$location.path '/'
 
       .catch (err) ->
         $scope.errors.other = err.message
