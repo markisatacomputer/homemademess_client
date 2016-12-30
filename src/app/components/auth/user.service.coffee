@@ -2,10 +2,13 @@
 
 angular.module 'homemademessClient'
 .factory 'User', ($resource, apiUrl, $cookies) ->
-  token = $cookies.get 'token'
-  if token
-    headers =
-      'Authorization' : 'Bearer ' + token
+
+  authHeader = (headers) ->
+    token = $cookies.get 'token'
+    if token
+      'Bearer ' + token
+    else
+      ''
 
   $resource apiUrl + '/users/:id/:controller',
     id: '@_id'
@@ -14,11 +17,13 @@ angular.module 'homemademessClient'
       method: 'PUT'
       params:
         controller: 'password'
-      headers: headers
+      headers:
+        'Authorization' : authHeader
 
     get:
       method: 'GET'
       params:
         id: 'me'
-      headers: headers
+      headers:
+        'Authorization' : authHeader
 
