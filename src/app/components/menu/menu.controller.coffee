@@ -5,6 +5,21 @@ angular.module 'homemademessClient'
   menuCtrl = [ '$scope', 'Auth', '$state', '$mdDialog', 'apiUrl',
   ($scope, Auth, $state, $mdDialog, apiUrl) ->
     $scope.menu =
+      common: [
+        {
+          label: 'Search'
+          src: 'search'
+          action: 'go'
+          arg: 'home.search'
+        }
+      ]
+      authCommon: [
+        {
+          label: 'Log Out'
+          src:   'exit_to_app'
+          action:  'logout'
+        }
+      ]
       admin: [
         {
           label: 'Settings'
@@ -17,17 +32,6 @@ angular.module 'homemademessClient'
             templateUrl: '/app/account/settings/settings.html'
             controller: 'SettingsCtrl'
         }
-        {
-          label: 'Search'
-          src: 'search'
-          action: 'go'
-          arg: 'home.search'
-        }
-        {
-          label: 'Log Out'
-          src:   'exit_to_app'
-          action:  'logout'
-        }
       ]
       undefined: [
         {
@@ -38,22 +42,24 @@ angular.module 'homemademessClient'
         }
       ]
 
-    $scope.isLoggedIn = Auth.isLoggedIn
-    $scope.user =Auth.getCurrentUser()
-    $scope.errors = {}
     $scope.menuOpen = false
+
+    $scope.$watch $scope.view.user, (now, old) ->
+      if !angular.equals now, old
+        $scope.menuOpen = true
+        $scope.$digest()
 
     $scope.login = (form) ->
       $scope.submitted = true
       if form.$valid
         # Logged in, redirect to home
         Auth.login
-          email: $scope.user.email
-          password: $scope.user.password
+          email: $scope.view.user.email
+          password: $scope.view.user.password
         .then (user) ->
           $mdDialog.hide()
           $scope.menuOpen = true
-          $scope.user = user
+          $scope.view.user = user
         .catch (err) ->
           $scope.errors.other = err.message
 
@@ -62,7 +68,7 @@ angular.module 'homemademessClient'
 
     $scope.logout = ->
       Auth.logout()
-      $scope.user = {}
+      $scope.view.user = {}
 
     $scope.loginDialog = () ->
       $mdDialog.show {
@@ -72,6 +78,11 @@ angular.module 'homemademessClient'
         templateUrl: '/app/account/login/login.html'
         controller: ($scope, $mdDialog) ->
       }
+
+    $scope.getMenu = ->
+      menu = $scope.menu[$scope.view.user.role].concat $scope.menu['common']
+      if $scope.view.user.role? then menu = menu.concat $scope.menu['authCommon']
+      menu
 
     $scope.go = (there) ->
       $state.go there

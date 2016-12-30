@@ -24,6 +24,8 @@ angular.module 'homemademessClient'
               s.data.images
           map: (slides, lodash) ->
             lodash.indexBy slides, '_id'
+          user: (Auth) ->
+            Auth.getCurrentUser()
       .state 'home.slideshow',
         url: 'slide/'
         component: 'slideshow'

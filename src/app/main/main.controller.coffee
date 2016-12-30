@@ -2,14 +2,18 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$state', 'slides', 'map', '$resource', 'lodash', 'apiUrl',
-  ($scope, $state, slides, map, $resource, lodash, apiUrl) ->
+  '$scope', '$state', 'slides', 'map', 'user', '$resource', 'lodash', 'apiUrl',
+  ($scope, $state, slides, map, user, $resource, lodash, apiUrl) ->
     # init view
     $scope.view = {}
     $scope.view.images = slides
 
     # create map with ids as index
     $scope.view.map = map
+
+    # add user
+    $scope.view.user = user
+
     # filter
     $scope.view.filter =
       tag:
