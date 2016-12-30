@@ -2,7 +2,6 @@
 
 angular.module 'homemademessClient'
 .controller 'LoginCtrl', ($scope, Auth, $location, $window, apiUrl) ->
-  $scope.user = {}
   $scope.errors = {}
   $scope.login = (form) ->
     $scope.submitted = true
@@ -10,11 +9,11 @@ angular.module 'homemademessClient'
     if form.$valid
       # Logged in, redirect to home
       Auth.login
-        email: $scope.user.email
-        password: $scope.user.password
+        email: $scope.view.user.email
+        password: $scope.view.user.password
 
-      #.then ->
-        #$location.path '/'
+      .then (u)->
+        console.log u, $scope.view.user
 
       .catch (err) ->
         $scope.errors.other = err.message
