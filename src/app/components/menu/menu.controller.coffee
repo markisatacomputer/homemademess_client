@@ -7,10 +7,16 @@ angular.module 'homemademessClient'
     $scope.menu =
       common: [
         {
-          label: 'Search'
-          src: 'search'
+          label: 'Home'
+          src: 'party_mode'
           action: 'go'
-          arg: 'home.search'
+          arg: 'home'
+        }
+        {
+          label: 'Filter'
+          src: 'filter_list'
+          action: 'go'
+          arg: 'home.showFilters'
         }
       ]
       authCommon: [
@@ -44,8 +50,8 @@ angular.module 'homemademessClient'
 
     $scope.menuOpen = false
 
-    $scope.$watch $scope.view.user, (now, old) ->
-      if !angular.equals now, old
+    $scope.$watch $scope.view.user, (now, old, equals) ->
+      if !equals
         $scope.menuOpen = true
         $scope.$digest()
 
@@ -80,7 +86,7 @@ angular.module 'homemademessClient'
       }
 
     $scope.getMenu = ->
-      menu = $scope.menu[$scope.view.user.role].concat $scope.menu['common']
+      menu = $scope.menu['common'].concat $scope.menu[$scope.view.user.role]
       if $scope.view.user.role? then menu = menu.concat $scope.menu['authCommon']
       menu
 
