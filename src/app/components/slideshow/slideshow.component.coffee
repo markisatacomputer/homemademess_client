@@ -1,7 +1,7 @@
 'use strict'
 
 class SlideshowCtrl
-  constructor: ($state, $document, debounce, $location) ->
+  constructor: ($state, $document, debounce, $location, $element) ->
     this.$state = $state
     this.$document = $document
     this.debounce = debounce
@@ -41,7 +41,16 @@ class SlideshowCtrl
         ctrl.showClose()
     , bounce, false
 
-  # bind keyboard events to navigation
+  $onDestroy: () ->
+    angular.element document.querySelector 'body'
+    .removeClass 'slideshow'
+    # remove click listener
+    angular.element document.querySelector 'slideshow'
+    .off 'click'
+    # unbind keyboard
+    this.$document.off 'keyup'
+
+  # slideshow navigation
   showChange: (e, n)->
     if this.slides?
       switch e

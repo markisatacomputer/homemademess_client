@@ -2,8 +2,8 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$state', 'slides', 'map', 'user', '$resource', 'lodash', 'apiUrl',
-  ($scope, $state, slides, map, user, $resource, lodash, apiUrl) ->
+  '$scope', '$state', 'slides', 'map', 'user', 'tags', '$resource', 'lodash', 'apiUrl',
+  ($scope, $state, slides, map, user, tags, $resource, lodash, apiUrl) ->
     # init view
     $scope.view = {}
     $scope.view.images = slides
@@ -14,10 +14,11 @@ angular.module 'homemademessClient'
     # add user
     $scope.view.user = user
 
+
     # filter
     $scope.view.filter =
       tag:
-        tags: []
+        tags: tags
         logic: ['and', 'or', 'not']
         operator: 'and'
       date:
@@ -34,6 +35,7 @@ angular.module 'homemademessClient'
     $scope.$watchCollection 'view.filter.tag.tags', (newTags) ->
       Images.get { tags: mapTags newTags, logic: $scope.view.filter.tag.operator }, (result) ->
         $scope.view.images = result.images
+        $scope.view.map = lodash.indexBy result.images, '_id'
         $scope.view.tags = result.tags
 
     # broadcast view content complete for child directives

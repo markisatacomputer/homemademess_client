@@ -1,6 +1,6 @@
 div.searchy
   div#search
-    tags-input(ng-model="view.filter.tag.tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false")
+    tags-input(ng-model="view.filter.tag.tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false" add-on-enter="false" on-tag-removed="ragRemoved($tag)")
       auto-complete(source="findTags($query)" min-length="1" template="result-temp.html")
 
     script(type="text/ng-template" id="tag-temp.html")

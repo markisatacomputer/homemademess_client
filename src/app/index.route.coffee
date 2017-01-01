@@ -2,19 +2,9 @@ angular.module 'homemademessClient'
   .config ($stateProvider, $urlRouterProvider) ->
     'ngInject'
 
-    slideshowExit = ($transition$, $document, $rootScope) ->
-      if $transition$.to().name.indexOf('slide') is -1 and angular.element(document.querySelector('body')).hasClass 'slideshow'
-        angular.element document.querySelector 'body'
-        .removeClass 'slideshow'
-        # remove click listener
-        angular.element document.querySelector '.slideshow'
-        .off 'click'
-        # unbind keyboard
-        $document.off 'keyup'
-
     $stateProvider
       .state 'home',
-        url: '/'
+        url: '/?{tags}&{page:int}'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
         resolve:
@@ -26,17 +16,37 @@ angular.module 'homemademessClient'
             lodash.indexBy slides, '_id'
           user: (Auth) ->
             Auth.getCurrentUser()
+          tags: ($location, $http, apiUrl) ->
+            tags = $location.search().tags
+            if tags != undefined
+              $http.get apiUrl + '/tags?text='  + tags
+              .then (tags) ->
+                tags.data
+              , (e) ->
+                console.log e
+                []
+            else
+              []
+        params:
+          tags:
+            dynamic: true
+          page:
+            dynamic: true
+      .state 'home.showFilters',
+        views:
+          'searchbar@home':
+            templateUrl: 'app/components/searchbar/searchbar.html'
+            controller: 'SearchbarCtrl'
       .state 'home.slideshow',
         url: 'slide/'
-        component: 'slideshow'
-        onExit: slideshowExit
+        views:
+          'slideshow@home':
+            template: '<slideshow map="view.map" slides="view.images" ui-view>'
+            controller: ($scope) ->
+
       .state 'home.slideshow.slide',
         url: ':slide/'
         component: 'slide'
-      .state 'home.search',
-        url: 'search/:tags/'
-        templateUrl: 'app/components/searchbar/searchbar.html'
-        controller: 'SearchCtrl'
       .state 'home.tagged',
         url: 'tagged/:tag/'
         templateUrl: 'app/main/tagged/tagged.html'
@@ -47,14 +57,3 @@ angular.module 'homemademessClient'
         controller: 'slideshowCtrl'
 
     $urlRouterProvider.otherwise '/'
-
-    ###.state 'home.slideshow',
-        url: 'slide/:slide/'
-        component: 'slideshow'
-        onEnter: slideshowEnter
-        onExit: slideshowExit
-        resolve:
-          slideId: ($transition$) ->
-            $transition$.params().slide
-        views:
-          slide: 'slide'###
