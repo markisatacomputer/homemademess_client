@@ -13,6 +13,9 @@ angular.module 'homemademessClient'
     $scope.broadcastLayout = () ->
       $rootScope.$broadcast 'slidesLayout'
 
+    $scope.getLink = (id) ->
+      $state.href $state.$current.name + '.slideshow.slide', {slide: id}
+
     $scope.aspect = (img,n) ->
       #  Get aspect ratio as decimal
       a = Math.round((img.height/img.width)*100)/100

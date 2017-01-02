@@ -2,5 +2,5 @@
   md-grid-list(md-cols-sm='{{cols.sm}}', md-cols-md='{{cols.md}}', md-cols-lg='{{cols.lg}}', md-cols-gt-lg='{{cols.gt}}' md-row-height='1:1', md-gutter="5px", md-on-layout="broadcastLayout()")
     md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}')
       div.img-container
-        a(ui-sref='.slideshow.slide({slide: image._id})')
+        a(ng-href='{{getLink(image._id)}}' )
           img.img-responsive(ng-src='{{image.derivative[derivative].uri}}')

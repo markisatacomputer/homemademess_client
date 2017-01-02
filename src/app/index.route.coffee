@@ -52,8 +52,12 @@ angular.module 'homemademessClient'
         templateUrl: 'app/main/tagged/tagged.html'
         controller: 'TaggedCtrl'
       .state 'home.tagged.slideshow',
-        url: 'slide/:slide/'
-        templateUrl: 'app/components/slideshow/slideshow.html'
-        controller: 'slideshowCtrl'
+        url: 'slide/'
+        views:
+          'slideshow@home':
+            template: '<slideshow map="view.map" slides="view.images" ui-view>'
+      .state 'home.tagged.slideshow.slide',
+        url: ':slide/'
+        component: 'slide'
 
     $urlRouterProvider.otherwise '/'
