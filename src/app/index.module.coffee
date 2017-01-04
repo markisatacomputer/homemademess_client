@@ -9,6 +9,3 @@ angular.module 'homemademessClient', [
   'ngLodash'
   'debounce'
 ]
-.filter 'taglink', () ->
-  (input) ->
-    input.replace /\s/g, '_'

@@ -1,13 +1,17 @@
 'use strict'
 
 class SlideshowCtrl
-  constructor: ($state, $document, debounce, $location, $element) ->
+  constructor: ($state, $document, debounce, $stateParams, $element, lodash) ->
     this.$state = $state
     this.$document = $document
     this.debounce = debounce
-    this.location = $location
+    this.stateParams = $stateParams
+    this.lodash = lodash
 
   $onInit: () ->
+    #init map
+    this.map = this.lodash.indexBy this.slides, '_id'
+
     ctrl = this   # for inside debounce functions
     bounce = 400  # debounce in ms
 
@@ -21,7 +25,7 @@ class SlideshowCtrl
     .on 'keyup', this.debounce (e) ->
       if !ctrl.$state.transition?
         if [39,37,38,40,27].indexOf e.which != -1
-          n = ctrl.uriSlideIdToN ctrl.location.$$path
+          n = ctrl.map[ctrl.stateParams.slide].n
           if n?
             switch e.which
               when 39 then ctrl.showChange 'slideright', n
@@ -39,7 +43,7 @@ class SlideshowCtrl
       .hasClass 'close-slide'
       if test
         ctrl.showClose()
-    , bounce, false
+    , bounce, true
 
   $onDestroy: () ->
     angular.element document.querySelector 'body'
@@ -66,15 +70,9 @@ class SlideshowCtrl
   showClose: (e)->
     this.$state.go '^.^'
 
-  uriSlideIdToN: () ->
-    match = this.location.$$path.match( /\/slide\/([0-9a-zA-Z]*)\// ).pop()
-    if this.map[match]?.n?
-      this.map[match].n
-
 angular.module 'homemademessClient'
 .component 'slideshow',
   bindings:
     slides: '<'
-    map: '<'
   templateUrl: 'app/components/slideshow/slideshow.html'
   controller: SlideshowCtrl

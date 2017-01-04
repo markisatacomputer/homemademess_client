@@ -5,7 +5,7 @@ angular.module 'homemademessClient'
   menuCtrl = [ '$scope', 'Auth', '$state', '$mdDialog', 'apiUrl',
   ($scope, Auth, $state, $mdDialog, apiUrl) ->
     $scope.menu =
-      common: [
+      [
         {
           label: 'Home'
           src: 'party_mode'
@@ -15,18 +15,14 @@ angular.module 'homemademessClient'
         {
           label: 'Filter'
           src: 'filter_list'
-          action: 'go'
-          arg: 'home.showFilters'
+          action: 'toggle'
+          arg: 'showFilters'
         }
-      ]
-      authCommon: [
         {
           label: 'Log Out'
           src:   'exit_to_app'
           action:  'logout'
         }
-      ]
-      admin: [
         {
           label: 'Settings'
           src:   'settings'
@@ -38,22 +34,24 @@ angular.module 'homemademessClient'
             templateUrl: '/app/account/settings/settings.html'
             controller: 'SettingsCtrl'
         }
-      ]
-      undefined: [
         {
           label: 'Log In'
           src:   'vpn_key'
-          action: 'loginDialog'
-          arg:  ''
+          action: 'dialog'
+          arg:
+            clickOutsideToClose: true
+            scope: $scope
+            preserveScope: true
+            templateUrl: '/app/account/login/login.html'
+            controller: ($scope, $mdDialog) ->
         }
       ]
 
     $scope.menuOpen = false
 
-    $scope.$watch $scope.view.user, (now, old, equals) ->
-      if !equals
+    $scope.$watch $scope.view.user, (now, old) ->
+      if angular.equals now, old
         $scope.menuOpen = true
-        $scope.$digest()
 
     $scope.login = (form) ->
       $scope.submitted = true
@@ -76,25 +74,19 @@ angular.module 'homemademessClient'
       Auth.logout()
       $scope.view.user = {}
 
-    $scope.loginDialog = () ->
-      $mdDialog.show {
-        clickOutsideToClose: true
-        scope: $scope
-        preserveScope: true
-        templateUrl: '/app/account/login/login.html'
-        controller: ($scope, $mdDialog) ->
-      }
-
     $scope.getMenu = ->
-      menu = $scope.menu['common'].concat $scope.menu[$scope.view.user.role]
-      if $scope.view.user.role? then menu = menu.concat $scope.menu['authCommon']
-      menu
+      #menu = $scope.menu['common'].concat $scope.menu[$scope.view.user.role]
+      #if $scope.view.user.role? then menu = menu.concat $scope.menu['authCommon']
+      $scope.menu
 
     $scope.go = (there) ->
       $state.go there
 
     $scope.dialog = (args) ->
       $mdDialog.show args
+
+    $scope.toggle = (it) ->
+      $scope[it] = !$scope[it]
 
   ]
   directive =

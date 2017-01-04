@@ -4,27 +4,21 @@ angular.module 'homemademessClient'
 
     $stateProvider
       .state 'home',
-        url: '/?{tags}&{page:int}'
+        url: '/?{tags}&{page:int}&{per:int}'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
         resolve:
-          slides: ($http, apiUrl) ->
-            $http.get apiUrl + '/images'
-            .then (s)->
-              s.data.images
-          map: (slides, lodash) ->
-            lodash.indexBy slides, '_id'
+          view: (Slides) ->
+            Slides.get {},
+              (s) ->
+                s.data
           user: (Auth) ->
             Auth.getCurrentUser()
-          tags: ($location, $http, apiUrl) ->
-            tags = $location.search().tags
-            if tags != undefined
-              $http.get apiUrl + '/tags?text='  + tags
-              .then (tags) ->
-                tags.data
-              , (e) ->
-                console.log e
-                []
+          tgs: (Tags, $location) ->
+            if $location.search().tags?
+              Tags.get {},
+                (t) ->
+                  t
             else
               []
         params:
@@ -32,31 +26,37 @@ angular.module 'homemademessClient'
             dynamic: true
           page:
             dynamic: true
-      .state 'home.showFilters',
-        views:
-          'searchbar@home':
-            templateUrl: 'app/components/searchbar/searchbar.html'
-            controller: 'SearchbarCtrl'
       .state 'home.slideshow',
         url: 'slide/'
         views:
           'slideshow@home':
-            template: '<slideshow map="view.map" slides="view.images" ui-view>'
+            template: '<slideshow slides="view.images" ui-view>'
             controller: ($scope) ->
 
       .state 'home.slideshow.slide',
         url: ':slide/'
         component: 'slide'
-      .state 'home.tagged',
-        url: 'tagged/:tag/'
-        templateUrl: 'app/main/tagged/tagged.html'
+      .state 'tagged',
+        url: '/tagged/:tag/'
+        templateUrl: 'app/tagged/tagged.html'
         controller: 'TaggedCtrl'
-      .state 'home.tagged.slideshow',
+        resolve:
+          view: (Slides, $transition$) ->
+            Slides.get {tagtext: $transition$.params().tag},
+              (s) ->
+                s.data
+          user: (Auth) ->
+            Auth.getCurrentUser()
+          tag: (Tags, $transition$) ->
+            Tags.get {text: $transition$.params().tag},
+              (t) ->
+                t.data
+      .state 'tagged.slideshow',
         url: 'slide/'
         views:
-          'slideshow@home':
-            template: '<slideshow map="view.map" slides="view.images" ui-view>'
-      .state 'home.tagged.slideshow.slide',
+          'slideshow@tagged':
+            template: '<slideshow slides="view.images" ui-view>'
+      .state 'tagged.slideshow.slide',
         url: ':slide/'
         component: 'slide'
 

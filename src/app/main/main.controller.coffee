@@ -2,43 +2,32 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$state', 'slides', 'map', 'user', 'tags', '$resource', 'lodash', 'apiUrl',
-  ($scope, $state, slides, map, user, tags, $resource, lodash, apiUrl) ->
+  '$scope', '$location', 'view', 'user', 'tgs', 'Slides', 'Tags',
+  ($scope, $location, view, user, tgs, Slides, Tags) ->
     # init view
-    $scope.view = {}
-    $scope.view.images = slides
-
-    # create map with ids as index
-    $scope.view.map = map
-
+    $scope.view = view
     # add user
     $scope.view.user = user
+    # filters start hidden
+    $scope.showFilters = false
+    # populate tags for searchbar
+    $scope.tags = tgs
 
 
-    # filter
-    $scope.view.filter =
-      tag:
-        tags: tags
-        logic: ['and', 'or', 'not']
-        operator: 'and'
-      date:
-        max: 0
-        min: 0
-
-    #  Map tags to simple array
-    mapTags = (tags) ->
-      # return an array of unique values
-      lodash.uniq lodash.map tags, '_id'
-
-    #  Action to take when tags change
-    Images = $resource apiUrl + '/images'
-    $scope.$watchCollection 'view.filter.tag.tags', (newTags) ->
-      Images.get { tags: mapTags newTags, logic: $scope.view.filter.tag.operator }, (result) ->
-        $scope.view.images = result.images
-        $scope.view.map = lodash.indexBy result.images, '_id'
-        $scope.view.tags = result.tags
-
-    # broadcast view content complete for child directives
-    $scope.$on '$viewContentLoaded', (event) ->
-      $scope.$broadcast 'viewInit', $state.params
+    #  watch query params
+    $scope.$watch () ->
+      $location.search()
+    , (newSearch, oldSearch) ->
+      if !angular.equals newSearch, oldSearch
+        Slides.get {},
+          (s) ->
+            $scope.view = s
+          (e) ->
+            console.log e
+        if $location.search().tags?
+          Tags.get {},
+            (t) ->
+              $scope.tags = t
+            (e) ->
+              console.log e
 ]
