@@ -1,0 +1,22 @@
+pager {
+  position: fixed;
+  bottom: 8%;
+  width: 100%;
+  div {
+    position: absolute;
+    max-width: 40%;
+    a {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    &.previous {
+      left: 1.5em;
+    }
+    &.next {
+      right: 1.5em;
+    }
+  }
+}

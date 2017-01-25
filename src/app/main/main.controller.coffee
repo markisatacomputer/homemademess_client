@@ -48,7 +48,6 @@ angular.module 'homemademessClient'
     # recieve new filters from componenet
     $scope.recieveFilter = (filter) ->
       oldFilter = angular.copy $scope.view.filter
-      console.log filter, oldFilter, angular.equals(angular.toJson(filter), angular.toJson(oldFilter))
       # check for change - and update view
       if !angular.equals(angular.toJson(filter), angular.toJson(oldFilter))
         # update slides
