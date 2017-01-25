@@ -16,7 +16,7 @@ angular.module 'homemademessClient'
           user: (Auth) ->
             Auth.getCurrentUser().$promise
           tgs: (Tags, $location) ->
-            if $location.search().tags?
+            if $location.search().tagtext?
               Tags.get {},
                 (t) ->
                   t

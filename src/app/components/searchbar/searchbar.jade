@@ -1,7 +1,7 @@
 div.searchy
   div#search
-    tags-input(ng-model="tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false" add-on-enter="false" on-tag-removed="updateTagParam($tag)" on-tag-added="updateTagParam($tag)")
-      auto-complete(source="findTags($query)" min-length="1" template="result-temp.html")
+    tags-input(ng-model="$ctrl.filter.tag.tags", template="tag-temp.html", title="Tags", placeholder="search by tag", replace-spaces-with-dashes="false" add-on-enter="false" on-tag-removed="$ctrl.updateTags($tag)" on-tag-added="$ctrl.updateTags($tag)")
+      auto-complete(source="$ctrl.findTags($query)" min-length="1" template="result-temp.html")
 
     script(type="text/ng-template" id="tag-temp.html")
       span

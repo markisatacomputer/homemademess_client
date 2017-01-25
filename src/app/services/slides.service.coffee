@@ -21,7 +21,7 @@ angular.module 'homemademessClient'
     per:     ()->
       getParam 'per',  60
     tagtext: ()->
-      getParam 'tags'
+      getParam 'tagtext'
   ,
     #  our only method for the moment
     get:

@@ -6,8 +6,8 @@ angular.module 'homemademessClient'
   #  get query param and return value -> default value -> null
   getTags = () ->
     filter = $location.search()
-    if filter.tags?
-      filter.tags
+    if filter.tagtext?
+      filter.tagtext
     else
       []
 

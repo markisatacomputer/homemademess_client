@@ -2,13 +2,15 @@
 
   div(ui-view)
 
-  searchbar(ng-show="showFilters")
+  searchbar(ng-show="showFilters" filter="view.filter"  on-update="recieveFilter(filter)")
 
   div(ui-view="slideshow")
 
   menu
 
   slides
+
+  pager(filter="view.filter" on-update="recieveFilter(filter)")
 
   footer.footer
     .container
