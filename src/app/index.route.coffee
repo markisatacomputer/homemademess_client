@@ -12,13 +12,15 @@ angular.module 'homemademessClient'
             Slides.get {},
               (s) ->
                 s.data
+            .$promise
           user: (Auth) ->
-            Auth.getCurrentUser()
+            Auth.getCurrentUser().$promise
           tgs: (Tags, $location) ->
             if $location.search().tags?
               Tags.get {},
                 (t) ->
                   t
+              .$promise
             else
               []
         params:
@@ -45,12 +47,14 @@ angular.module 'homemademessClient'
             Slides.get {tagtext: $transition$.params().tag},
               (s) ->
                 s.data
+            .$promise
           user: (Auth) ->
-            Auth.getCurrentUser()
+            Auth.getCurrentUser().$promise
           tag: (Tags, $transition$) ->
             Tags.get {text: $transition$.params().tag},
               (t) ->
                 t.data
+            .$promise
       .state 'tagged.slideshow',
         url: 'slide/'
         views:
