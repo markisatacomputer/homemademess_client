@@ -50,6 +50,8 @@ angular.module 'homemademessClient'
       oldFilter = angular.copy $scope.view.filter
       # check for change - and update view
       if !angular.equals(angular.toJson(filter), angular.toJson(oldFilter))
+        # make sure to start on page one
+        filter.pagination.page = 0
         # update slides
         updateView filter
         # update params
