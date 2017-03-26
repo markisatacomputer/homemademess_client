@@ -16,9 +16,12 @@ angular.module 'homemademessClient'
     $scope.getLink = (id) ->
       $state.href $state.$current.name + '.slideshow.slide', {slide: id}
 
-    $scope.aspect = (img,n) ->
+    ratio = (img) ->
       #  Get aspect ratio as decimal
-      a = Math.round((img.height/img.width)*100)/100
+      Math.round((img.height/img.width)*100)/100
+
+    $scope.aspect = (img,n) ->
+      a = ratio img
       #  Set columns/rows
       columns = switch
         #  If pano span page width
@@ -43,6 +46,10 @@ angular.module 'homemademessClient'
       rows = Math.round columns*a
       aspect = [columns, rows]
       aspect[n]
+
+    $scope.clss = (img) ->
+      a = ratio img
+      clss = if a>1 then "vertical" else if a<1 then "horizontal" else if a==1 then "square"
   ]
   directive =
     restrict: 'E'
