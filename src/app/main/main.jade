@@ -6,7 +6,9 @@
 
   div(ui-view="slideshow")
 
-  menu
+  menu(user="view.user" on-update="recieveMenuAction(action)")
+
+  menu-action(action="action" scope="{showFilters: showFilters}" on-update="recieveScope(name, value)")
 
   slides
 

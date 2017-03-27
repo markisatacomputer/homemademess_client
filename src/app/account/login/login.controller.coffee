@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.controller 'LoginCtrl', ($scope, Auth, $location, $window, apiUrl) ->
+.controller 'LoginCtrl', ($scope, Auth, $location, $window, apiUrl, $mdDialog) ->
   $scope.errors = {}
   $scope.login = (form) ->
     $scope.submitted = true
@@ -13,7 +13,8 @@ angular.module 'homemademessClient'
         password: $scope.view.user.password
 
       .then (u)->
-        console.log u, $scope.view.user
+        $scope.view.user = u
+        $mdDialog.hide()
 
       .catch (err) ->
         $scope.errors.other = err.message

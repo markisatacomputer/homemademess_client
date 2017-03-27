@@ -13,6 +13,7 @@ angular.module 'homemademessClient'
     # populate tags for searchbar
     $scope.view.filter.tag.tags = tgs
 
+
     #  set slides to fit filter
     updateView = (filter) ->
       params = getParamsObject filter
@@ -74,4 +75,19 @@ angular.module 'homemademessClient'
               $scope.view.filter.tag.tags = t
             (e) ->
               console.log e
+
+    $scope.recieveScope = (name, value) ->
+      $scope[name] = value
+
+    # react to menu action
+    $scope.recieveMenuAction = (action) ->
+      $scope.action = action
+      ###
+      if $scope.action == action
+        $scope.$apply()
+      else
+        $scope.action = action
+      ###
+
+
 ]
