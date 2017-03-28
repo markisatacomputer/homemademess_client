@@ -1,10 +1,12 @@
 'use strict'
 
 class MenuCtrl
-  constructor: (lodash, $state, $scope) ->
+  constructor: (lodash, $state, $scope, Auth, $mdDialog) ->
     this.lodash = lodash
     this.$state = $state
     this.$scope = $scope
+    this.Auth = Auth
+    this.$mdDialog = $mdDialog
     this.menuOpen = false
     this.menu = []
     this.menuItems =
@@ -78,10 +80,31 @@ class MenuCtrl
         i = ctrl.lodash.intersection item.states, ctrl.lodash.words ctrl.$state.current.name
         i.length
 
+  #  here's where the action is - ba dum dum
+  act: (action) ->
+    ctrl = this
+    switch action
+      when 'showFilters'
+        ctrl.onBroadcastAction
+          action:
+            function: 'toggle'
+            arg: 'showFilters'
+      when 'login' then ctrl.$mdDialog.show
+        clickOutsideToClose: true
+        templateUrl: '/app/account/login/login.html'
+        controller: 'LoginCtrl'
+      when 'logout' then ctrl.Auth.logout()
+      when 'home' then ctrl.$state.go 'home'
+      when 'settings' then ctrl.$mdDialog.show
+        clickOutsideToClose: true
+        templateUrl: '/app/account/settings/settings.html'
+        controller: 'SettingsCtrl'
+
 angular.module 'homemademessClient'
 .component 'menu',
   bindings:
     user: '<'
-    onUpdate: '&'
+    onUpdateScope: '&'
+    onBroadcastAction: '&'
   templateUrl: 'app/components/menu/menu.html'
   controller: MenuCtrl

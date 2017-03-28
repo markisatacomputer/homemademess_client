@@ -76,18 +76,20 @@ angular.module 'homemademessClient'
             (e) ->
               console.log e
 
-    $scope.recieveScope = (name, value) ->
-      $scope[name] = value
+    #  listen for user authorization events
+    $scope.$on 'userAuth', (e, user) ->
+      $scope.view.user = user
 
     # react to menu action
     $scope.recieveMenuAction = (action) ->
-      $scope.action = action
-      ###
-      if $scope.action == action
-        $scope.$apply()
-      else
-        $scope.action = action
-      ###
+      if (action.hasOwnProperty 'function') and (angular.isFunction $scope[action.function])
+        $scope[action.function] action.arg
 
+    $scope.recieveScopeUpdate = (update) ->
+      if action.hasOwnProperty 'name' and action.hasOwnProperty 'value' and $scope[action.name]?
+        $scope[action.name] = action.value
 
+    $scope.toggle = (val) ->
+      if $scope.hasOwnProperty val
+        $scope[val] = !$scope[val]
 ]

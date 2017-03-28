@@ -2,13 +2,11 @@
 
   div(ui-view)
 
-  searchbar(ng-show="showFilters" filter="view.filter"  on-update="recieveFilter(filter)")
+  searchbar(filter="view.filter"  on-update="recieveFilter(filter)" ng-show="showFilters")
 
   div(ui-view="slideshow")
 
-  menu(user="view.user" on-update="recieveMenuAction(action)")
-
-  menu-action(action="action" scope="{showFilters: showFilters}" on-update="recieveScope(name, value)")
+  menu(user="view.user" on-update-scope="recieveScopeUpdate(update)" on-broadcast-action="recieveMenuAction(action)")
 
   slides
 

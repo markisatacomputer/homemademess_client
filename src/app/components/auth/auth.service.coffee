@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'Auth', ($location, $http, User, $cookies, $q, apiUrl) ->
+.factory 'Auth', ($location, $http, User, $cookies, $q, apiUrl, broadcastService) ->
   currentUser = if $cookies.get 'token' then User.get(
     {}
     () ->
@@ -27,6 +27,7 @@ angular.module 'homemademessClient'
       $cookies.put 'token', res.data.token
       currentUser = User.get()
       callback? res, currentUser
+      broadcastService.send 'userAuth', currentUser
       currentUser
 
     , (err) =>
@@ -42,6 +43,7 @@ angular.module 'homemademessClient'
   logout: ->
     $cookies.remove 'token'
     currentUser = {}
+    broadcastService.send 'userAuth', currentUser
     return
 
 
