@@ -6,7 +6,7 @@ angular.module 'homemademessClient'
 
   # init view
   $scope.view = view
-  $scope.user = user
+  $scope.view.user = user
   $scope.tag = tag  #$stateParams.tag.replace /_/g, ' '
 
 ]

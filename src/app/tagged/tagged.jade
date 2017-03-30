@@ -4,9 +4,11 @@
 
   div(ui-view="slideshow")
 
-  menu
+  menu(user="view.user" on-update-scope="recieveScopeUpdate(update)" on-broadcast-action="recieveMenuAction(action)")
 
   slides
+
+  pager(filter="view.filter" on-update="recieveFilter(filter)")
 
   footer.footer
     .container
