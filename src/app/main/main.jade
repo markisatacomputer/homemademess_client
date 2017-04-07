@@ -6,11 +6,11 @@
 
   div(ui-view="slideshow")
 
-  menu(user="view.user" on-update-scope="recieveScopeUpdate(update)" on-broadcast-action="recieveMenuAction(action)")
+  menu(user="user" on-update-scope="recieveScopeUpdate(update)" on-broadcast-action="recieveMenuAction(action)")
 
   slides
 
-  upload(user="view.user")
+  upload(user="user")
 
   pager(filter="view.filter" on-update="recieveFilter(filter)")
 

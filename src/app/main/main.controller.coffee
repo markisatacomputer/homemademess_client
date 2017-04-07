@@ -7,7 +7,7 @@ angular.module 'homemademessClient'
     # init view
     $scope.view = view
     # add user
-    $scope.view.user = user
+    $scope.user = user
     # filters start hidden
     $scope.showFilters = false
     # populate tags for searchbar
@@ -78,7 +78,7 @@ angular.module 'homemademessClient'
 
     #  listen for user authorization events
     $scope.$on 'userAuth', (e, user) ->
-      $scope.view.user = user
+      $scope.user = user
 
     # react to menu action
     $scope.recieveMenuAction = (action) ->
