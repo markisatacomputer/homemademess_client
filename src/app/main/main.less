@@ -22,6 +22,18 @@ body {
         border-top: 1px solid #E5E5E5;
     }
 }
+
+@dz-highlight-color: rgb(222, 242, 93);
+
+.dz-drag-hover {
+    > div {
+        border: 15px solid @dz-highlight-color;
+        div.container.main {
+            margin: -15px;
+        }
+    }
+}
+
 .md-dialog-is-showing  md-grid-list div.img-container img,
 body.slideshow  md-grid-list div.img-container img {
     opacity: .25;

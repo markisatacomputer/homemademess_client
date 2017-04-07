@@ -1,12 +1,13 @@
 'use strict'
 
 class MenuCtrl
-  constructor: (lodash, $state, $scope, Auth, $mdDialog) ->
+  constructor: (lodash, $state, $scope, Auth, $mdDialog, dropzoneService) ->
     this.lodash = lodash
     this.$state = $state
     this.$scope = $scope
     this.Auth = Auth
     this.$mdDialog = $mdDialog
+    this.dropzoneService = dropzoneService
     this.menuOpen = false
     this.menu = []
     this.menuItems =
@@ -24,6 +25,13 @@ class MenuCtrl
           action: 'showFilters'
           states: ['home']
           roles: ['anon','admin','download']
+        }
+        {
+          label: 'Upload'
+          src: 'backup'
+          action: 'toggleUpload'
+          states: ['home']
+          roles: ['admin']
         }
         {
           label: 'Settings'
@@ -89,6 +97,8 @@ class MenuCtrl
           action:
             function: 'toggle'
             arg: 'showFilters'
+      when 'toggleUpload'
+        this.dropzoneService.toggle()
       when 'login' then ctrl.$mdDialog.show
         clickOutsideToClose: true
         templateUrl: '/app/account/login/login.html'

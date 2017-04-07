@@ -8,4 +8,6 @@ angular.module 'homemademessClient', [
   'hmTouchEvents'
   'ngLodash'
   'debounce'
+  'oc.lazyLoad'
+  'btford.socket-io'
 ]
