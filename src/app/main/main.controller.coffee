@@ -80,6 +80,10 @@ angular.module 'homemademessClient'
     $scope.$on 'userAuth', (e, user) ->
       $scope.user = user
 
+    $scope.$on 'dropzone.success', (e, f) ->
+      #angular.element(f.previewElement).remove()
+      console.log f
+
     # react to menu action
     $scope.recieveMenuAction = (action) ->
       if (action.hasOwnProperty 'function') and (angular.isFunction $scope[action.function])

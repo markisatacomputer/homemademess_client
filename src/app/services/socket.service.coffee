@@ -1,22 +1,71 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'socketService', (socketFactory, apiUrl, $ocLazyLoad, $rootScope) ->
+.factory 'socketService', (socketFactory, apiUrl, Auth, $ocLazyLoad, broadcastService, $q) ->
 
-  $rootScope.$on 'ocLazyLoad.fileLoaded', (e, file) ->
-    console.log file, e
+  getIO: () ->
+    socketService = this
+    $q (resolve, reject) ->
+      if socketService.io?
+        resolve socketService.io
+      else
+        $ocLazyLoad.load apiUrl + '/socket.io-client/socket.io.js'
+        .then () ->
+          socketService.io = io
+          resolve io
+        , (e) ->
+          reject e
 
-    # socket.io now auto-configures its connection when we omit a connection url
-    ioSocket = io '',
-      # Send auth token on connection, you will need to DI the Auth service above
-      # 'query': 'token=' + Auth.getToken()
-      path: apiUrl + '/socket.io-client'
+  getSocket: () ->
+    socketService = this
+    $q (resolve, reject) ->
+      if socketService.socket?
+        resolve socketService.socket
+      else
+        socketService.getIO().then (ioc) ->
+          ioSocket = ioc apiUrl,
+            query: 'token=' + Auth.getToken() # Send auth token on connection
+            path: '/socket.io-client'
 
-    socket = socketFactory ioSocket: ioSocket
+          ioSocket.on 'connect', ->
+            socketService.sock = socketFactory ioSocket: ioSocket
+            broadcastService.send 'socket.init', ioSocket
+            resolve socketService.socket
+        , (e) ->
+          broadcastService.send 'socket.init error', e
+          reject e
 
-    socket: socket
+  getSocketBindings: (sock) ->
+    socketService = this
+    ###
+    sock.on 'connect', ->
+      socketService.socket = socketFactory ioSocket: ioSocket
+      broadcastService.send 'socket.init', ioSocket
+      resolve socketService.socket
+    ###
 
-  $ocLazyLoad.load apiUrl + '/socket.io-client/socket.io.js'
+  init: () ->
+    socketService = this
+    $q (resolve, reject) ->
+      socketService.getSocket().then (sock) ->
+        console.log sock, socketService.socket
+        resolve sock
+      , (e) ->
+        reject e
+
+  destroy: () ->
+    if this.socket?.close?
+      this.socket.close()
+      this.socket = undefined
+      broadcastService.send 'socket.close'
+
+  registerListener: (name, func) ->
+    this.socket.on name, func
+
+  broadcastEvent: (name) ->
+    this.socket.on name, (data) ->
+      broadcastService.send name, data
+
 
   ###
   Register listeners to sync an array with updates on a model
@@ -33,7 +82,7 @@ angular.module 'homemademessClient'
     ###
     Syncs item creation/updates on 'model:save'
     ###
-    socket.on modelName + ':save', (item) ->
+    this.socket.on modelName + ':save', (item) ->
       oldItem = _.find array,
         _id: item._id
 
@@ -53,7 +102,7 @@ angular.module 'homemademessClient'
     ###
     Syncs removed items on 'model:remove'
     ###
-    socket.on modelName + ':remove', (item) ->
+    this.socket.on modelName + ':remove', (item) ->
       event = 'deleted'
       _.remove array,
         _id: item._id
@@ -75,7 +124,7 @@ angular.module 'homemademessClient'
     ###
     Syncs item creation/updates on 'model:save'
     ###
-    socket.on modelName + ':save', (item) ->
+    this.socket.on modelName + ':save', (item) ->
 
       console.log ':save', item
       # replace oldItem if it exists
@@ -91,7 +140,7 @@ angular.module 'homemademessClient'
     ###
     Syncs removed items on 'model:remove'
     ###
-    socket.on modelName + ':remove', (item) ->
+    this.socket.on modelName + ':remove', (item) ->
       event = 'deleted'
       delete obj[item._id]
 
@@ -103,5 +152,5 @@ angular.module 'homemademessClient'
   @param modelName
   ###
   unsyncUpdates: (modelName) ->
-    socket.removeAllListeners modelName + ':save'
-    socket.removeAllListeners modelName + ':remove'
+    this.socket.removeAllListeners modelName + ':save'
+    this.socket.removeAllListeners modelName + ':remove'
