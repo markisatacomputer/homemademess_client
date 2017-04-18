@@ -46,22 +46,37 @@ angular.module 'homemademessClient'
         param += val.replace /\s/g, '_'
       param
 
+    #  test object equality
+    testEquality = (obj, obj2) ->
+      if !angular.equals(angular.toJson(obj), angular.toJson(obj2))
+        false
+      else
+        true
+
     # recieve new filters from componenet
     $scope.recieveFilter = (filter) ->
       oldFilter = angular.copy $scope.view.filter
       # check for change - and update view
-      if !angular.equals(angular.toJson(filter), angular.toJson(oldFilter))
+      if !testEquality filter, oldFilter
         # make sure to start on page one IF filter outside of pagination has changed...
         filterCopy = angular.copy filter
         delete filterCopy.pagination
         oldFilterCopy = angular.copy oldFilter
         delete oldFilterCopy.pagination
-        if !angular.equals(angular.toJson(filterCopy), angular.toJson(oldFilterCopy))
+        if !testEquality filterCopy, oldFilterCopy
           filter.pagination.page = 0
         # update slides
         updateView filter
         # update params
         updateParams filter
+
+    $scope.recieveView = (view) ->
+      console.log view
+      oldView = angular.copy $scope.view
+      # check for change - and update view
+      if !testEquality view, oldView
+        console.log view
+        $scope.view = view
 
     #  watch query params
     $scope.$watch () ->
@@ -78,11 +93,8 @@ angular.module 'homemademessClient'
 
     #  listen for user authorization events
     $scope.$on 'userAuth', (e, user) ->
-      $scope.user = user
-
-    $scope.$on 'dropzone.success', (e, f) ->
-      #angular.element(f.previewElement).remove()
-      console.log f
+      if !testEquality user, $scope.user
+        $scope.user = user
 
     # react to menu action
     $scope.recieveMenuAction = (action) ->

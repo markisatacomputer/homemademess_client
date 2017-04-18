@@ -8,7 +8,6 @@ angular.module 'homemademessClient'
       url: apiUrl + '/up'
       headers:
         "Test-Header": "This is a test."
-      createImageThumbnails: false
       autoProcessQueue: true
       previewsContainer: 'upload-info'
       init: () ->
@@ -17,7 +16,7 @@ angular.module 'homemademessClient'
         this.on 'addedfile', (f) ->
           broadcastService.send 'dropzone.addedfile', f
         this.on 'success', (f, res) ->
-          broadcastService.send 'dropzone.success', f
+          broadcastService.send 'dropzone.success', {file: f, res: res}
         this.on 'error', (f, msg) ->
           console.log 'error', f, msg
           broadcastService.send 'dropzone.error', f

@@ -28,7 +28,7 @@ angular.module 'homemademessClient'
             path: '/socket.io-client'
 
           ioSocket.on 'connect', ->
-            socketService.sock = socketFactory ioSocket: ioSocket
+            socketService.socket = socketFactory ioSocket: ioSocket
             broadcastService.send 'socket.init', ioSocket
             resolve socketService.socket
         , (e) ->
@@ -48,7 +48,6 @@ angular.module 'homemademessClient'
     socketService = this
     $q (resolve, reject) ->
       socketService.getSocket().then (sock) ->
-        console.log sock, socketService.socket
         resolve sock
       , (e) ->
         reject e

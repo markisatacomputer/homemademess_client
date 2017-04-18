@@ -10,7 +10,7 @@
 
   slides
 
-  admin(user="user")
+  admin(user="user" view="view" on-update="recieveView(view)")
 
   pager(filter="view.filter" on-update="recieveFilter(filter)")
 
