@@ -2,8 +2,8 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$location', 'view', 'user', 'tgs', 'Slides', 'Tags',
-  ($scope, $location, view, user, tgs, Slides, Tags) ->
+  '$scope', '$location', '$window', 'view', 'user', 'tgs', 'Slides', 'Tags',
+  ($scope, $location, $window, view, user, tgs, Slides, Tags) ->
     # init view
     $scope.view = view
     # add user
@@ -56,15 +56,19 @@ angular.module 'homemademessClient'
     # recieve new filters from componenet
     $scope.recieveFilter = (filter) ->
       oldFilter = angular.copy $scope.view.filter
+      oldPagination = angular.copy oldFilter.pagination
+      filterCopy = angular.copy filter
       # check for change - and update view
-      if !testEquality filter, oldFilter
-        # make sure to start on page one IF filter outside of pagination has changed...
-        filterCopy = angular.copy filter
+      if !testEquality filterCopy, oldFilter
+        #
+        delete oldFilter.pagination
         delete filterCopy.pagination
-        oldFilterCopy = angular.copy oldFilter
-        delete oldFilterCopy.pagination
-        if !testEquality filterCopy, oldFilterCopy
+        # make sure to start on page one IF filter outside of pagination has changed...
+        if !testEquality filterCopy, oldFilter
           filter.pagination.page = 0
+        #  scroll to the top of the page if we're on
+        if !testEquality filter.pagination.page, oldPagination.page
+          $window.scrollTo 0,0
         # update slides
         updateView filter
         # update params
