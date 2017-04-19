@@ -71,7 +71,6 @@ angular.module 'homemademessClient'
         updateParams filter
 
     $scope.recieveView = (view) ->
-      console.log view
       oldView = angular.copy $scope.view
       # check for change - and update view
       if !testEquality view, oldView

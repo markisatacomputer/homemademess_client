@@ -35,15 +35,6 @@ angular.module 'homemademessClient'
           broadcastService.send 'socket.init error', e
           reject e
 
-  getSocketBindings: (sock) ->
-    socketService = this
-    ###
-    sock.on 'connect', ->
-      socketService.socket = socketFactory ioSocket: ioSocket
-      broadcastService.send 'socket.init', ioSocket
-      resolve socketService.socket
-    ###
-
   init: () ->
     socketService = this
     $q (resolve, reject) ->
