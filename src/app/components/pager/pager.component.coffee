@@ -19,7 +19,7 @@ class PagerCtrl
     this.onUpdate {filter: filter}
 
   getPages: () ->
-    this.total = Math.round(this.filter.pagination.count/this.filter.pagination.per)-1
+    this.total = Math.ceil(this.filter.pagination.count/this.filter.pagination.per)-1
     this.page = this.filter.pagination.page
     if this.total > this.page
       this.next = true
