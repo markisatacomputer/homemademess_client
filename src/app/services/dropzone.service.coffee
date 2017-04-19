@@ -18,10 +18,8 @@ angular.module 'homemademessClient'
         this.on 'success', (f, res) ->
           broadcastService.send 'dropzone.success', {file: f, res: res}
         this.on 'error', (f, msg) ->
-          console.log 'error', f, msg
-          broadcastService.send 'dropzone.error', f
+          broadcastService.send 'dropzone.error', {file: f, msg: msg}
         this.on 'canceled', (f) ->
-          console.log 'canceled', f
           broadcastService.send 'dropzone.canceled', f
 
     if this.dropzone?
@@ -48,6 +46,5 @@ angular.module 'homemademessClient'
       when 'destroy'
         if this.dropzone?
           this.destroy()
-          console.log 'dropzone.destroy'
           if !this.dropzone?
             broadcastService.send 'dropzone.destroy'
