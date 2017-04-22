@@ -2,7 +2,8 @@
 
 angular.module 'homemademessClient'
 .directive 'slides', ->
-  slidesCtrl = [ '$scope', '$state', '$rootScope', '$mdMedia', ($scope, $state, $rootScope, $mdMedia) ->
+  slidesCtrl = [ '$scope', '$state', '$rootScope', '$mdMedia', 'paramService',
+  ($scope, $state, $rootScope, $mdMedia, paramService) ->
     $scope.cols =
       sm: 24
       md: 36
@@ -14,7 +15,8 @@ angular.module 'homemademessClient'
       $rootScope.$broadcast 'slidesLayout'
 
     $scope.getLink = (id) ->
-      $state.href $state.$current.name + '.slideshow.slide', {slide: id}
+      url = $state.href $state.$current.name + '.slideshow.slide', {slide: id}
+      url + paramService.paramsToString()
 
     ratio = (img) ->
       #  Get aspect ratio as decimal

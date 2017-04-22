@@ -1,12 +1,14 @@
 'use strict'
 
 class SlideshowCtrl
-  constructor: ($state, $document, debounce, $stateParams, $element, lodash) ->
+  constructor: ($state, $document, debounce, $stateParams, lodash, paramService, $window) ->
     this.$state = $state
     this.$document = $document
     this.debounce = debounce
     this.stateParams = $stateParams
     this.lodash = lodash
+    this.paramService = paramService
+    this.window = $window
 
   $onInit: () ->
     #init map
@@ -63,12 +65,12 @@ class SlideshowCtrl
         when 'slideup'    then nn = 0
         when 'slidedown'  then nn = this.slides.length-1
       if this.slides[nn]?._id?
-        this.$state.go this.$state.current, {slide: this.slides[nn]._id}
+        this.window.location.href = this.$state.href(this.$state.current, {slide: this.slides[nn]._id}) + this.paramService.paramsToString()
     false
 
   # find parent state and go to there
   showClose: (e)->
-    this.$state.go '^.^'
+    this.window.location.href = this.$state.href('^.^') + this.paramService.paramsToString()
 
 angular.module 'homemademessClient'
 .component 'slideshow',

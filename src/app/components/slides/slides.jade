@@ -4,3 +4,7 @@
       div.img-container
         a(ng-href='{{getLink(image._id)}}' )
           img.img-responsive(ng-src='{{image.derivative[derivative].uri}}')
+      div(ng-if="user.role=='admin'")
+        select-slide(slides="view.images" onUpdate="recieveSlides(slides)")
+        delete-slide(slides="view.images" onUpdate="recieveSlides(slides)")
+        edit-slide(slides="view.images" onUpdate="recieveSlides(slides)")

@@ -1,12 +1,13 @@
 .container.main
 
-  div(ui-view)
+  menu(user="user")
 
-  searchbar(filter="view.filter"  on-update="recieveFilter(filter)" ng-show="showFilters")
+  .filter(ng-if="showFilters")
+    searchbar(filter="view.filter"  on-update="recieveFilter(filter)")
 
   div(ui-view="slideshow")
 
-  menu(user="user" on-update-scope="recieveScopeUpdate(update)" on-broadcast-action="recieveMenuAction(action)")
+  div(ui-view)
 
   slides
 

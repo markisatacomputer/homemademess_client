@@ -1,13 +1,12 @@
 'use strict'
 
 class MenuCtrl
-  constructor: (lodash, $state, $scope, Auth, $mdDialog, dropzoneService) ->
+  constructor: (lodash, $state, $transitions, broadcastService) ->
     this.lodash = lodash
     this.$state = $state
-    this.$scope = $scope
-    this.Auth = Auth
-    this.$mdDialog = $mdDialog
-    this.dropzoneService = dropzoneService
+    this.state = 'home'
+    this.transitions = $transitions
+    this.broadcastService = broadcastService
     this.menuOpen = false
     this.menu = []
     this.menuItems =
@@ -22,7 +21,7 @@ class MenuCtrl
         {
           label: 'Filter'
           src: 'filter_list'
-          action: 'showFilters'
+          action: 'toggleFilters'
           states: ['home']
           roles: ['anon','admin','download']
         }
@@ -31,6 +30,13 @@ class MenuCtrl
           src: 'backup'
           action: 'toggleUpload'
           states: ['home']
+          roles: ['admin']
+        }
+        {
+          label: 'Edit Mode'
+          src: 'edit'
+          action: 'toggleEdit'
+          states: ['home','tagged']
           roles: ['admin']
         }
         {
@@ -59,17 +65,19 @@ class MenuCtrl
   $onInit: () ->
     ctrl = this
 
+    # init state
+    this.state = this.$state.current.name
+
     # init menu
     ctrl.menu = ctrl.getMenu()
 
-    #  watch state and update menu on change
-    ctrl.$scope.$watch () ->
-      ctrl.$state.current.name
-    , (now, old) ->
-      if !angular.equals old, now
+    # watch state changes and update menu
+    ctrl.transitions.onFinish {}, (trans) ->
+      if (ctrl.state != trans._targetState._definition.name)
+        ctrl.state = trans._targetState._definition.name
         ctrl.menu = ctrl.getMenu()
 
-  $onChanges: () ->
+  $onChanges: (changes) ->
     #  wait for user
     if this.user?.$promise?
       ctrl = this
@@ -80,41 +88,21 @@ class MenuCtrl
 
   getMenu: () ->
     ctrl = this
-    role = if this.user?.role? then this.user.role else 'anon'
+    role = if ctrl.user?.role? then ctrl.user.role else 'anon'
     if !Array.isArray(role) then role = [role]
-    ctrl.lodash.filter this.menuItems, (item) ->
+    ctrl.lodash.filter ctrl.menuItems, (item) ->
       i = ctrl.lodash.intersection item.roles, role
       if i.length > 0
-        i = ctrl.lodash.intersection item.states, ctrl.lodash.words ctrl.$state.current.name
+        i = ctrl.lodash.intersection item.states, ctrl.lodash.words ctrl.state
         i.length
 
   #  here's where the action is - ba dum dum
   act: (action) ->
-    ctrl = this
-    switch action
-      when 'showFilters'
-        ctrl.onBroadcastAction
-          action:
-            function: 'toggle'
-            arg: 'showFilters'
-      when 'toggleUpload'
-        this.dropzoneService.toggle()
-      when 'login' then ctrl.$mdDialog.show
-        clickOutsideToClose: true
-        templateUrl: '/app/account/login/login.html'
-        controller: 'LoginCtrl'
-      when 'logout' then ctrl.Auth.logout()
-      when 'home' then ctrl.$state.go 'home'
-      when 'settings' then ctrl.$mdDialog.show
-        clickOutsideToClose: true
-        templateUrl: '/app/account/settings/settings.html'
-        controller: 'SettingsCtrl'
+    this.broadcastService.send 'menu.' + action
 
 angular.module 'homemademessClient'
 .component 'menu',
   bindings:
     user: '<'
-    onUpdateScope: '&'
-    onBroadcastAction: '&'
   templateUrl: 'app/components/menu/menu.html'
   controller: MenuCtrl
