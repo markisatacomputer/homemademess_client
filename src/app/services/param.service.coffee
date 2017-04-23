@@ -34,6 +34,8 @@ angular.module 'homemademessClient'
       str = $httpParamSerializer this.getParams()
       if str.length > 0
         "?" + str
+      else
+        ""
 
     init: ->
       ctrl = this
