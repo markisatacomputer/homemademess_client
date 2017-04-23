@@ -14,7 +14,7 @@ class MenuCtrl
         {
           label: 'Home'
           src: 'home'
-          action: 'home'
+          href: this.$state.href 'home'
           states: ['tagged']
           roles: ['anon','admin','download']
         }
@@ -49,14 +49,14 @@ class MenuCtrl
         {
           label: 'Log In'
           src:   'vpn_key'
-          action: 'login'
+          action: 'toggleAuth'
           states: ['home', 'tagged']
           roles: ['anon']
         }
         {
           label: 'Log Out'
           src:   'exit_to_app'
-          action:  'logout'
+          action:  'toggleAuth'
           states: ['home', 'tagged']
           roles: ['admin','download']
         }
