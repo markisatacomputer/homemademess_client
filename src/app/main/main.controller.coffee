@@ -2,8 +2,8 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$window', 'view', 'user', 'tgs', 'Slides', 'Tags', 'filterService', 'paramService',
-  ($scope, $window, view, user, tgs, Slides, Tags, filterService, paramService) ->
+  '$scope', '$window', 'view', 'user', 'tgs', 'Slides', 'Tags', 'Auth', 'filterService', 'paramService',
+  ($scope, $window, view, user, tgs, Slides, Tags, Auth, filterService, paramService) ->
     # init view
     $scope.view = view
     # add user
@@ -73,7 +73,13 @@ angular.module 'homemademessClient'
       if !testEquality user, $scope.user
         $scope.user = user
 
+    #  listen for filter toggle
     $scope.$on 'menu.toggleFilters', ->
       $scope.showFilters = filterService.toggleDisplay()
+
+    #  listen for login/logout
+    $scope.$on 'menu.toggleAuth', ->
+      Auth.toggle()
+
 
 ]
