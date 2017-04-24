@@ -39,7 +39,7 @@ angular.module 'homemademessClient'
     socketService = this
     $q (resolve, reject) ->
       socketService.getSocket().then (sock) ->
-        resolve sock
+        resolve socketService
       , (e) ->
         reject e
 
@@ -50,11 +50,14 @@ angular.module 'homemademessClient'
       broadcastService.send 'socket.close'
 
   registerListener: (name, func) ->
-    this.socket.on name, func
-
-  broadcastEvent: (name) ->
-    this.socket.on name, (data) ->
-      broadcastService.send name, data
+    ctrl = this
+    #  allow adding the same callback to several different events
+    if !Array.isArray name
+      name = [name]
+    name.forEach (n) ->
+      this.socket.on n, (data)->
+        ctrl.broadcastService n, data
+        if func? then func data
 
 
   ###

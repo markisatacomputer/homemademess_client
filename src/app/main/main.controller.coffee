@@ -52,6 +52,7 @@ angular.module 'homemademessClient'
         # update view with new filter
         updateView filter
 
+    # TODO - fix flashing on update
     $scope.recieveView = (view) ->
       oldView = angular.copy $scope.view
       # check for change - and update view
