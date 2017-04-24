@@ -11,7 +11,8 @@
 
   slides
 
-  admin(user="user" view="view" on-update="recieveView(view)")
+  .admin(ng-if="user.role=='admin'")
+    admin(user="user" view="view" on-update="recieveView(view)")
 
   pager(filter="view.filter" on-update="recieveFilter(filter)")
 
