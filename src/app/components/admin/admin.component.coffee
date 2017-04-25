@@ -16,8 +16,10 @@ class AdminCtrl
     angular.forEach selected, (id, i) ->
       if add
         angular.element(document.getElementById(id)).addClass('selected')
+        angular.element(document).find('body').addClass('has-selected')
       else
         angular.element(document.getElementById(id)).removeClass('selected')
+        angular.element(document).find('body').removeClass('has-selected')
 
   updateView: (postRecieve)->
     ctrl = this
