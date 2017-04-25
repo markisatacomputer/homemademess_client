@@ -16,6 +16,7 @@ angular.module 'homemademessClient'
 
     toggle: (id) ->
       i = this.selected.indexOf id
+      prev = this.isEmpty()
       if i is -1
         this.selected.push id
         broadcastService.send 'select.on', id
@@ -26,9 +27,12 @@ angular.module 'homemademessClient'
       #  save to cookie
       $cookies.putObject 'selected', this.selected
 
-      #  broadcast if empty
-      if this.selected.length is 0
-        broadcastService.send 'select.empty', id
+      #  broadcast when empty status changes
+      if this.isEmpty() is not prev
+        if prev
+          broadcastService.send 'select.has-selected'
+        else
+          broadcastService.send 'select.empty'
 
   selectService.selected = selectService.getSelected()
   selectService

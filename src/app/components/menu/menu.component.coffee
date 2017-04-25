@@ -1,12 +1,14 @@
 'use strict'
 
 class MenuCtrl
-  constructor: (lodash, $state, $transitions, broadcastService) ->
+  constructor: (lodash, $state, $transitions, $rootScope, broadcastService, selectService) ->
     this.lodash = lodash
     this.$state = $state
     this.state = 'home'
     this.transitions = $transitions
+    this.scope = $rootScope
     this.broadcastService = broadcastService
+    this.selectService = selectService
     this.menuOpen = false
     this.menu = []
     this.menuItems =
@@ -26,18 +28,36 @@ class MenuCtrl
           roles: ['anon','admin','download']
         }
         {
-          label: 'Upload'
-          src: 'backup'
-          action: 'toggleUpload'
+          label: 'Tag Selected'
+          src: 'add_circle'
+          action: 'selected.tag'
           states: ['home']
           roles: ['admin']
+          select: true
         }
         {
-          label: 'Edit Mode'
-          src: 'edit'
-          action: 'toggleEdit'
-          states: ['home','tagged']
+          label: 'Untag Selected'
+          src: 'highlight_off'
+          action: 'selected.untag'
+          states: ['home']
           roles: ['admin']
+          select: true
+        }
+        {
+          label: 'Edit Selected'
+          src: 'edit'
+          action: 'selected.edit'
+          states: ['home']
+          roles: ['admin']
+          select: true
+        }
+        {
+          label: 'Delete Selected'
+          src: 'delete'
+          action: 'selected.remove'
+          states: ['home']
+          roles: ['admin']
+          select: true
         }
         {
           label: 'Settings'
@@ -77,6 +97,12 @@ class MenuCtrl
         ctrl.state = trans._targetState._definition.name
         ctrl.menu = ctrl.getMenu()
 
+    # watch selected changes
+    ctrl.scope.$on 'select.has-selected', (e, id) ->
+      ctrl.menu = ctrl.getMenu()
+    ctrl.scope.$on 'select.empty', (e, id) ->
+      ctrl.menu = ctrl.getMenu()
+
   $onChanges: (changes) ->
     #  wait for user
     if this.user?.$promise?
@@ -91,10 +117,16 @@ class MenuCtrl
     role = if ctrl.user?.role? then ctrl.user.role else 'anon'
     if !Array.isArray(role) then role = [role]
     ctrl.lodash.filter ctrl.menuItems, (item) ->
+      #  filter roles
       i = ctrl.lodash.intersection item.roles, role
+      #  filter states
       if i.length > 0
         i = ctrl.lodash.intersection item.states, ctrl.lodash.words ctrl.state
-        i.length
+      #  filter selected
+      if i.length > 0
+        if ctrl.selectService.isEmpty() and item.select is true
+          i.length = 0
+      i.length
 
   #  here's where the action is - ba dum dum
   act: (action) ->
