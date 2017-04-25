@@ -10,6 +10,15 @@ class AdminCtrl
     this.Slides = Slides
     this.uploads = []
 
+  clssSelected: (add)->
+    if !add? then add = true
+    selected = this.selectService.getSelected()
+    angular.forEach selected, (id, i) ->
+      if add
+        angular.element(document.getElementById(id)).addClass('selected')
+      else
+        angular.element(document.getElementById(id)).removeClass('selected')
+
   updateView: (postRecieve)->
     ctrl = this
     this.Slides.get {},
@@ -46,6 +55,9 @@ class AdminCtrl
     , (e) ->
       console.log e
 
+    #  show selected
+    this.clssSelected()
+
     #  LISTEN TO SCOPE EVENTS
     #  on successful upload to api, listen for successful upload to cloud
     this.$scope.$on 'dropzone.success', (e, args) ->
@@ -65,14 +77,12 @@ class AdminCtrl
     this.$scope.$on 'select.empty', (e, id) ->
       angular.element(document).find('body').removeClass('has-selected')
     this.$scope.$on 'slidesLayout', (e) ->
-      selected = ctrl.selectService.getSelected()
-      console.log selected
-      angular.forEach selected, (id, i) ->
-        angular.element(document.getElementById(id)).addClass('selected')
+      ctrl.clssSelected()
 
   $onDestroy: () ->
     this.dropzoneService.toggle 'destroy'
     this.socketService.destroy()
+    this.clssSelected false
 
 angular.module 'homemademessClient'
 .component 'admin',
