@@ -4,11 +4,13 @@ class MenuCtrl
   constructor: (lodash, $state, $transitions, $rootScope, broadcastService, selectService) ->
     this.lodash = lodash
     this.$state = $state
-    this.state = 'home'
     this.transitions = $transitions
     this.scope = $rootScope
     this.broadcastService = broadcastService
     this.selectService = selectService
+
+    this.trigger = 'menu'
+    this.state = 'home'
     this.menuOpen = false
     this.menu = []
     this.menuItems =
@@ -87,7 +89,6 @@ class MenuCtrl
 
     # init state
     this.state = this.$state.current.name
-
     # init menu
     ctrl.menu = ctrl.getMenu()
 
@@ -100,6 +101,7 @@ class MenuCtrl
     # watch selected changes
     ctrl.scope.$on 'select.has-selected', (e, id) ->
       ctrl.menu = ctrl.getMenu()
+      ctrl.menuOpen = true
     ctrl.scope.$on 'select.empty', (e, id) ->
       ctrl.menu = ctrl.getMenu()
 
@@ -116,6 +118,9 @@ class MenuCtrl
     ctrl = this
     role = if ctrl.user?.role? then ctrl.user.role else 'anon'
     if !Array.isArray(role) then role = [role]
+    #  trigger icon
+    if ctrl.selectService.isEmpty() then ctrl.trigger = "menu" else ctrl.trigger = "done_all"
+    #  FILTERS
     ctrl.lodash.filter ctrl.menuItems, (item) ->
       #  filter roles
       i = ctrl.lodash.intersection item.roles, role

@@ -3,7 +3,7 @@ div.navvy
     md-fab-speed-dial.md-fling(md-direction="down" md-open="$ctrl.menuOpen" class="md-hover-full" ng-mouseenter="$ctrl.menuOpen=true" ng-mouseleave="$ctrl.menuOpen=false")
       md-fab-trigger
         md-button(aria-label="Menu" class="md-fab")
-          md-icon.material-icons menu
+          md-icon.material-icons {{$ctrl.trigger}}
 
       md-fab-actions
         md-button(ng-repeat="item in $ctrl.menu" aria-label="{{item.label}}" class="md-fab md-raised md-mini {{item.src}}" ng-class="{selectAction: item.select}" ng-click="$ctrl.act(item.action)" ng-href="{{item.href}}")
