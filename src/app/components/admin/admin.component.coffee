@@ -1,10 +1,11 @@
 'use strict'
 
 class AdminCtrl
-  constructor: (socketService, dropzoneService, broadcastService, $rootScope, Slides) ->
+  constructor: (socketService, dropzoneService, broadcastService, selectService, $rootScope, Slides) ->
     this.socketService = socketService
     this.dropzoneService = dropzoneService
     this.broadcastService = broadcastService
+    this.selectService = selectService
     this.$scope = $rootScope
     this.Slides = Slides
     this.uploads = []
@@ -52,6 +53,22 @@ class AdminCtrl
     #  on delete slide, emit to api, remove from view, return view
     this.$scope.$on 'slide.remove', (e, slide) ->
       ctrl.socketService.socket.emit 'image:remove', slide._id
+
+    #  select events
+    this.$scope.$on 'slide.select', (e, slide) ->
+      ctrl.selectService.toggle slide._id
+    this.$scope.$on 'select.on', (e, id) ->
+      angular.element(document).find('body').addClass('has-selected')
+      angular.element(document.getElementById(id)).addClass('selected')
+    this.$scope.$on 'select.off', (e, id) ->
+      angular.element(document.getElementById(id)).removeClass('selected')
+    this.$scope.$on 'select.empty', (e, id) ->
+      angular.element(document).find('body').removeClass('has-selected')
+    this.$scope.$on 'slidesLayout', (e) ->
+      selected = ctrl.selectService.getSelected()
+      console.log selected
+      angular.forEach selected, (id, i) ->
+        angular.element(document.getElementById(id)).addClass('selected')
 
   $onDestroy: () ->
     this.dropzoneService.toggle 'destroy'
