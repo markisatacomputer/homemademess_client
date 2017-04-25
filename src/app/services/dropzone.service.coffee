@@ -1,13 +1,13 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'dropzoneService', (apiUrl, broadcastService) ->
+.factory 'dropzoneService', (apiUrl, broadcastService, Auth) ->
 
   init: () ->
     this.dropzone = new Dropzone 'body',
       url: apiUrl + '/up'
       headers:
-        "Test-Header": "This is a test."
+        "Authorization": Auth.getToken()
       autoProcessQueue: true
       previewsContainer: 'upload-info'
       init: () ->
