@@ -7,7 +7,7 @@
       div.edit-actions(ng-if="user.role=='admin'")
         md-button.select-slide(ng-click="broadcast.send('slide.select',image)")
           md-icon.material-icons done
-        md-button.delete-slide(ng-click="broadcast.send('slide.remove',image)")
-          md-icon.material-icons delete
         md-button.edit-slide(ng-click="broadcast.send('slide.edit',image)")
           md-icon.material-icons edit
+        md-button.delete-slide(ng-click="broadcast.send('slide.remove',image)")
+          md-icon.material-icons delete
