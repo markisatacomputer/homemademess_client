@@ -2,8 +2,8 @@
 
 angular.module 'homemademessClient'
 .directive 'slides', ->
-  slidesCtrl = [ '$scope', '$state', '$rootScope', '$mdMedia', 'paramService',
-  ($scope, $state, $rootScope, $mdMedia, paramService) ->
+  slidesCtrl = [ '$scope', '$state', 'broadcastService', '$mdMedia', 'paramService',
+  ($scope, $state, broadcastService, $mdMedia, paramService) ->
     $scope.cols =
       sm: 24
       md: 36
@@ -11,8 +11,7 @@ angular.module 'homemademessClient'
       gt: 60
     $scope.derivative = 0
 
-    $scope.broadcastLayout = () ->
-      $rootScope.$broadcast 'slidesLayout'
+    $scope.broadcast = broadcastService
 
     $scope.getLink = (id) ->
       url = $state.href $state.$current.name + '.slideshow.slide', {slide: id}
@@ -52,6 +51,7 @@ angular.module 'homemademessClient'
     $scope.clss = (img) ->
       a = ratio img
       clss = if a>1 then "vertical" else if a<1 then "horizontal" else if a==1 then "square"
+
   ]
   directive =
     restrict: 'E'

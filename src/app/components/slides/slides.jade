@@ -1,10 +1,13 @@
 .slides
-  md-grid-list(md-cols-sm='{{cols.sm}}', md-cols-md='{{cols.md}}', md-cols-lg='{{cols.lg}}', md-cols-gt-lg='{{cols.gt}}' md-row-height='1:1', md-gutter="5px", md-on-layout="broadcastLayout()")
-    md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}' ng-class='clss(image)')
+  md-grid-list(md-cols-sm='{{cols.sm}}', md-cols-md='{{cols.md}}', md-cols-lg='{{cols.lg}}', md-cols-gt-lg='{{cols.gt}}' md-row-height='1:1', md-gutter="5px", md-on-layout="broadcast.send('slidesLayout')")
+    md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}' ng-class='clss(image)' ng-attr-id="{{image._id}}")
       div.img-container
         a(ng-href='{{getLink(image._id)}}' )
           img.img-responsive(ng-src='{{image.derivative[derivative].uri}}')
-      div(ng-if="user.role=='admin'")
-        select-slide(slides="view.images" onUpdate="recieveSlides(slides)")
-        delete-slide(slides="view.images" onUpdate="recieveSlides(slides)")
-        edit-slide(slides="view.images" onUpdate="recieveSlides(slides)")
+      div.edit-actions(ng-if="user.role=='admin'")
+        md-button.select-slide(ng-click="broadcast.send('slide.select',image)")
+          md-icon.material-icons done
+        md-button.delete-slide(ng-click="broadcast.send('slide.remove',image)")
+          md-icon.material-icons delete
+        md-button.edit-slide(ng-click="broadcast.send('slide.edit',image)")
+          md-icon.material-icons edit
