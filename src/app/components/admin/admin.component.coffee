@@ -38,7 +38,9 @@ class AdminCtrl
     ctrl = this
     #  INIT SERVICES
     this.dropzoneService.toggle 'init'
-    this.socketService.init().then (s) ->
+    #  resolve socket
+    this.socketService.then (s) ->
+      ctrl.socketService = s
       #  reload view on when api tells us view has changed
       s.socket.addListener ['images:viewChange'], (imageId) ->
         ctrl.updateView()
