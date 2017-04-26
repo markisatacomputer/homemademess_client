@@ -7,7 +7,6 @@ class AdminCtrl
     this.broadcastService = broadcastService
     this.$scope = $rootScope
     this.Slides = Slides
-    this.uploads = []
 
   updateView: (postRecieve)->
     ctrl = this
