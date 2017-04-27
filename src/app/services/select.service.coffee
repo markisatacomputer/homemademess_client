@@ -14,6 +14,10 @@ angular.module 'homemademessClient'
     isEmpty: ->
       if this.selected.length is 0 then true else false
 
+    empty: () ->
+      while this.selected.length > 0
+        this.toggle this.selected[0]
+
     toggle: (id) ->
       i = this.selected.indexOf id
       prev = this.isEmpty()

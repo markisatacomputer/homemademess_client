@@ -16,7 +16,7 @@ class SelectedCtrl
         else []
       filterTrigger:
         (currentTrigger) ->
-          if selectService.isEmpty() then currentTrigger else "done_all"
+          if selectService.isEmpty() then currentTrigger else "offline_pin"
       menuExtra: [
         {
           label: 'Tag Selected'
@@ -49,6 +49,21 @@ class SelectedCtrl
           states: ['home']
           roles: ['admin']
           select: true
+        }
+        {
+          label: 'Deselect All'
+          src: 'done_all'
+          action: 'selected.deselect'
+          states: ['home']
+          roles: ['admin']
+          select: true
+        }
+        {
+          label: 'Select All'
+          src: 'select_all'
+          action: 'selected.all'
+          states: ['home']
+          roles: ['admin']
         }
       ]
 
@@ -86,6 +101,17 @@ class SelectedCtrl
     this.$scope.$on 'select.empty', (e) ->
       angular.element(document).find('body').removeClass('has-selected')
       ctrl.broadcastService.send 'menu.refresh', false
+
+    #  menu selected action events
+    this.$scope.$on 'menu.selected.deselect', (e) ->
+      ctrl.selectService.empty()
+    this.$scope.$on 'menu.selected.all', (e) ->
+      all = angular.element(document).find('md-grid-tile')
+      select = (el) ->
+        id = angular.element(el).attr 'id'
+        if ctrl.selectService.selected.indexOf id is not -1
+          ctrl.selectService.toggle id
+      select tile for tile in all
 
     #  on slides change, class
     this.$scope.$on 'slidesLayout', (e) ->
