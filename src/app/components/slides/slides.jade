@@ -1,5 +1,5 @@
 .slides
-  md-grid-list(md-cols-sm='{{cols.sm}}', md-cols-md='{{cols.md}}', md-cols-lg='{{cols.lg}}', md-cols-gt-lg='{{cols.gt}}' md-row-height='1:1', md-gutter="5px", md-on-layout="broadcast.send('slidesLayout')")
+  md-grid-list(md-cols-sm='{{cols.sm}}', md-cols-md='{{cols.md}}', md-cols-lg='{{cols.lg}}', md-cols-gt-lg='{{cols.gt}}' md-row-height='1:1', md-gutter="5px", md-on-layout="broadcast.send('slides.layout')")
     md-grid-tile(ng-repeat="(n, image) in view.images", md-colspan='{{aspect(image,0)}}', md-rowspan='{{aspect(image,1)}}' ng-class='clss(image)' ng-attr-id="{{image._id}}")
       div.img-container
         a(ng-href='{{getLink(image._id)}}' )

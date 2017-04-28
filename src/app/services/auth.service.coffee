@@ -27,7 +27,7 @@ angular.module 'homemademessClient'
       $cookies.put 'token', res.data.token
       currentUser = User.get()
       callback? res, currentUser
-      broadcastService.send 'userAuth', currentUser
+      broadcastService.send 'auth.login', currentUser
       currentUser
 
     , (err) =>
@@ -43,7 +43,7 @@ angular.module 'homemademessClient'
   logout: ->
     $cookies.remove 'token'
     currentUser = {}
-    broadcastService.send 'userAuth', currentUser
+    broadcastService.send 'auth.logout', currentUser
     return
 
 

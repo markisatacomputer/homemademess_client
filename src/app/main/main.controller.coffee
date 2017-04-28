@@ -70,9 +70,10 @@ angular.module 'homemademessClient'
             console.log e
 
     #  listen for user authorization events
-    $scope.$on 'userAuth', (e, user) ->
-      if !testEquality user, $scope.user
-        $scope.user = user
+    $scope.$on 'auth.login', (e, user) ->
+      $scope.user = user
+    $scope.$on 'auth.logout', (e, user) ->
+      $scope.user = user
 
     #  listen for filter toggle
     $scope.$on 'menu.toggleFilters', ->
