@@ -18,9 +18,16 @@ md-grid-tile.selected {
 }
 
 body.has-selected {
-  md-fab-trigger {
-    button.md-fab {
-      background: green;
+  .navvy .menu.container {
+    md-fab-trigger {
+      button.md-fab {
+        background: green;
+      }
+    }
+    md-fab-actions {
+      a.selected {
+        background: green;
+      }
     }
   }
 }

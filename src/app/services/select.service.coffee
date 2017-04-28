@@ -11,6 +11,19 @@ angular.module 'homemademessClient'
       else
         []
 
+    #  get array of ids for all unselected images in current view
+    getSelectedInView: (selected)->
+      allEl = angular.element(document).find('md-grid-tile')
+      all = []
+      ctrl = this
+      saveSelectState = (el) ->
+        id = angular.element(el).attr 'id'
+        if selected and ctrl.selected.indexOf(id) > -1 then all.push id
+        if not selected and ctrl.selected.indexOf(id) is -1 then all.push id
+
+      saveSelectState tile for tile in allEl
+      all
+
     isEmpty: ->
       if this.selected.length is 0 then true else false
 

@@ -23,6 +23,9 @@ class MenuCtrl
     #  menu refresh triggered
     this.scope.$on 'menu.refresh', (e, open) ->
       ctrl.getMenu(open)
+    #  slides updated
+    this.scope.$on 'slides.update', (e, open) ->
+      ctrl.getMenu()
 
   getMenu: (open) ->
     this.menu = this.menuService.getMenu()
