@@ -4,6 +4,10 @@ angular.module 'homemademessClient'
 .factory 'selectService', ($cookies, broadcastService) ->
   selectService =
 
+    init: ->
+      this.selected = this.getSelected()
+      this
+
     getSelected: ->
       selected = $cookies.getObject 'selected'
       if Array.isArray selected
@@ -11,18 +15,13 @@ angular.module 'homemademessClient'
       else
         []
 
-    #  get array of ids for all unselected images in current view
-    getSelectedInView: (selected)->
-      allEl = angular.element(document).find('md-grid-tile')
-      all = []
-      ctrl = this
-      saveSelectState = (el) ->
-        id = angular.element(el).attr 'id'
-        if selected and ctrl.selected.indexOf(id) > -1 then all.push id
-        if not selected and ctrl.selected.indexOf(id) is -1 then all.push id
-
-      saveSelectState tile for tile in allEl
-      all
+    emitSelections: ->
+      if this.selected.length > 0
+        broadcastService.send 'select.has-selected'
+        angular.forEach this.selected, (id, i) ->
+          broadcastService.send 'select.on', id
+      else
+        broadcastService.send 'select.empty'
 
     isEmpty: ->
       if this.selected.length is 0 then true else false
@@ -34,9 +33,11 @@ angular.module 'homemademessClient'
     toggle: (id) ->
       i = this.selected.indexOf id
       prev = this.isEmpty()
+      #  Select
       if i is -1
         this.selected.push id
         broadcastService.send 'select.on', id
+      #  Deselect
       else
         this.selected.splice i, 1
         broadcastService.send 'select.off', id
@@ -46,10 +47,6 @@ angular.module 'homemademessClient'
 
       #  broadcast when empty status changes
       if this.isEmpty() is not prev
-        if prev
-          broadcastService.send 'select.has-selected'
-        else
-          broadcastService.send 'select.empty'
+        if prev then broadcastService.send 'select.has-selected' else broadcastService.send 'select.empty'
 
-  selectService.selected = selectService.getSelected()
-  selectService
+  selectService.init()

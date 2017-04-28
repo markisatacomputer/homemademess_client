@@ -1,16 +1,22 @@
 'use strict'
 
 class SelectedCtrl
-  constructor: (broadcastService, selectService, menuService, $rootScope) ->
-    this.broadcastService = broadcastService
+  constructor: (selectService, menuService, $scope) ->
     this.selectService = selectService
     this.menuService = menuService
-    this.$scope = $rootScope
+    this.$scope = $scope
     this.menuConfig =
       registerID: 'select'
       filterMenu: (item, itemArray) ->
         if !selectService.isEmpty() and item.select is true then itemArray   #  only show selected actions when something is selected
-        else if typeof item.select is 'undefined' then itemArray             #  everything else show
+        else if typeof item.select is 'undefined'
+          if item.action is 'selected.deselect' and selectService.isEmpty() then []
+          if item.action is 'selected.all'
+            allTiles = angular.element(document).find('md-grid-tile')
+            selectedTiles = angular.element(allTiles).hasClass('selected')
+            console.log allTiles.length, selectedTiles.length
+            if allTiles.length is selectedTiles.length then []
+          itemArray             #  everything else show
         else []                                                              #  just in case?
       filterTrigger: (currentTrigger) ->
         if selectService.isEmpty() then currentTrigger else "offline_pin"
@@ -50,36 +56,30 @@ class SelectedCtrl
         {
           label: 'Deselect All'
           src: 'select_all'
-          action: 'selected.deselect'
+          action: 'select.none'
           states: ['home']
           roles: ['admin']
         }
         {
           label: 'Select All'
           src: 'done_all'
-          action: 'selected.all'
+          action: 'select.all'
           states: ['home']
           roles: ['admin']
         }
       ]
 
-  clssSelected: (add)->
-    if !add? then add = true
-    selected = this.selectService.getSelected()
+  #  get array of ids for all unselected images in current view
+  toggleSelectedInView: (select)->
+    allEl = angular.element(document).find('md-grid-tile')
+    all = []
+    ctrl = this
+    saveSelectState = (el) ->
+      id = angular.element(el).attr 'id'
+      if select and ctrl.selectService.selected.indexOf(id) > -1 then ctrl.selectService.toggle id
+      if not select and ctrl.selectService.selected.indexOf(id) is -1 then ctrl.selectService.toggle id
 
-    if add and !this.selectService.isEmpty()
-      angular.forEach selected, (id, i) ->
-        angular.element(document.getElementById(id)).addClass('selected')
-      angular.element(document).find('body').addClass('has-selected')
-    else
-      angular.forEach selected, (id, i) ->
-        angular.element(document.getElementById(id)).removeClass('selected')
-      angular.element(document).find('body').removeClass('has-selected')
-
-  toggleSelectInView: (selected) ->
-    all = this.selectService.getSelectedInView selected
-    this.selectService.toggle id for id in all
-    this.broadcastService.send 'menu.refresh', !selected
+    saveSelectState tile for tile in allEl
 
   $onInit: () ->
     ctrl = this
@@ -87,10 +87,20 @@ class SelectedCtrl
     #  add menu
     this.menuService.registerMenu this.menuConfig
 
+    #  Menu and Slide ACTIONS
     #  slide single select button event
     this.$scope.$on 'slide.select', (e, slide) ->
       ctrl.selectService.toggle slide._id
+    #  menu selected action events
+    this.$scope.$on 'menu.select.none', (e) ->
+      ctrl.toggleSelectedInView true
+    this.$scope.$on 'menu.select.all', (e) ->
+      ctrl.toggleSelectedInView false
 
+    #  Event REACTIONS
+    #  slides update
+    this.$scope.$on 'slides.layout', (e) ->
+      ctrl.selectService.emitSelections()
     #  select service events
     this.$scope.$on 'select.on', (e, id) ->
       angular.element(document.getElementById(id)).addClass('selected')
@@ -98,23 +108,19 @@ class SelectedCtrl
       angular.element(document.getElementById(id)).removeClass('selected')
     this.$scope.$on 'select.has-selected', (e) ->
       angular.element(document).find('body').addClass('has-selected')
-      ctrl.broadcastService.send 'menu.refresh', true
     this.$scope.$on 'select.empty', (e) ->
       angular.element(document).find('body').removeClass('has-selected')
-      ctrl.broadcastService.send 'menu.refresh', false
 
-    #  menu selected action events
-    this.$scope.$on 'menu.selected.deselect', (e) ->
-      ctrl.toggleSelectInView true
-    this.$scope.$on 'menu.selected.all', (e) ->
-      ctrl.toggleSelectInView false
-
-    #  on slides change, class
-    this.$scope.$on 'slidesLayout', (e) ->
-      ctrl.clssSelected()
+    #  init css classes
+    ctrl.selectService.emitSelections()
 
   $onDestroy: () ->
-    this.clssSelected false
+    # remove css classes
+    angular.forEach this.selectService.selected, (id, i) ->
+      angular.element(document.getElementById(id)).removeClass('selected')
+    angular.element(document).find('body').removeClass('has-selected')
+    # remove menu
+    this.menuService.removeMenu this.menuConfig.registerID
 
 angular.module 'homemademessClient'
 .component 'selectedControl',
