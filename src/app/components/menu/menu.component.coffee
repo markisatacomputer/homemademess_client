@@ -16,16 +16,19 @@ class MenuCtrl
 
     #  menu item ADDED
     this.scope.$on 'menu.add', (e, id) ->
-      ctrl.getMenu(true)
+      ctrl.getMenu true
     #  menu item REMOVED
     this.scope.$on 'menu.remove', (e, id) ->
       ctrl.getMenu()
     #  menu refresh triggered
     this.scope.$on 'menu.refresh', (e, open) ->
-      ctrl.getMenu(open)
+      ctrl.getMenu open
     #  slides updated
     this.scope.$on 'slides.update', (e, open) ->
       ctrl.getMenu()
+    #  user changed
+    this.scope.$on 'userAuth', (e, user) ->
+      ctrl.getMenu true
 
   getMenu: (open) ->
     this.menu = this.menuService.getMenu()
