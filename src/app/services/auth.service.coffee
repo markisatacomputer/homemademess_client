@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'Auth', ($location, $http, User, $cookies, $q, $mdDialog, apiUrl, broadcastService) ->
+.factory 'Auth', ($http, User, $cookies, $mdDialog, apiUrl, broadcastService) ->
   currentUser = if $cookies.get 'token' then User.get(
     {}
     () ->
