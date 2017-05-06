@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'Tags', ($resource, apiUrl, $location, $stateParams) ->
+.factory 'Tags', ($resource, apiUrl, $location) ->
 
   #  get query param and return value -> default value -> null
   getTags = () ->

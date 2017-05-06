@@ -1,11 +1,11 @@
 'use strict'
 
 class AdminCtrl
-  constructor: (socketService, dropzoneService, broadcastService, $rootScope, Slides) ->
+  constructor: (socketService, dropzoneService, broadcastService, $scope, Slides) ->
     this.socketService = socketService
     this.dropzoneService = dropzoneService
     this.broadcastService = broadcastService
-    this.$scope = $rootScope
+    this.$scope = $scope
     this.Slides = Slides
 
   updateView: (postRecieve)->
