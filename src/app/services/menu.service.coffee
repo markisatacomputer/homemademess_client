@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'menuService', ($cookies, $state, broadcastService, Auth, lodash) ->
+.factory 'menuService', ($state, broadcastService, Auth, lodash) ->
   menuStart:
     [
       {
