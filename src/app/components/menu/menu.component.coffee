@@ -33,12 +33,12 @@ class MenuCtrl
     this.scope.$on 'auth.login', (e, user) ->
       ctrl.getMenu true
     this.scope.$on 'auth.logout', (e, user) ->
-      ctrl.getMenu false
+      ctrl.getMenu()
 
   getMenu: (open) ->
     this.menu = this.menuService.getMenu()
     this.trigger = this.menuService.getTrigger()
-    this.menuOpen = open
+    this.menuOpen = if open? and typeof(open) is "boolean" then open else false
 
   #  here's where the action is - ba dum dum
   act: (action) ->
