@@ -6,7 +6,7 @@ class SearchbarCtrl
 
   #  Autocomplete
   findTags: (value) ->
-    return this.Auto.query({q:value}).$promise
+    return this.Auto.query({q:value,s:0}).$promise
 
   #  update params and scope on tags update
   updateTags: (tag) ->
