@@ -1,8 +1,8 @@
 'use strict'
 
 class SearchbarCtrl
-  constructor: ($resource, apiUrl) ->
-    this.Auto = $resource apiUrl + '/auto'
+  constructor: ($resource, Auto) ->
+    this.Auto = Auto
 
   #  Autocomplete
   findTags: (value) ->
