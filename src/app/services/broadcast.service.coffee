@@ -2,6 +2,10 @@
 
 angular.module 'homemademessClient'
 .factory 'broadcastService', ($rootScope, debug) ->
-  send: (msg, data) ->
-    $rootScope.$broadcast msg, data
-    if debug then console.log msg, data
+  send: ->
+    #  convert args to array
+    args = if arguments.length is 1 then [arguments[0]] else Array.apply null, arguments
+    #  broadcast
+    $rootScope.$broadcast.apply $rootScope, args
+    #  debug
+    if debug then console.log.apply $rootScope, args
