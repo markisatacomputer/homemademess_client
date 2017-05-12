@@ -1,0 +1,13 @@
+.action-container
+  p You're about to delete all of the following images:
+
+  md-list
+    md-list-item.md-2-line(ng-repeat="item in ctrl.selectService.getSelected()")
+      .md-item-text.md-whiteframe-z1(flex)
+        h3 {{item.name}}
+
+  p You cannot undo this operation.  Are you super duper sure you want to continue?
+
+  md-button.md-raised.md-primary(ng-click="ctrl.removeAll()") I'm sure, do it already!
+  md-button.md-raised(ng-click="ctrl.$mdDialog.hide()") Don't do it!
+

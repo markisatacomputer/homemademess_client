@@ -1,71 +1,39 @@
 'use strict'
 
-class SelectedCtrl
-  constructor: (selectService, menuService, $scope) ->
+class SelectCtrl
+  constructor: (selectService, menuService, $scope, $mdDialog) ->
+    ctrl = this
     this.selectService = selectService
     this.menuService = menuService
     this.$scope = $scope
+    this.$mdDialog = $mdDialog
     this.menuConfig =
       registerID: 'select'
       filterMenu: (item, itemArray) ->
-        if !selectService.isEmpty() and item.select is true then itemArray   #  only show selected actions when something is selected
-        else if typeof item.select is 'undefined'
-          if item.action is 'selected.deselect' and selectService.isEmpty() then []
-          if item.action is 'selected.all'
-            allTiles = angular.element(document).find('md-grid-tile')
-            selectedTiles = angular.element(allTiles).hasClass('selected')
-            console.log allTiles.length, selectedTiles.length
-            if allTiles.length is selectedTiles.length then []
-          itemArray             #  everything else show
-        else []                                                              #  just in case?
+        if typeof item.select is true
+          if item.action is 'select.none' and ctrl.selectService.isEmpty()
+            console.log 'nope'
+            return []
+          if item.action is 'select.all' and ctrl.selectService.isFull() then return []
+        itemArray
       filterTrigger: (currentTrigger) ->
         if selectService.isEmpty() then currentTrigger else "offline_pin"
       menuExtra: [
-        {
-          label: 'Tag Selected'
-          src: 'add_circle'
-          action: 'selected.tag'
-          states: ['home']
-          roles: ['admin']
-          select: true
-        }
-        {
-          label: 'Untag Selected'
-          src: 'highlight_off'
-          action: 'selected.untag'
-          states: ['home']
-          roles: ['admin']
-          select: true
-        }
-        {
-          label: 'Edit Selected'
-          src: 'edit'
-          action: 'selected.edit'
-          states: ['home']
-          roles: ['admin']
-          select: true
-        }
-        {
-          label: 'Delete Selected'
-          src: 'delete'
-          action: 'selected.remove'
-          states: ['home']
-          roles: ['admin']
-          select: true
-        }
         {
           label: 'Deselect All'
           src: 'select_all'
           action: 'select.none'
           states: ['home']
           roles: ['admin']
+          select: true
         }
         {
-          label: 'Select All'
+          label: 'Select All (on all pages)'
           src: 'done_all'
           action: 'select.all'
           states: ['home']
           roles: ['admin']
+          select: true
         }
       ]
 
@@ -123,5 +91,8 @@ class SelectedCtrl
     this.menuService.removeMenu this.menuConfig.registerID
 
 angular.module 'homemademessClient'
-.component 'selectedControl',
-  controller: SelectedCtrl
+.component 'selectControl',
+  bindings:
+    view: '<'
+  templateUrl: 'app/components/admin/select/select.html'
+  controller: SelectCtrl

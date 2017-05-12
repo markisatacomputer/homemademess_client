@@ -1,0 +1,31 @@
+.action-container
+
+  md-chips(
+    ng-model="ctrl.selectedTags"
+    md-transform-chip="ctrl.prepareTag($chip)"
+    md-autocomplete-snap
+  )
+
+    md-autocomplete(
+      md-selected-item="ctrl.selectedItem"
+      md-search-text="ctrl.searchText"
+      md-items="item in ctrl.findTags(ctrl.searchText)"
+      md-item-text="item.text"
+      md-min-length="1"
+      md-autofocus="true"
+      placeholder="Search or Add Tags"
+    )
+      md-item-template
+        span(md-highlight-text="ctrl.searchText") {{item.text}} ({{item._images.length}})
+
+    md-chip-template
+      strong {{$chip.text}}
+      span &nbsp;&#40;{{$chip._images.length}}&#41;&nbsp;
+
+  md-button.md-raised.md-primary(ng-click="ctrl.add()") Add Tags
+  md-button.md-raised(ng-click="ctrl.clearSelectedTags()") Clear Selections
+
+  md-list
+    md-list-item.md-2-line(ng-repeat="item in ctrl.tagsInView")
+      .md-item-text.md-whiteframe-z1(flex)
+        h3 {{item.text}}
