@@ -9,7 +9,7 @@
 
   div(ui-view)
 
-  slides
+  slides(view="view" user="user")
 
   .admin(ng-if="user.role=='admin'")
     admin(user="user" view="view" on-update="recieveView(view)")

@@ -1,59 +1,60 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.directive 'slides', ->
-  slidesCtrl = [ '$scope', '$state', 'broadcastService', '$mdMedia', 'paramService',
-  ($scope, $state, broadcastService, $mdMedia, paramService) ->
-    $scope.cols =
+class SlidesCtrl
+  constructor: ($scope, $state, broadcastService, $mdMedia) ->
+    this.$scope = $scope
+    this.$state = $state
+    this.broadcastService = broadcastService
+    this.$mdMedia = $mdMedia
+    this.cols =
       sm: 24
       md: 36
       lg: 48
       gt: 60
-    $scope.derivative = 0
+    this.derivative = 0
 
-    $scope.broadcast = broadcastService
+  getLink: (id) ->
+    this.$state.href this.$state.$current.name + '.slideshow.slide', {slide: id}
 
-    $scope.getLink = (id) ->
-      url = $state.href $state.$current.name + '.slideshow.slide', {slide: id}
-      url + paramService.paramsToString()
+  ratio: (img) ->
+    #  Get aspect ratio as decimal
+    Math.round((img.height/img.width)*100)/100
 
-    ratio = (img) ->
-      #  Get aspect ratio as decimal
-      Math.round((img.height/img.width)*100)/100
+  aspect: (img,n) ->
+    a = this.ratio img
+    #  Set columns/rows
+    columns = switch
+      #  If pano span page width
+      when a < 0.4
+        switch
+          when $mdMedia 'sm'
+            this.derivative = 0
+            this.cols.sm
+          when $mdMedia 'md'
+            this.derivative = 0
+            this.cols.md
+          when $mdMedia 'lg'
+            this.derivative = 1
+            this.cols.lg
+          when $mdMedia 'gt-lg'
+            this.derivative = 1
+            this.cols.gt
+      #  Default one column
+      else
+        this.derivative = 0
+        12
+    rows = Math.round columns*a
+    aspect = [columns, rows]
+    aspect[n]
 
-    $scope.aspect = (img,n) ->
-      a = ratio img
-      #  Set columns/rows
-      columns = switch
-        #  If pano span page width
-        when a < 0.4
-          switch
-            when $mdMedia 'sm'
-              $scope.derivative = 0
-              $scope.cols.sm
-            when $mdMedia 'md'
-              $scope.derivative = 0
-              $scope.cols.md
-            when $mdMedia 'lg'
-              $scope.derivative = 1
-              $scope.cols.lg
-            when $mdMedia 'gt-lg'
-              $scope.derivative = 1
-              $scope.cols.gt
-        #  Default one column
-        else
-          $scope.derivative = 0
-          12
-      rows = Math.round columns*a
-      aspect = [columns, rows]
-      aspect[n]
+  clss: (img) ->
+    a = this.ratio img
+    clss = if a>1 then "vertical" else if a<1 then "horizontal" else if a==1 then "square"
 
-    $scope.clss = (img) ->
-      a = ratio img
-      clss = if a>1 then "vertical" else if a<1 then "horizontal" else if a==1 then "square"
-
-  ]
-  directive =
-    restrict: 'E'
-    controller: slidesCtrl
-    templateUrl: 'app/components/slides/slides.html'
+angular.module 'homemademessClient'
+.component 'slides',
+  bindings:
+    view: '<'
+    user: '<'
+  templateUrl: 'app/components/slides/slides.html'
+  controller: SlidesCtrl
