@@ -1,8 +1,9 @@
 'use strict'
 
 class TagCtrl
-  constructor: (menuService, $scope, $mdDialog) ->
+  constructor: (menuService, selectService, $scope, $mdDialog) ->
     this.menuService = menuService
+    this.selectService = selectService
     this.$scope = $scope
     this.$mdDialog = $mdDialog
     this.menuConfig =

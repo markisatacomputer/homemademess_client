@@ -24,6 +24,7 @@
 
   md-button.md-raised.md-primary(ng-click="ctrl.add()") Add Tags
   md-button.md-raised(ng-click="ctrl.clearSelectedTags()") Clear Selections
+  md-button.md-raised(ng-click="ctrl.$mdDialog.hide()") Close
 
   md-list
     md-list-item.md-2-line(ng-repeat="item in ctrl.tagsInView")
