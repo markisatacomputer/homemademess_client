@@ -6,8 +6,7 @@ angular.module 'homemademessClient'
   init: () ->
     this.dropzone = new Dropzone 'body',
       url: apiUrl + '/up'
-      #headers:
-        #"Authorization": Auth.getToken()
+      headers: Auth.addHeader()
       autoProcessQueue: true
       previewsContainer: 'upload-info'
       init: () ->

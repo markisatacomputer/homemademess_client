@@ -140,6 +140,12 @@ angular.module 'homemademessClient'
   getToken: ->
     $cookies.get 'token'
 
+  addHeader: (headers) ->
+    if typeof(headers) is 'undefined' then headers = {}
+    token = $cookies.get 'token'
+    if token then headers.Authorization = 'Bearer ' + token
+    headers
+
   toggle: ->
     ctrl = this
     ctrl.isLoggedInAsync (loggedIn) ->
