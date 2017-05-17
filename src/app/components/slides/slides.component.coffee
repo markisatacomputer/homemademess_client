@@ -47,10 +47,6 @@ class SlidesCtrl
     aspect = [columns, rows]
     aspect[n]
 
-  clss: (img) ->
-    a = this.ratio img
-    clss = if a>1 then "vertical" else if a<1 then "horizontal" else if a==1 then "square"
-
 angular.module 'homemademessClient'
 .component 'slides',
   bindings:
