@@ -4,10 +4,12 @@ angular.module 'homemademessClient'
 .factory 'Auth', ($http, User, $cookies, $mdDialog, apiUrl, broadcastService) ->
   currentUser = if $cookies.get 'token' then User.get(
     {}
-    () ->
-      #console.log 'success'
-    () ->
+    (u) ->
+      if u.role = 'admin'
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.get 'token'
+    (e) ->
       $cookies.remove 'token'
+      delete $http.defaults.headers.common.Authorization
   ) else {}
 
   ###
@@ -23,10 +25,15 @@ angular.module 'homemademessClient'
       password: user.password
 
     .then (res) ->
-      $cookies.remove 'token'
-      $cookies.put 'token', res.data.token
+      #  save token in cookie
+      now = new Date()
+      $cookies.put 'token', res.data.token, { expires: new Date(now.getTime() + (4*60*60*1000) ) }
+      #  set default Authorization header
+      $http.defaults.headers.common.Authorization = 'Bearer ' + res.data.token
+      #  set current user
       currentUser = User.get()
       callback? res, currentUser
+      #  broadcast user
       broadcastService.send 'auth.login', currentUser
       currentUser
 
@@ -42,6 +49,7 @@ angular.module 'homemademessClient'
   ###
   logout: ->
     $cookies.remove 'token'
+    delete $http.defaults.headers.common.Authorization
     currentUser = {}
     broadcastService.send 'auth.logout', currentUser
     return
@@ -139,12 +147,6 @@ angular.module 'homemademessClient'
   ###
   getToken: ->
     $cookies.get 'token'
-
-  addHeader: (headers) ->
-    if typeof(headers) is 'undefined' then headers = {}
-    token = $cookies.get 'token'
-    if token then headers.Authorization = 'Bearer ' + token
-    headers
 
   toggle: ->
     ctrl = this

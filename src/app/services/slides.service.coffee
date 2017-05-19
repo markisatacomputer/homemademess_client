@@ -14,13 +14,6 @@ angular.module 'homemademessClient'
       else
         null
 
-  authHeader = (headers) ->
-    token = $cookies.get 'token'
-    if token
-      'Bearer ' + token
-    else
-      ''
-
   $resource apiUrl + '/images',
     #  all the query params for our api call
     page:    ()->
@@ -29,9 +22,3 @@ angular.module 'homemademessClient'
       getParam 'per',  60
     tagtext: ()->
       getParam 'tagtext'
-  ,
-    #  our only method for the moment
-    get:
-      method: 'GET'
-      headers:
-        'Authorization' : authHeader

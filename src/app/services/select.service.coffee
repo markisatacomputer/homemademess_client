@@ -2,28 +2,20 @@
 
 angular.module 'homemademessClient'
 .factory 'selectService', (Auth, $resource, apiUrl, paramService, broadcastService) ->
-
-  headers = Auth.addHeader()
-
   api =  $resource apiUrl + '/select/:id',
     {id: @id},
     get:
       method: 'GET'
       isArray: true
-      headers: headers
     select:
       method: 'POST'
-      headers: headers
     deselect:
       method: 'DELETE'
-      headers: headers
     selectAll:
       method: 'POST'
       isArray: true
-      headers: headers
     deselectAll:
       method: 'DELETE'
-      headers: headers
 
   selectService =
     selected: []
