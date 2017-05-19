@@ -30,7 +30,6 @@ class TagCtrl
         templateUrl: '/app/components/admin/tag/tagDialog.html'
         controller: 'TagDialogCtrl'
         controllerAs: 'ctrl'
-        bindToController: true
 
   $onDestroy: () ->
     # remove menu

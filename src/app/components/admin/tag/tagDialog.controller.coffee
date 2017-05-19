@@ -1,10 +1,8 @@
 'use strict'
 
 class TagDialogCtrl
-  constructor: (Auto, Tags, socketService, tagDialogService, $mdDialog) ->
+  constructor: (Auto, Tags, tagDialogService, $mdDialog) ->
     ctrl = this
-    socketService.then (s) ->
-      ctrl.socketService = s
 
     this.Auto = Auto
     this.Tags = Tags
