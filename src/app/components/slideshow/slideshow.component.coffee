@@ -65,12 +65,12 @@ class SlideshowCtrl
         when 'slideup'    then nn = 0
         when 'slidedown'  then nn = this.slides.length-1
       if this.slides[nn]?._id?
-        this.window.location.href = this.$state.href(this.$state.current, {slide: this.slides[nn]._id}) + this.paramService.paramsToString()
+        this.window.location.href = this.$state.href(this.$state.current, {slide: this.slides[nn]._id})
     false
 
   # find parent state and go to there
   showClose: (e)->
-    this.window.location.href = this.$state.href('^.^') + this.paramService.paramsToString()
+    this.window.location.href = this.$state.href('^.^')
 
 angular.module 'homemademessClient'
 .component 'slideshow',

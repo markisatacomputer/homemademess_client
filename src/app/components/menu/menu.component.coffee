@@ -20,15 +20,10 @@ class MenuCtrl
     #  menu item REMOVED
     this.scope.$on 'menu.remove', (e, id) ->
       ctrl.getMenu()
-    #  menu refresh triggered
-    this.scope.$on 'select.has-selected', (e) ->
-      ctrl.getMenu true
-    #  menu refresh triggered
-    this.scope.$on 'select.empty', (e) ->
-      ctrl.getMenu()
-    #  slides updated
-    this.scope.$on 'slides.update', (e, open) ->
-      ctrl.getMenu()
+    #  selection changes
+    this.scope.$on 'menu.reload', (e, open) ->
+      ctrl.getMenu open
+
     #  user changed
     this.scope.$on 'auth.login', (e, user) ->
       ctrl.getMenu true
@@ -38,7 +33,7 @@ class MenuCtrl
   getMenu: (open) ->
     this.menu = this.menuService.getMenu()
     this.trigger = this.menuService.getTrigger()
-    this.menuOpen = if open? and typeof(open) is "boolean" then open else false
+    this.menuOpen = if typeof(open) is "boolean" then open else this.menuOpen
 
   #  here's where the action is - ba dum dum
   act: (action) ->

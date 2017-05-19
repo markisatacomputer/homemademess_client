@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'homemademessClient'
-.factory 'Slides', ($resource, apiUrl, $location) ->
+.factory 'Slides', ($cookies, $resource, apiUrl, $location) ->
 
   #  get query param and return value -> default value -> null
   getParam = (q, defaultVal) ->
@@ -13,6 +13,13 @@ angular.module 'homemademessClient'
         defaultVal
       else
         null
+
+  authHeader = (headers) ->
+    token = $cookies.get 'token'
+    if token
+      'Bearer ' + token
+    else
+      ''
 
   $resource apiUrl + '/images',
     #  all the query params for our api call
@@ -26,3 +33,5 @@ angular.module 'homemademessClient'
     #  our only method for the moment
     get:
       method: 'GET'
+      headers:
+        'Authorization' : authHeader
