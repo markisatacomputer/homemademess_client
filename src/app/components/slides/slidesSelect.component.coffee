@@ -1,9 +1,10 @@
 'use strict'
 
 class SlidesSelectCtrl
-  constructor: ($scope, selectService) ->
+  constructor: ($scope, selectService, Auth) ->
     this.$scope = $scope
     this.selectService = selectService
+    this.Auth = Auth
 
   toggleSelect: (id, value) ->
     i = this.map.indexOf id
@@ -15,12 +16,26 @@ class SlidesSelectCtrl
     angular.forEach this.view.images, (img, i) ->
       ctrl.view.images[i].selected = value
 
+  drawSelected: () ->
+    ctrl = this
+    this.selectService.getSelected().then (s) ->
+        angular.forEach ctrl.view.images, (img, i) ->
+          if s.indexOf(img._id) > -1
+            ctrl.view.images[i].selected = true
+
   $onInit: () ->
     ctrl = this
 
     #  Map image ids
     this.map = this.view.images.map (i) ->
       return i._id
+
+    #  Draw Selected on page load since slides will come before jwt sometimes
+    user = this.Auth.getCurrentUser()
+    if user.hasOwnProperty '$promise'
+      user.$promise.then (u) ->
+        if u.role is 'admin'
+          ctrl.drawSelected()
 
     #  draw selected images
     this.$scope.$on 'select.on', (e, id) ->
@@ -34,11 +49,7 @@ class SlidesSelectCtrl
     this.$scope.$on 'auth.logout', () ->
       ctrl.toggleSelectAll false
     this.$scope.$on 'auth.login', () ->
-      ctrl.selectService.getSelected().then (s) ->
-        angular.forEach ctrl.view.images, (img, i) ->
-          if s.indexOf(img._id) > -1
-            ctrl.view.images[i].selected = true
-
+      ctrl.drawSelected()
 
   $onChanges: (changes) ->
     #  Map image ids
