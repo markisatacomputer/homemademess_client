@@ -5,16 +5,17 @@ angular.module 'homemademessClient'
 
   headers = Auth.addHeader()
 
-  api =  $resource apiUrl + '/select/tags',
+  api =  $resource apiUrl + '/select/tags/:id',
     {},
     get:
       method: 'GET'
       headers: headers
-
-    put:
+    post:
       method: 'POST'
       headers: headers
-
+    delete:
+      method: 'DELETE'
+      headers: headers
 
   tagDialogService =
     get: ->
@@ -25,7 +26,14 @@ angular.module 'homemademessClient'
       .$promise
 
     add: (tags) ->
-      api.put tags, (t) ->
+      api.post tags, (t) ->
+        return t
+      , (e) ->
+        console.log e
+      .$promise
+
+    remove: (tagid) ->
+      api.delete {id: tagid}, (t) ->
         return t
       , (e) ->
         console.log e

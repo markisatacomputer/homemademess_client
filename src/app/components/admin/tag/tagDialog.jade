@@ -29,6 +29,7 @@
     ng-model="ctrl.tagsInView.objects"
     md-transform-chip="ctrl.prepareTag($chip)"
     md-removeable="true"
+    md-on-remove="ctrl.remove($chip)"
   )
     md-chip-template
       span

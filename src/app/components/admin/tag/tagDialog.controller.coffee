@@ -29,18 +29,9 @@ class TagDialogCtrl
   getSelectedTagIds: ->
     return this.selectedTags.map (tag) ->
       tag._id
-  addTagToTagsInView: (tag) ->
-    add = true
-    angular.forEach this.tagsInView.ids, (t, i) ->
-      if t == tag._id
-        add = false
 
-    if add
-      this.tagsInView.objects.push tag
-      this.tagsInView.ids.push tag._id
-
-  remove: (tagId) ->
-    this.socketService.emit 'selected:tags:remove', {tagIds: [tagId]}
+  remove: (tag) ->
+    this.tagDialogService.remove tag._id
 
   add: ->
     ctrl = this
@@ -65,10 +56,10 @@ class TagDialogCtrl
       this.tagDialogService.add tagids
       .then (r) ->
         #  update tag list
-        angular.forEach ctrl.selectedTags, (tag, i) ->
-          ctrl.addTagToTagsInView tag
-        #  clear search
-        ctrl.clearSelectedTags()
+        ctrl.tagDialogService.get().then (tags) ->
+          ctrl.tagsInView = tags
+          #  clear search
+          ctrl.clearSelectedTags()
 
 angular.module 'homemademessClient'
 .controller 'TagDialogCtrl', TagDialogCtrl
