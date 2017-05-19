@@ -24,11 +24,6 @@ angular.module 'homemademessClient'
     deselectAll:
       method: 'DELETE'
       headers: headers
-    getTags:
-      method: 'GET'
-      headers: headers
-      params:
-        id: 'tags'
 
   selectService =
     selected: []
@@ -44,14 +39,6 @@ angular.module 'homemademessClient'
       ctrl = this
       api.get {returnImages: 1}, (s) ->
         return s
-      , (e) ->
-        console.log e
-      .$promise
-
-    getSelectedTags: ->
-      ctrl = this
-      api.getTags (t) ->
-        return t
       , (e) ->
         console.log e
       .$promise
