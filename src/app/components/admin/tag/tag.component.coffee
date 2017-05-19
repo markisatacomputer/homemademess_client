@@ -1,9 +1,8 @@
 'use strict'
 
 class TagCtrl
-  constructor: (menuService, selectService, $scope, $mdDialog) ->
+  constructor: (menuService, $scope, $mdDialog) ->
     this.menuService = menuService
-    this.selectService = selectService
     this.$scope = $scope
     this.$mdDialog = $mdDialog
     this.menuConfig =
@@ -31,8 +30,6 @@ class TagCtrl
         templateUrl: '/app/components/admin/tag/tagDialog.html'
         controller: 'TagDialogCtrl'
         controllerAs: 'ctrl'
-        locals:
-          selectedImages: ctrl.selectService.selected
         bindToController: true
 
   $onDestroy: () ->

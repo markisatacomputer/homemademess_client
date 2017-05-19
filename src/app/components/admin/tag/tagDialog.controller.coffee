@@ -1,17 +1,21 @@
 'use strict'
 
 class TagDialogCtrl
-  constructor: (Auto, Tags, socketService, $mdDialog) ->
+  constructor: (Auto, Tags, socketService, selectService, $mdDialog) ->
     ctrl = this
     socketService.then (s) ->
       ctrl.socketService = s
 
     this.Auto = Auto
     this.Tags = Tags
+    this.selectService = selectService
     this.$mdDialog = $mdDialog
     this.selectedTags = []
     this.searchText
     this.selectedItem
+
+    this.selectService.getSelectedTags().then (tags) ->
+      ctrl.tagsInView = tags
 
   findTags: (value) ->
     this.Auto.query {q:value}
@@ -40,7 +44,6 @@ class TagDialogCtrl
     if this.selectedTags.length > 0
       this.socketService.emit 'selected:tags:add', {tagIds: this.getSelectedTagIds()}
       this.clearSelectedTags()
-
 
 angular.module 'homemademessClient'
 .controller 'TagDialogCtrl', TagDialogCtrl
