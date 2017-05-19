@@ -19,9 +19,9 @@ class SlidesSelectCtrl
   drawSelected: () ->
     ctrl = this
     this.selectService.getSelected().then (s) ->
-        angular.forEach ctrl.view.images, (img, i) ->
-          if s.indexOf(img._id) > -1
-            ctrl.view.images[i].selected = true
+      angular.forEach ctrl.view.images, (img, i) ->
+        if s.indexOf(img._id) > -1
+          ctrl.view.images[i].selected = true
 
   $onInit: () ->
     ctrl = this

@@ -14,7 +14,7 @@ angular.module 'homemademessClient'
       else
         null
 
-  $resource apiUrl + '/images',
+  $resource apiUrl + '/images/:id',
     #  all the query params for our api call
     page:    ()->
       getParam 'page', 0
@@ -22,3 +22,4 @@ angular.module 'homemademessClient'
       getParam 'per',  60
     tagtext: ()->
       getParam 'tagtext'
+    id: @id
