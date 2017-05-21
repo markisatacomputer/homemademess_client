@@ -27,10 +27,19 @@ angular.module 'homemademessClient'
         console.log e
       .$promise
 
-    getSelectedImages: ->
+    getSelectedImages: (filter) ->
       ctrl = this
-      api.get {returnImages: 1}, (s) ->
-        return s
+      if filter then filter.returnImages = 1 else filter = {returnImages: 1}
+      api.get filter, (s) ->
+        s
+      , (e) ->
+        console.log e
+      .$promise
+
+    deleteSelectedImages: ->
+      ctrl = this
+      api.delete {id: 'images'}, (r) ->
+        r
       , (e) ->
         console.log e
       .$promise

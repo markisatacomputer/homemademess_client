@@ -30,9 +30,6 @@ class DeleteCtrl
         templateUrl: '/app/components/admin/delete/deleteDialog.html'
         controller: 'DeleteDialogCtrl'
         controllerAs: 'ctrl'
-        locals:
-          selectedImages: ctrl.selectService.selected
-        bindToController: true
 
   $onDestroy: () ->
     # remove menu

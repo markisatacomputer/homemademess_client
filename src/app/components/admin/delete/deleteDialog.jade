@@ -1,10 +1,16 @@
 .action-container
-  p You're about to delete all of the following images:
+  p You're about to delete all of the following files FOREVER:
 
-  md-list
-    md-list-item.md-2-line(ng-repeat="item in ctrl.selectService.getSelected()")
-      .md-item-text.md-whiteframe-z1(flex)
-        h3 {{item.name}}
+  md-content(class="md-padding" layout="row")
+    md-card(ng-repeat="item in ctrl.selectedImages" flex-xs="50" flex-sm="33" flex-md="25" flex-lg="16.6" flex-xl="10" layout="column")
+      md-card-title
+        md-card-title-text
+         span.md-subtitle {{item.filename}}
+      md-card-content(layout="row")
+        .md-media-sm.card-media
+          img.thumb(ng-src="{{item.derivative[0].uri}}")
+
+  {{ctrl.additional}}
 
   p You cannot undo this operation.  Are you super duper sure you want to continue?
 
