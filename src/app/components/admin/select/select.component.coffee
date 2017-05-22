@@ -7,6 +7,7 @@ class SelectCtrl
     this.selectService = selectService
     this.Auth = Auth
 
+    ctrl = this
     this.menuConfig =
       registerID: 'select'
       filterTrigger: (currentTrigger) ->
