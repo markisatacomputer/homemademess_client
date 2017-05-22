@@ -37,8 +37,12 @@
         }
       }
       &.selected {
-        .edit-actions {
-          left: 12%;
+        figure:hover {
+          .edit-actions {
+            .edit-slide, .delete-slide {
+              opacity: 0;
+            }
+          }
         }
       }
     }

@@ -24,13 +24,10 @@
       div.img-container
         a(ng-href='{{$ctrl.getLink(image._id)}}' )
           img.img-responsive(ng-src='{{image.derivative[$ctrl.derivative].uri}}')
-      div.edit-actions(ng-if="$ctrl.user.role=='admin' && !image.selected")
+      div.edit-actions(ng-if="$ctrl.user.role=='admin'")
         md-button.select-slide(ng-click="$ctrl.broadcastService.send('slide.select',image)")
           md-icon.material-icons done
         md-button.edit-slide(ng-click="$ctrl.broadcastService.send('slide.edit',image)")
           md-icon.material-icons edit
         md-button.delete-slide(ng-click="$ctrl.broadcastService.send('slide.remove',image)")
           md-icon.material-icons delete
-      div.edit-actions(ng-if="image.selected")
-        md-button.select-slide(ng-click="$ctrl.broadcastService.send('slide.select',image)")
-          md-icon.material-icons done
