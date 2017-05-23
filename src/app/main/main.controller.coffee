@@ -13,6 +13,11 @@ angular.module 'homemademessClient'
     # populate tags for searchbar
     $scope.view.filter.tag.tags = tgs
 
+    # add image map
+    mapImages = ->
+      $scope.view.map = $scope.view.images.map (i) ->
+        return i._id
+    mapImages()
 
     #  set slides to fit filter
     updateView = (filter) ->
@@ -21,11 +26,9 @@ angular.module 'homemademessClient'
       # if filter is passed then we need to update params
       if filter? then paramService.updateParams params
       # now call api to update view
-      Slides.get params,
-        (s) ->
-          $scope.view = s
-        (e) ->
-          console.log e
+      Slides.get params, (s) ->
+        $scope.view = s
+        mapImages()
 
     #  test object equality
     testEquality = (obj, obj2) ->
@@ -58,6 +61,7 @@ angular.module 'homemademessClient'
       # check for change - and update view
       if !testEquality view, oldView
         $scope.view = view
+        mapImages()
 
     #  listen for user param changes
     $scope.$on 'params:update:recieve', (newParams) ->

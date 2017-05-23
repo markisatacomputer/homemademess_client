@@ -30,7 +30,7 @@ class SelectCtrl
       ]
 
   toggleSelect: (id, value) ->
-    i = this.map.indexOf id
+    i = this.view.map.indexOf id
     if i > -1
       this.view.images[i].selected = value
 
@@ -48,10 +48,6 @@ class SelectCtrl
 
   $onInit: () ->
     ctrl = this
-
-    #  Map image ids
-    this.map = this.view.images.map (i) ->
-      return i._id
 
     #  Draw Selected on page load since slides will come before jwt sometimes
     user = this.Auth.getCurrentUser()
@@ -91,11 +87,6 @@ class SelectCtrl
         if item.action is 'select.all' and ctrl.selectService.isFull(ctrl.view.filter.pagination.count) then return []
         itemArray
       ctrl.menuService.registerMenu ctrl.menuConfig
-
-  $onChanges: (changes) ->
-    #  Map image ids
-    this.map = this.view.images.map (i) ->
-      return i._id
 
   $onDestroy: () ->
     # remove menu
