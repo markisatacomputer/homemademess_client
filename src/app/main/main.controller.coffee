@@ -55,14 +55,6 @@ angular.module 'homemademessClient'
         # update view with new filter
         updateView filter
 
-    # TODO - fix flashing on update
-    $scope.recieveView = (view) ->
-      oldView = angular.copy $scope.view
-      # check for change - and update view
-      if !testEquality view, oldView
-        $scope.view = view
-        mapImages()
-
     #  listen for user param changes
     $scope.$on 'params:update:recieve', (newParams) ->
       updateView()

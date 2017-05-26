@@ -1,13 +1,8 @@
 'use strict'
 
 class AdminCtrl
-  constructor: (broadcastService, $scope, menuService) ->
-    this.broadcastService = broadcastService
-    this.$scope = $scope
-    this.menuService = menuService
 
   $onInit: () ->
-    ctrl = this
     #  ADD CLASSES
     angular.element(document).find('body').addClass('user-'+this.user.name)
     angular.element(document).find('body').addClass('role-admin')
@@ -22,6 +17,5 @@ angular.module 'homemademessClient'
   bindings:
     user: '<'
     view: '<'
-    onUpdate: '&'
   templateUrl: 'app/components/admin/admin.html'
   controller: AdminCtrl
