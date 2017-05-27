@@ -92,6 +92,16 @@ angular.module 'homemademessClient'
       Auth.toggle()
 
     socketService.then (s) ->
+      #  mark image as in process of deletion
+      s.socket.on 'image:delete:begin', (id) ->
+        i = $scope.view.map.indexOf id
+        if i > -1 then $scope.view.images[i].delete = true
+
+      #  refresh view after successful delete operation
+      s.socket.on 'image:delete:complete', (id) ->
+        i = $scope.view.map.indexOf id
+        if i > -1 then updateView()
+
       #  temp image is saved as perm
       s.socket.on 'image:upload:complete', (img) ->
         #  remove dropzone preview

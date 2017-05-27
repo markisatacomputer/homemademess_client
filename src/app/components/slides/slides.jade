@@ -18,7 +18,7 @@
       md-colspan='{{$ctrl.aspect(image,0)}}'
       md-rowspan='{{$ctrl.aspect(image,1)}}'
       ng-init='ratio= $ctrl.ratio(image)'
-      ng-class='{vertical: (ratio > 1), horizontal: (ratio<1), square: (ratio ==1), selected: image.selected}'
+      ng-class='{vertical: (ratio > 1), horizontal: (ratio<1), square: (ratio ==1), selected: image.selected, deleting: image.delete}'
       ng-attr-id="{{image._id}}"
     )
       div.img-container

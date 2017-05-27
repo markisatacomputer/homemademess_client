@@ -45,6 +45,18 @@
           }
         }
       }
+      &.deleting {
+        .edit-actions {
+          display: none;
+        }
+        div.img-container {
+          background: #FFF;
+          a {
+            pointer-events: none;
+            cursor: not-allowed;
+          }
+        }
+      }
     }
     figure:hover {
       div.edit-actions {
