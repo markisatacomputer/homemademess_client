@@ -4,7 +4,7 @@ angular.module 'homemademessClient'
 
     $stateProvider
       .state 'home',
-        url: '/?{tags}&{page:int}&{per:int}'
+        url: '/?{tagtext}&{page:int}&{per:int}'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
         resolve:
@@ -24,9 +24,11 @@ angular.module 'homemademessClient'
             else
               []
         params:
-          tags:
-            dynamic: true
           page:
+            dynamic: true
+          per:
+            dynamic: true
+          tagtext:
             dynamic: true
       .state 'home.slideshow',
         url: 'slide/'
