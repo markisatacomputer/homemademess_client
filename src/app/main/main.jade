@@ -1,18 +1,18 @@
 .container.main
 
-  menu(user="user")
+  .admin(ng-if="user.role=='admin'")
+    admin(user="user" view="view")
 
   .filter(ng-if="showFilters")
     searchbar(filter="view.filter"  on-update="recieveFilter(filter)")
+
+  menu(user="user")
 
   div(ui-view="slideshow")
 
   div(ui-view)
 
   slides(view="view" user="user")
-
-  .admin(ng-if="user.role=='admin'")
-    admin(user="user" view="view")
 
   pager(filter="view.filter" on-update="recieveFilter(filter)")
 
