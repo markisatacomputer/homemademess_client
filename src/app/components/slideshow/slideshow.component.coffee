@@ -1,21 +1,17 @@
 'use strict'
 
 class SlideshowCtrl
-  constructor: ($state, $document, debounce, $stateParams, lodash, paramService, $window) ->
+  constructor: ($state, $document, debounce, $stateParams, paramService, $window) ->
     this.$state = $state
     this.$document = $document
     this.debounce = debounce
     this.stateParams = $stateParams
-    this.lodash = lodash
     this.paramService = paramService
     this.window = $window
+    this.bounce = 400   # debounce in ms
 
   $onInit: () ->
-    #init map
-    this.map = this.lodash.indexBy this.slides, '_id'
-
-    ctrl = this   # for inside debounce functions
-    bounce = 400  # debounce in ms
+    ctrl = this
 
     # body class
     angular.element document.querySelector 'body'
@@ -27,15 +23,15 @@ class SlideshowCtrl
     .on 'keyup', this.debounce (e) ->
       if !ctrl.$state.transition?
         if [39,37,38,40,27].indexOf e.which != -1
-          n = ctrl.map[ctrl.stateParams.slide].n
-          if n?
+          slideNumber = ctrl.view.map.indexOf ctrl.stateParams.slide
+          if slideNumber?
             switch e.which
-              when 39 then ctrl.showChange 'slideright', n
-              when 37 then ctrl.showChange 'slideleft', n
-              when 38 then ctrl.showChange 'slideup', n
-              when 40 then ctrl.showChange 'slidedown', n
+              when 39 then ctrl.showChange 'slideright', slideNumber
+              when 37 then ctrl.showChange 'slideleft', slideNumber
+              when 38 then ctrl.showChange 'slideup', slideNumber
+              when 40 then ctrl.showChange 'slidedown', slideNumber
               when 27 then ctrl.showClose()
-    , bounce, true
+    , ctrl.bounce, true
 
     # click out events
     angular.element document.querySelector 'slideshow'
@@ -45,7 +41,7 @@ class SlideshowCtrl
       .hasClass 'close-slide'
       if test
         ctrl.showClose()
-    , bounce, true
+    , ctrl.bounce, true
 
   $onDestroy: () ->
     angular.element document.querySelector 'body'
@@ -58,14 +54,14 @@ class SlideshowCtrl
 
   # slideshow navigation
   showChange: (e, n)->
-    if this.slides?
+    if this.view.images?
       switch e
         when 'slideright' then nn = n+1
         when 'slideleft'  then nn = n-1
         when 'slideup'    then nn = 0
-        when 'slidedown'  then nn = this.slides.length-1
-      if this.slides[nn]?._id?
-        this.window.location.href = this.$state.href(this.$state.current, {slide: this.slides[nn]._id})
+        when 'slidedown'  then nn = this.view.images.length-1
+      if this.view.images[nn]?._id?
+        this.window.location.href = this.$state.href(this.$state.current, {slide: this.view.images[nn]._id})
     false
 
   # find parent state and go to there
@@ -75,6 +71,6 @@ class SlideshowCtrl
 angular.module 'homemademessClient'
 .component 'slideshow',
   bindings:
-    slides: '<'
+    view: '<'
   templateUrl: 'app/components/slideshow/slideshow.html'
   controller: SlideshowCtrl

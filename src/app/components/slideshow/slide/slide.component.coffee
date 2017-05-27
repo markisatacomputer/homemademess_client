@@ -6,7 +6,8 @@ class SlideCtrl
     $element.addClass 'close-slide'
 
   $onInit: () ->
-    this.slide = this.slideshow.map[this.$stateParams.slide]
+    index = this.slideshow.view.map.indexOf this.$stateParams.slide
+    this.slide = this.slideshow.view.images[index]
     img =  this.slide.derivative[2]
 
     # add layout class

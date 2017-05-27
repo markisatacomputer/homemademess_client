@@ -32,8 +32,7 @@ angular.module 'homemademessClient'
         url: 'slide/'
         views:
           'slideshow@home':
-            template: '<slideshow slides="view.images" ui-view>'
-            controller: ($scope) ->
+            template: '<slideshow view="view" ui-view>'
 
       .state 'home.slideshow.slide',
         url: ':slide/'
