@@ -6,7 +6,7 @@ angular.module 'homemademessClient'
   '$window'
   'view'
   'user'
-  'tgs'
+  'tag'
   'Slides'
   'Tags'
   'Auth'
@@ -14,7 +14,7 @@ angular.module 'homemademessClient'
   'paramService'
   'broadcastService'
   'socketService'
-  ($scope, $window, view, user, tgs, Slides, Tags, Auth, filterService, paramService, broadcastService, socketService) ->
+  ($scope, $window, view, user, tag, Slides, Tags, Auth, filterService, paramService, broadcastService, socketService) ->
     # init view
     $scope.view = view
     # add user
@@ -22,7 +22,7 @@ angular.module 'homemademessClient'
     # filters start hidden
     $scope.showFilters = filterService.getDisplay()
     # populate tags for searchbar
-    $scope.view.filter.tag.tags = tgs
+    $scope.view.filter.tag.tags = tag
 
     # add image map
     mapImages = ->
