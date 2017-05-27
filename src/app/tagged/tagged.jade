@@ -1,14 +1,14 @@
 .container.main
 
-  h1.tag {{tag[0].text}}
+  menu(user="user")
+
+  h1.tag {{$ctrl.tag[0].text}}
 
   div(ui-view="slideshow")
 
-  menu(user="view.user" on-update-scope="recieveScopeUpdate(update)" on-broadcast-action="recieveMenuAction(action)")
+  slides(view="$ctrl.view" user="$ctrl.user")
 
-  slides
-
-  pager(filter="view.filter" on-update="recieveFilter(filter)")
+  pager(filter="$ctrl.view.filter" on-update="recieveFilter(filter)")
 
   footer.footer
     .container
@@ -16,3 +16,4 @@
         | homemademess.com
         = ' | '
         a(href='https://github.com/markisatacomputer/homemademess') github
+

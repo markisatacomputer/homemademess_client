@@ -41,8 +41,7 @@ angular.module 'homemademessClient'
         component: 'slide'
       .state 'tagged',
         url: '/tagged/:tag/'
-        templateUrl: 'app/tagged/tagged.html'
-        controller: 'TaggedCtrl'
+        component: 'taggedDisplay'
         resolve:
           view: (Slides, $transition$) ->
             Slides.get {tagtext: $transition$.params().tag},
@@ -60,7 +59,7 @@ angular.module 'homemademessClient'
         url: 'slide/'
         views:
           'slideshow@tagged':
-            template: '<slideshow slides="view.images" ui-view>'
+            template: '<slideshow view="view" ui-view>'
       .state 'tagged.slideshow.slide',
         url: ':slide/'
         component: 'slide'
