@@ -2,8 +2,19 @@
 
 angular.module 'homemademessClient'
 .controller 'MainCtrl', [
-  '$scope', '$window', 'view', 'user', 'tgs', 'Slides', 'Tags', 'Auth', 'filterService', 'paramService',
-  ($scope, $window, view, user, tgs, Slides, Tags, Auth, filterService, paramService) ->
+  '$scope'
+  '$window'
+  'view'
+  'user'
+  'tgs'
+  'Slides'
+  'Tags'
+  'Auth'
+  'filterService'
+  'paramService'
+  'broadcastService'
+  'socketService'
+  ($scope, $window, view, user, tgs, Slides, Tags, Auth, filterService, paramService, broadcastService, socketService) ->
     # init view
     $scope.view = view
     # add user
@@ -29,6 +40,7 @@ angular.module 'homemademessClient'
       Slides.get params, (s) ->
         $scope.view = s
         mapImages()
+        broadcastService.send 'updateView', s
 
     #  test object equality
     testEquality = (obj, obj2) ->
@@ -79,5 +91,21 @@ angular.module 'homemademessClient'
     $scope.$on 'menu.toggleAuth', ->
       Auth.toggle()
 
+    socketService.then (s) ->
+      #  temp image is saved as perm
+      s.socket.on 'image:upload:complete', (img) ->
+        #  remove dropzone preview
+        angular.element document.getElementById 'dz-'+img._id
+        .addClass 'image-saved'
+
+        #  get view images date boundaries
+        createDate  = Number img.createDate
+        createDates = []
+        createDates.push Number $scope.view.images[0].createDate
+        createDates.push Number $scope.view.images[$scope.view.images.length - 1].createDate
+        createDates.sort()
+        #  if inside then refresh view
+        if createDates[0] < createDate and createDates[1] > createDate
+          updateView()
 
 ]

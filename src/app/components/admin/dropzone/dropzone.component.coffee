@@ -1,27 +1,9 @@
 'use strict'
 
 class DZCtrl
-  constructor: (socketService, dropzoneService, $scope) ->
-    ctrl = this
-    socketService.then (s) ->
-      ctrl.socketService = s
+  constructor: (dropzoneService, $scope) ->
     this.dropzoneService = dropzoneService
     this.$scope = $scope
-
-  #  Dropzone Listeners
-  addUploadListener: (f, res) ->
-    ctrl = this
-    if res._id? and ctrl.socketService.socket?
-      #  Upload Progress - TODO
-      ctrl.socketService.socket.on res._id+':progress', (progress, total) ->
-        console.log res._id+':progress', progress, total
-      #  Upload Complete
-      ctrl.socketService.socket.on res._id+':complete', (item) ->
-        #  save image from temp cleanup
-        if item.createDate != 0
-          ctrl.socketService.emit 'image:save', item._id
-        #  remove dropzone preview - TODO - add animating class rather than removing element entirely
-        angular.element(f.previewElement).remove()
 
   $onInit: () ->
     ctrl = this
@@ -29,9 +11,9 @@ class DZCtrl
     this.dropzoneService.toggle 'init'
 
     #  LISTEN TO SCOPE EVENTS
-    #  on successful upload to api, listen for successful upload to cloud
+    #  on successful upload to api, add record id to the element
     this.$scope.$on 'dropzone.success', (e, args) ->
-      ctrl.addUploadListener args.file, args.res
+      angular.element(args.file.previewElement).attr 'id', 'dz-' + args.res._id
 
   $onDestroy: () ->
     #  REMOVE SERVICES
