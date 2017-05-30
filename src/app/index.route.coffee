@@ -33,9 +33,7 @@ angular.module 'homemademessClient'
       .state 'home.slideshow',
         url: 'slide/'
         views:
-          'slideshow@home':
-            template: '<slideshow view="view" ui-view>'
-
+          'slideshow@home': 'slideshow'
       .state 'home.slideshow.slide',
         url: ':slide/'
         component: 'slide'
@@ -58,8 +56,7 @@ angular.module 'homemademessClient'
       .state 'tagged.slideshow',
         url: 'slide/'
         views:
-          'slideshow@tagged':
-            template: '<slideshow view="view" ui-view>'
+          'slideshow@tagged': 'slideshow'
       .state 'tagged.slideshow.slide',
         url: ':slide/'
         component: 'slide'

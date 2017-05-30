@@ -1,1 +1,8 @@
-.slideshow(class="close-slide" ui-view)
+.slideshow(
+  class="close-slide"
+  ui-view
+  md-swipe-left="$ctrl.showChange('slideleft')"
+  md-swipe-right="$ctrl.showChange('slideright')"
+  md-swipe-up="$ctrl.showChange('slideup')"
+  md-swipe-down="$ctrl.showChange('slidedown')"
+)
