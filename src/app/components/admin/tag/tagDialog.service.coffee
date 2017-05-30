@@ -13,7 +13,7 @@ angular.module 'homemademessClient'
       .$promise
 
     add: (tags) ->
-      api.post tags, (t) ->
+      api.save tags, (t) ->
         return t
       , (e) ->
         console.log e
