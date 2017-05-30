@@ -9,7 +9,12 @@ var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('scripts', function () {
+
+  //  for local dev - load environment
+  require('dotenv').config();
+
   return gulp.src(path.join(conf.paths.src, '/app/**/*.coffee'))
+    .pipe($.preprocess())
     .pipe($.sourcemaps.init())
     .pipe($.coffeelint())
     .pipe($.coffeelint.reporter())
