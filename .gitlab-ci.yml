@@ -13,7 +13,7 @@ cache:
 before_script:
   - npm install bower gulp -g
   - npm install
-  - bower install
+  - bower install --allow-root
 
 pages:
   stage: deploy
