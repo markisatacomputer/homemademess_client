@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'dropzoneService', (apiUrl, broadcastService, Auth) ->
+dropzoneService = (apiUrl, broadcastService, Auth) ->
 
   init: () ->
     this.dropzone = new Dropzone 'body',
@@ -48,3 +47,6 @@ angular.module 'homemademessClient'
           this.destroy()
           if !this.dropzone?
             broadcastService.send 'dropzone.destroy'
+
+angular.module 'homemademessClient'
+.factory 'dropzoneService', ['apiUrl', 'broadcastService', 'Auth', dropzoneService]

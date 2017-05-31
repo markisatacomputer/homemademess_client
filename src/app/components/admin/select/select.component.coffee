@@ -97,4 +97,4 @@ angular.module 'homemademessClient'
   bindings:
     view: '<'
   templateUrl: 'app/components/admin/select/select.html'
-  controller: SelectCtrl
+  controller: ['selectService', 'menuService', '$scope', 'Auth', SelectCtrl]

@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'selectService', (Auth, $resource, apiUrl, paramService, broadcastService) ->
+selectService = (Auth, $resource, apiUrl, paramService, broadcastService) ->
   api =  $resource apiUrl + '/select/:id',
     {id: @id},
     get:
@@ -91,3 +90,6 @@ angular.module 'homemademessClient'
             broadcastService.send 'menu.reload'
 
   selectService
+
+angular.module 'homemademessClient'
+.factory 'selectService', ['Auth', '$resource', 'apiUrl', 'paramService', 'broadcastService', selectService]

@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'filterService', ($cookies, broadcastService) ->
+filterService = ($cookies, broadcastService) ->
   filterService =
     setDisplay: (set) ->
       if set
@@ -24,3 +23,6 @@ angular.module 'homemademessClient'
 
   filterService.display = filterService.getDisplay()
   filterService
+
+angular.module 'homemademessClient'
+.factory 'filterService', ['$cookies', 'broadcastService', filterService]

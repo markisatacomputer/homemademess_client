@@ -14,4 +14,4 @@ class DeleteCtrl
 
 angular.module 'homemademessClient'
 .component 'deleteControl',
-  controller: DeleteCtrl
+  controller: ['$scope', 'Slides', DeleteCtrl]

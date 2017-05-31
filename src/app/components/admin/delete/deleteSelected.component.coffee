@@ -37,4 +37,4 @@ class DeleteSelectedCtrl
 
 angular.module 'homemademessClient'
 .component 'deleteSelectedControl',
-  controller: DeleteSelectedCtrl
+  controller: ['menuService', '$scope', '$mdDialog', DeleteSelectedCtrl]

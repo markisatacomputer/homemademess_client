@@ -42,4 +42,4 @@ class MenuCtrl
 angular.module 'homemademessClient'
 .component 'menu',
   templateUrl: 'app/components/menu/menu.html'
-  controller: MenuCtrl
+  controller: ['$rootScope', 'menuService', 'broadcastService', MenuCtrl]

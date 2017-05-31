@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'menuService', ($state, broadcastService, Auth, lodash) ->
+menuService = ($state, broadcastService, Auth, lodash) ->
   menuStart:
     [
       {
@@ -100,3 +99,6 @@ angular.module 'homemademessClient'
       if ctrl[name][id]?
         delete ctrl[name][id]
     broadcastService.send 'menu.remove', id
+
+angular.module 'homemademessClient'
+.factory 'menuService', ['$state', 'broadcastService', 'Auth', 'lodash', menuService]

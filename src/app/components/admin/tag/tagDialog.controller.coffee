@@ -60,4 +60,4 @@ class TagDialogCtrl
           ctrl.clearSelectedTags()
 
 angular.module 'homemademessClient'
-.controller 'TagDialogCtrl', TagDialogCtrl
+.controller 'TagDialogCtrl', ['Auto', 'Tags', 'tagDialogService', '$mdDialog', TagDialogCtrl]

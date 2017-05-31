@@ -37,4 +37,4 @@ class TagCtrl
 
 angular.module 'homemademessClient'
 .component 'tagControl',
-  controller: TagCtrl
+  controller: ['menuService', '$scope', '$mdDialog', TagCtrl]

@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'socketService', (socketFactory, apiUrl, Auth, $ocLazyLoad, broadcastService, $q) ->
+socketService = (socketFactory, apiUrl, Auth, $ocLazyLoad, broadcastService, $q) ->
   socketService =
     getIO: () ->
       socketService = this
@@ -65,3 +64,6 @@ angular.module 'homemademessClient'
   , (e) ->
     broadcastService.send 'socket.init.error', e
     e
+
+angular.module 'homemademessClient'
+.factory 'socketService', ['socketFactory', 'apiUrl', 'Auth', '$ocLazyLoad', 'broadcastService', '$q', socketService]

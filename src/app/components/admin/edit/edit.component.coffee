@@ -40,4 +40,4 @@ class EditCtrl
 
 angular.module 'homemademessClient'
 .component 'editControl',
-  controller: EditCtrl
+  controller: ['menuService', '$scope', '$mdDialog', EditCtrl]

@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'Tags', ($resource, apiUrl, $location) ->
+Tags = ($resource, apiUrl, $location) ->
 
   #  get query param and return value -> default value -> null
   getTags = () ->
@@ -20,3 +19,6 @@ angular.module 'homemademessClient'
     get:
       method: 'GET'
       isArray: true
+
+angular.module 'homemademessClient'
+.factory 'Tags', ['$resource', 'apiUrl', '$location', Tags]

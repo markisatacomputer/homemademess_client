@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'Slides', ($cookies, $resource, apiUrl, $location) ->
+Slides = ($cookies, $resource, apiUrl, $location) ->
 
   #  get query param and return value -> default value -> null
   getParam = (q, defaultVal) ->
@@ -23,3 +22,6 @@ angular.module 'homemademessClient'
     tagtext: ()->
       getParam 'tagtext'
     id: @id
+
+angular.module 'homemademessClient'
+.factory 'Slides', ['$cookies', '$resource', 'apiUrl', '$location', Slides]

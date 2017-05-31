@@ -36,4 +36,4 @@ class DeleteDialogCtrl
       ctrl.$mdDialog.hide()
 
 angular.module 'homemademessClient'
-.controller 'DeleteDialogCtrl', DeleteDialogCtrl
+.controller 'DeleteDialogCtrl', ['selectService', '$mdDialog', '$mdMedia', DeleteDialogCtrl]

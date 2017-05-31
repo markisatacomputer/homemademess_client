@@ -25,4 +25,4 @@ angular.module 'homemademessClient'
   require:
     slideshow: '^^'
   templateUrl: 'app/components/slideshow/slide/slide.html'
-  controller: SlideCtrl
+  controller: ['$stateParams', '$element', SlideCtrl]

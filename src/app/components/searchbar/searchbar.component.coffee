@@ -21,7 +21,7 @@ class SearchbarCtrl
 
 angular.module 'homemademessClient'
 .component 'searchbar',
-  controller: SearchbarCtrl
+  controller: ['$resource', 'Auto', SearchbarCtrl]
   bindings:
     filter: '<'
     onUpdate: '&'

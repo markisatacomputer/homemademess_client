@@ -42,4 +42,4 @@ angular.module 'homemademessClient'
     user: '<'
     tag: '<'
   templateUrl: 'app/tagged/tagged.html'
-  controller: TaggedCtrl
+  controller: ['menuService', '$scope', '$state', TaggedCtrl]

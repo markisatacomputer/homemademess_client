@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'User', ($resource, apiUrl, $cookies) ->
+User = ($resource, apiUrl, $cookies) ->
 
   authHeader = (headers) ->
     token = $cookies.get 'token'
@@ -27,3 +26,5 @@ angular.module 'homemademessClient'
       headers:
         'Authorization' : authHeader
 
+angular.module 'homemademessClient'
+.factory 'User', ['$resource', 'apiUrl', '$cookies', User]

@@ -53,4 +53,4 @@ angular.module 'homemademessClient'
     view: '<'
     user: '<'
   templateUrl: 'app/components/slides/slides.html'
-  controller: SlidesCtrl
+  controller: ['$scope', '$state', 'broadcastService', '$mdMedia', SlidesCtrl]

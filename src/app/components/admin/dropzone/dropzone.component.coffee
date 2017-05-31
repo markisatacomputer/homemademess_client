@@ -22,4 +22,4 @@ class DZCtrl
 angular.module 'homemademessClient'
 .component 'dropzone',
   template: '<upload-info></upload-info>'
-  controller: DZCtrl
+  controller: ['dropzoneService', '$scope', DZCtrl]

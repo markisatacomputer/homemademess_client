@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'Auth', ($http, User, $cookies, $mdDialog, apiUrl, broadcastService) ->
+authService = ($http, User, $cookies, $mdDialog, apiUrl, broadcastService) ->
   currentUser = if $cookies.get 'token' then User.get(
     {}
     (u) ->
@@ -158,3 +157,7 @@ angular.module 'homemademessClient'
           clickOutsideToClose: true
           templateUrl: '/app/account/login/login.html'
           controller: 'LoginCtrl'
+
+
+angular.module 'homemademessClient'
+.factory 'Auth', ['$http', 'User', '$cookies', '$mdDialog', 'apiUrl', 'broadcastService', authService]

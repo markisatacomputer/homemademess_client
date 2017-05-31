@@ -1,5 +1,7 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'Auto', ($resource, apiUrl) ->
+Auto = ($resource, apiUrl) ->
   $resource apiUrl + '/auto'
+
+angular.module 'homemademessClient'
+.factory 'Auto', ['$resource', 'apiUrl', Auto]

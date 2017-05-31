@@ -1,7 +1,6 @@
 'use strict'
 
-angular.module 'homemademessClient'
-.factory 'paramService', ($rootScope, $location, broadcastService, $httpParamSerializer) ->
+paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) ->
   paramsService =
     #  get params from browser
     getParams: ->
@@ -49,3 +48,5 @@ angular.module 'homemademessClient'
 
   paramsService.init()
 
+angular.module 'homemademessClient'
+.factory 'paramService', ['$rootScope', '$location', 'broadcastService', '$httpParamSerializer', paramService]
