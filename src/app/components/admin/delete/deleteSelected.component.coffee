@@ -27,7 +27,7 @@ class DeleteSelectedCtrl
     this.$scope.$on 'menu.selected.remove', (e) ->
       ctrl.$mdDialog.show
         clickOutsideToClose: true
-        templateUrl: '/app/components/admin/delete/deleteDialog.html'
+        templateUrl: 'app/components/admin/delete/deleteDialog.html'
         controller: 'DeleteDialogCtrl'
         controllerAs: 'ctrl'
 

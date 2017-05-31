@@ -27,7 +27,7 @@ class EditCtrl
     this.$scope.$on 'menu.selected.edit', (e) ->
       ctrl.$mdDialog.show
         clickOutsideToClose: true
-        templateUrl: '/app/components/admin/edit/editDialog.html'
+        templateUrl: 'app/components/admin/edit/editDialog.html'
         controller: 'EditDialogCtrl'
         controllerAs: 'ctrl'
         locals:

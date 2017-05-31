@@ -27,7 +27,7 @@ class TagCtrl
     this.$scope.$on 'menu.selected.tag', (e) ->
       ctrl.$mdDialog.show
         clickOutsideToClose: true
-        templateUrl: '/app/components/admin/tag/tagDialog.html'
+        templateUrl: 'app/components/admin/tag/tagDialog.html'
         controller: 'TagDialogCtrl'
         controllerAs: 'ctrl'
 

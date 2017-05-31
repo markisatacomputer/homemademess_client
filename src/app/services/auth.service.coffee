@@ -155,7 +155,7 @@ authService = ($http, User, $cookies, $mdDialog, apiUrl, broadcastService) ->
       else
         $mdDialog.show
           clickOutsideToClose: true
-          templateUrl: '/app/account/login/login.html'
+          templateUrl: 'app/account/login/login.html'
           controller: 'LoginCtrl'
 
 
