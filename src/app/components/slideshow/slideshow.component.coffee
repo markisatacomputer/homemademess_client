@@ -23,14 +23,12 @@ class SlideshowCtrl
     .on 'keyup', this.debounce (e) ->
       if !ctrl.$state.transition?
         if [39,37,38,40,27].indexOf e.which != -1
-          slideNumber = ctrl.view.map.indexOf ctrl.stateParams.slide
-          if slideNumber?
-            switch e.which
-              when 39 then ctrl.showChange 'slideright', slideNumber
-              when 37 then ctrl.showChange 'slideleft', slideNumber
-              when 38 then ctrl.showChange 'slideup', slideNumber
-              when 40 then ctrl.showChange 'slidedown', slideNumber
-              when 27 then ctrl.showClose()
+          switch e.which
+            when 39 then ctrl.showChange 'slideright'
+            when 37 then ctrl.showChange 'slideleft'
+            when 38 then ctrl.showChange 'slideup'
+            when 40 then ctrl.showChange 'slidedown'
+            when 27 then ctrl.showClose()
     , ctrl.bounce, true
 
     # click out events
@@ -55,13 +53,15 @@ class SlideshowCtrl
   # slideshow navigation
   showChange: (e, n)->
     if this.view.images?
-      switch e
-        when 'slideright' then nn = n+1
-        when 'slideleft'  then nn = n-1
-        when 'slideup'    then nn = 0
-        when 'slidedown'  then nn = this.view.images.length-1
-      if this.view.images[nn]?._id?
-        this.window.location.href = this.$state.href(this.$state.current, {slide: this.view.images[nn]._id})
+      slideNumber = this.view.map.indexOf this.stateParams.slide
+      if slideNumber?
+        switch e
+          when 'slideright' then n = slideNumber+1
+          when 'slideleft'  then n = slideNumber-1
+          when 'slideup'    then n = 0
+          when 'slidedown'  then n = this.view.images.length-1
+      if this.view.images[n]?._id?
+        this.window.location.href = this.$state.href(this.$state.current, {slide: this.view.images[n]._id})
     false
 
   # find parent state and go to there
