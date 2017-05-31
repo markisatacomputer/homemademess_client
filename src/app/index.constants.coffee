@@ -2,12 +2,12 @@
 
 angular.module('homemademessClient')
   # @ifdef API_URL
-  .constant 'apiUrl', '
+  .constant 'apiUrl', location.protocol+'//'+'
     # @echo API_URL
     '
   # @endif
   # @ifndef API_URL
-  .constant 'apiUrl', 'http://localhost:8666'
+  .constant 'apiUrl', location.protocol+'//localhost:8666'
   # @endif
   # @ifndef DEBUG
   .constant 'debug', false
