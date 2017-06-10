@@ -38,8 +38,16 @@ angular.module 'homemademessClient'
       if filter? then paramService.updateParams params
       # now call api to update view
       Slides.get params, (s) ->
-        $scope.view = s
-        mapImages()
+        s.images.forEach (slide, i) ->
+          n = $scope.view.map.indexOf slide._id
+          if n == -1
+            $scope.view.images.splice i, 1, slide
+            $scope.view.map.splice i, 1, slide._id
+          else if n != i
+            $scope.view.images.splice i, 1, slide
+            $scope.view.map.splice i, 1, slide._id
+            $scope.view.images.splice n, 1
+            $scope.view.map.splice n, 1
         broadcastService.send 'updateView', s
 
     #  test object equality
@@ -109,13 +117,6 @@ angular.module 'homemademessClient'
         .addClass 'image-saved'
 
         #  get view images date boundaries
-        createDate  = Number img.createDate
-        createDates = []
-        createDates.push Number $scope.view.images[0].createDate
-        createDates.push Number $scope.view.images[$scope.view.images.length - 1].createDate
-        createDates.sort()
-        #  if inside then refresh view
-        if createDates[0] < createDate and createDates[1] > createDate
-          updateView()
+        updateView()
 
 ]
