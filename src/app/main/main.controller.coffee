@@ -48,6 +48,7 @@ angular.module 'homemademessClient'
             $scope.view.map.splice i, 1, slide._id
             $scope.view.images.splice n, 1
             $scope.view.map.splice n, 1
+        $scope.view.filter = s.filter
         broadcastService.send 'updateView', s
 
     #  test object equality
