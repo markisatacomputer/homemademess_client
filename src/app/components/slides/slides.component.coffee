@@ -21,27 +21,33 @@ class SlidesCtrl
     Math.round((img.height/img.width)*100)/100
 
   aspect: (img,n) ->
+    ctrl = this
     a = this.ratio img
     #  Set columns/rows
     columns = switch
       #  If pano span page width
       when a < 0.4
         switch
-          when this.$mdMedia 'sm'
-            this.derivative = 0
-            this.cols.sm
-          when this.$mdMedia 'md'
-            this.derivative = 0
-            this.cols.md
-          when this.$mdMedia 'lg'
-            this.derivative = 1
-            this.cols.lg
-          when this.$mdMedia 'gt-lg'
-            this.derivative = 1
-            this.cols.gt
+          when ctrl.$mdMedia 'sm'
+            ctrl.derivative = 0
+            ctrl.cols.sm
+          when ctrl.$mdMedia 'md'
+            ctrl.derivative = 0
+            ctrl.cols.md
+          when ctrl.$mdMedia 'lg'
+            ctrl.derivative = 1
+            ctrl.cols.lg
+          when ctrl.$mdMedia 'gt-lg'
+            ctrl.derivative = 1
+            ctrl.cols.gt
+      #  tall pics
+      when a > 1.8
+        ctrl.derivative = 0
+        cols = (1/a)*12
+        Math.ceil(cols/3)*3
       #  Default one column
       else
-        this.derivative = 0
+        ctrl.derivative = 0
         12
     rows = Math.round columns*a
     aspect = [columns, rows]
