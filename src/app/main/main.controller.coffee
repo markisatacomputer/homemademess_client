@@ -113,6 +113,8 @@ angular.module 'homemademessClient'
 
       #  temp image is saved as perm
       s.socket.on 'image:upload:complete', (img) ->
+        #  broadcast
+        broadcastService.send 'image.upload.complete', img
         #  remove dropzone preview
         angular.element document.getElementById 'dz-'+img._id
         .addClass 'image-saved'
