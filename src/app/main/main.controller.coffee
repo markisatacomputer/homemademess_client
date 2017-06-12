@@ -112,14 +112,15 @@ angular.module 'homemademessClient'
         if i > -1 then updateView()
 
       #  temp image is saved as perm
+      s.socket.on 'image:upload:begin', (img) ->
+        #  broadcast
+        broadcastService.send 'image.upload.begin', img
+
+      #  temp image is saved as perm
       s.socket.on 'image:upload:complete', (img) ->
         #  broadcast
         broadcastService.send 'image.upload.complete', img
-        #  remove dropzone preview
-        angular.element document.getElementById 'dz-'+img._id
-        .addClass 'image-saved'
-
-        #  get view images date boundaries
+        #  refresh slides
         updateView()
 
 ]

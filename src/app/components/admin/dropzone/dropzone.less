@@ -1,0 +1,77 @@
+admin {
+  upload-info, upload-info-message {
+    position: fixed;
+    bottom: 1em;
+    left: 20%;
+    width: 60%;
+    padding: 1em;
+    background: none;
+    z-index: 6;
+    display: none;
+  }
+  .upload-container {
+    &.processing,
+    &.rejected,
+    &.queued,
+    &.uploading {
+      upload-info, upload-info-message {
+        display: block;
+      }
+      upload-info {
+        bottom: 8em;
+      }
+    }
+    upload-info.hidepreviews {
+      display: none;
+    }
+  }
+
+  upload-info {
+    z-index: 5;
+    .dz-preview {
+      -webkit-transition: all 0.2s linear;
+      transition: all 0.2s linear;
+      overflow: hidden;
+      min-width: 100px;
+      &.image-saved {
+        height: 0;
+        min-height: 0;
+        width: 0;
+        min-width: 0;
+        margin: 0;
+      }
+    }
+  }
+  upload-info-message {
+    div {
+      margin-top: 0.5em;
+      .datum {
+        display: inline-block;
+        padding: 1em;
+        background: rgba(255, 255, 255, 0.5);
+        color: #fff;
+        text-shadow: 2px 2px 1px #666;
+        font-weight: bold;
+        border-radius: 6px;
+      }
+      .action {
+        .datum();
+        color: #666;
+        text-shadow: 2px 2px 2px #fff;
+        &.showpreviews {
+          cursor: pointer;
+        }
+      }
+      .datum:not(:last-child),
+      .action:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+body.dz-drag-hover {
+  admin upload-info {
+    display: block;
+  }
+}

@@ -1,0 +1,20 @@
+.upload-container(
+  ng-class="{processing: $ctrl.processing.length,rejected: $ctrl.rejected.length, queued: $ctrl.queued.length, uploading: $ctrl.uploading.length}"
+)
+  upload-info(ng-class="{hidepreviews: !$ctrl.showpreviews}")
+
+  upload-info-message
+    .stats
+      span.datum.processing(ng-show="$ctrl.processing.length") {{$ctrl.processing.length}} processing
+      span.datum.rejected(ng-show="$ctrl.rejected.length") {{$ctrl.rejected.length}} rejected
+      span.datum.queued(ng-show="$ctrl.queued.length") {{$ctrl.queued.length}} queued
+      span.datum.uploading(ng-show="$ctrl.uploading.length") {{$ctrl.uploading.length}} uploading
+      span.datum.progress {{$ctrl.total | number:0}}% Uploaded
+      span.datum.inprocess(ng-show="$ctrl.inprocess") Processing: {{$ctrl.inprocess.filename}} {{$ctrl.inprocess.percent | number:0}}%
+    .config
+      span.action.showpreviews(ng-click="$ctrl.showpreviews = !$ctrl.showpreviews")
+        span(ng-show="$ctrl.showpreviews") hide previews
+        span(ng-show="!$ctrl.showpreviews") show previews
+      span.action.selectoncomplete
+        label select on complete
+        input(type="checkbox" ng-model="$ctrl.selectoncomplete")
