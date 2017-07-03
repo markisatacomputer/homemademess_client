@@ -7,6 +7,7 @@ class SlidesCtrl
     this.broadcastService = broadcastService
     this.$mdMedia = $mdMedia
     this.cols =
+      xs: 24
       sm: 24
       md: 36
       lg: 48
@@ -28,6 +29,9 @@ class SlidesCtrl
       #  If pano span page width
       when a < 0.4
         switch
+          when ctrl.$mdMedia 'xs'
+            ctrl.derivative = 0
+            ctrl.cols.xs
           when ctrl.$mdMedia 'sm'
             ctrl.derivative = 0
             ctrl.cols.sm
