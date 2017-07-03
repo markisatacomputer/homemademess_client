@@ -1,13 +1,22 @@
 .searchy {
   position: fixed;
+  top: 6px;
   width: 100%;
   z-index: 50;
   #search {
     width: 96%;
-    margin: 3% 1%;
+    margin: 0px auto 6px 8px;
     tags-input {
+      .tags {
+        margin-right: 48px;
+      }
       .host {
         margin: 0;
+        input {
+          height: 48px;
+          width: 100% !important;
+          font-size: 1.6em;
+        }
       }
       .autocomplete {
         ul.suggestion-list {
