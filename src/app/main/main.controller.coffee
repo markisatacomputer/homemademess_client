@@ -48,6 +48,9 @@ angular.module 'homemademessClient'
             $scope.view.map.splice i, 1, slide._id
             $scope.view.images.splice n, 1
             $scope.view.map.splice n, 1
+        if s.images.length < $scope.view.images.length
+          $scope.view.images = $scope.view.images.slice 0, s.images.length
+          $scope.view.map = $scope.view.map.slice 0, s.images.length
         $scope.view.filter = s.filter
         broadcastService.send 'updateView', s
 
