@@ -19,6 +19,7 @@ paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) -
         params.tagtext = if filter.tag.tagtext.length > 0 then this.tagsToParam filter.tag.tagtext else null
         params.page = if filter.pagination.page > 0 then filter.pagination.page else null
         params.per = if filter.pagination.per != 60 then filter.pagination.per else null
+        params.selected = if filter.selected then filter.selected else null
       params
 
     #  Map tags to simple array

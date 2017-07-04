@@ -56,7 +56,7 @@ angular.module 'homemademessClient'
 
     #  test object equality
     testEquality = (obj, obj2) ->
-      if !angular.equals(angular.toJson(obj), angular.toJson(obj2))
+      if !angular.equals angular.toJson(obj), angular.toJson(obj2)
         false
       else
         true
@@ -78,6 +78,7 @@ angular.module 'homemademessClient'
           $window.scrollTo 0,0
         # update view with new filter
         updateView filter
+      else console.log filterCopy, oldFilter
 
     #  listen for user param changes
     $scope.$on 'params:update:recieve', (newParams) ->

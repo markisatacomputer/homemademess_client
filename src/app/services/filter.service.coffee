@@ -1,6 +1,8 @@
 'use strict'
 
-filterService = ($cookies, broadcastService) ->
+filterService = ($resource, apiUrl, $cookies, broadcastService) ->
+  api =  $resource apiUrl + '/info/:id', {id: @id}
+
   filterService =
     setDisplay: (set) ->
       if set
@@ -21,8 +23,15 @@ filterService = ($cookies, broadcastService) ->
       broadcastService.send 'filterService.toggleDisplay', display
       display
 
+    getDateBoundaries: ->
+      api.get {id: 'dates'}, (r) ->
+        r
+      , (e) ->
+        console.log e
+      .$promise
+
   filterService.display = filterService.getDisplay()
   filterService
 
 angular.module 'homemademessClient'
-.factory 'filterService', ['$cookies', 'broadcastService', filterService]
+.factory 'filterService', ['$resource', 'apiUrl', '$cookies', 'broadcastService', filterService]

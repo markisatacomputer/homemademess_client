@@ -1,0 +1,28 @@
+md-tabs.md-dynamic-height(md-selected="filterSelected")
+  md-tab#search
+    md-tab-label(aria-label="Search Tags")
+      md-icon.material-icons search
+    md-tab-body
+      searchbar(filter="$ctrl.filter" on-update="$ctrl.onUpdate({filter:filter})")
+
+  md-tab(ng-if="$ctrl.user.role == 'admin'")
+    md-tab-label(aria-label="Show Selected")
+      md-icon.material-icons check_circle
+    md-tab-body
+      p Filter results to show only selected images.
+      md-switch(ng-model="$ctrl.selected" aria-label="Show Selected Only" ng-change="$ctrl.updateSelect()")
+        span(ng-show="$ctrl.filter.selected")  Showing only selected images
+        span(ng-show="!$ctrl.filter.selected")  Showing all images
+
+  md-tab
+    md-tab-label(aria-label="Date Range")
+      md-icon.material-icons date_range
+    md-tab-body
+      md-slider-container
+        span Date From
+        md-slider(ng-model="$ctrl.filter.date.from" flex min="minDate" max="getMaxDate()" step="10000" aria-label="Date From")
+        span {{$ctrl.filter.date.from | fromUTC:'MM.DD.YY HHa'}}
+      md-slider-container
+        span Date To
+        md-slider(ng-model="$ctrl.filter.date.to" flex min="getMinDate()" max="maxDate" step="10000" aria-label="Date From")
+        span {{$ctrl.filter.date.to | fromUTC:'MM.DD.YY HHa'}}

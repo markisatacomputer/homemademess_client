@@ -4,7 +4,7 @@
     admin(user="user" view="view")
 
   .filter(ng-if="showFilters")
-    searchbar(filter="view.filter"  on-update="recieveFilter(filter)")
+    filter(filter="view.filter" user="user" on-update="recieveFilter(filter)")
 
   menu(user="user")
 
