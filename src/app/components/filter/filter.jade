@@ -18,11 +18,10 @@ md-tabs.md-dynamic-height(md-selected="filterSelected")
     md-tab-label(aria-label="Date Range")
       md-icon.material-icons date_range
     md-tab-body
-      md-slider-container
+      .from
         span Date From
-        md-slider(ng-model="$ctrl.filter.date.from" flex min="minDate" max="getMaxDate()" step="10000" aria-label="Date From")
-        span {{$ctrl.filter.date.from | fromUTC:'MM.DD.YY HHa'}}
-      md-slider-container
+        md-datepicker(ng-model="$ctrl.from" md-min-date="$ctrl.minDate" md-max-date="$ctrl.maxDate" ng-change="$ctrl.setDate()")
+      .to
         span Date To
-        md-slider(ng-model="$ctrl.filter.date.to" flex min="getMinDate()" max="maxDate" step="10000" aria-label="Date From")
-        span {{$ctrl.filter.date.to | fromUTC:'MM.DD.YY HHa'}}
+        md-datepicker(ng-model="$ctrl.to" md-min-date="$ctrl.minDate" md-max-date="$ctrl.maxDate" ng-change="$ctrl.setDate()")
+
