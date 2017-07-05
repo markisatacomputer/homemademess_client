@@ -8,13 +8,13 @@ angular.module 'homemademessClient'
         templateUrl: 'app/main/main.html'
         controller: 'MainCtrl'
         resolve:
-          view: (Slides) ->
+          user: (Auth) ->
+            Auth.getCurrentUser().$promise
+          view: (Slides, user) ->
             Slides.get {},
               (s) ->
                 s.data
             .$promise
-          user: (Auth) ->
-            Auth.getCurrentUser().$promise
           tag: (Tags, $location) ->
             if $location.search().tagtext?
               Tags.get {},
@@ -47,13 +47,13 @@ angular.module 'homemademessClient'
         url: '/tagged/:tag/'
         component: 'taggedDisplay'
         resolve:
-          view: (Slides, $transition$) ->
+          user: (Auth) ->
+            Auth.getCurrentUser().$promise
+          view: (Slides, $transition$, user) ->
             Slides.get {tagtext: $transition$.params().tag},
               (s) ->
                 s.data
             .$promise
-          user: (Auth) ->
-            Auth.getCurrentUser().$promise
           tag: (Tags, $transition$) ->
             Tags.get {text: $transition$.params().tag},
               (t) ->
