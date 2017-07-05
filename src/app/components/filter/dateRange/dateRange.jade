@@ -1,0 +1,6 @@
+.from
+  span Date From
+  md-datepicker(ng-model="$ctrl.from" md-min-date="$ctrl.minDate" md-max-date="$ctrl.maxFrom" ng-change="$ctrl.setDate()")
+.to
+  span Date To
+  md-datepicker(ng-model="$ctrl.to" md-min-date="$ctrl.minTo" md-max-date="$ctrl.maxDate" ng-change="$ctrl.setDate()")
