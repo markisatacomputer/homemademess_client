@@ -21,6 +21,12 @@ Slides = ($cookies, $resource, apiUrl, $location) ->
       getParam 'per',  60
     tagtext: ()->
       getParam 'tagtext'
+    start: ()->
+      getParam 'start'
+    end: ()->
+      getParam 'end'
+    selected: ()->
+      getParam 'selected'
     id: @id
 
 angular.module 'homemademessClient'
