@@ -15,8 +15,8 @@ class FilterCtrl
     this.selected = this.filter.selected
 
     #  set up dates from params
-    this.from = if this.filter?.date?.from? then new Date moment(this.filter.date.from).toISOString() else null
-    this.to = if this.filter?.date?.to? then new Date moment(this.filter.date.to).toISOString() else null
+    this.from = if this.filter?.date?.from? and this.filter.date.from != 0 then new Date moment(this.filter.date.from).toISOString() else null
+    this.to = if this.filter?.date?.to? and this.filter.date.to != 0 then new Date moment(this.filter.date.to).toISOString() else null
 
     #  get min and max dates from api
     this.filterService.getDateBoundaries().then (dates) ->
