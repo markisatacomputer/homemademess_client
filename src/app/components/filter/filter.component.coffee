@@ -1,9 +1,8 @@
 'use strict'
 
 class FilterCtrl
-  constructor: (filterService, debounce) ->
+  constructor: (filterService) ->
     this.filterService = filterService
-    this.debounce = debounce
     this.selected = false
     this.maxDate = moment().valueOf()
     this.minDate = 0
@@ -54,4 +53,4 @@ angular.module 'homemademessClient'
     user: '<'
     onUpdate: '&'
   templateUrl: 'app/components/filter/filter.html'
-  controller: ['filterService', 'debounce', FilterCtrl]
+  controller: ['filterService', FilterCtrl]
