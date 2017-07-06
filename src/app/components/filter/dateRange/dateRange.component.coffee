@@ -31,6 +31,11 @@ class DateRangeCtrl
       ctrl.maxFrom = ctrl.to
       ctrl.minTo = ctrl.from
 
+  #  when date filter changes come from elsewhere
+  $onChanges: () ->
+    this.from = if this.filter?.date?.from? and this.filter.date.from != 0 then new Date moment(this.filter.date.from).toISOString() else this.minDate
+    this.to = if this.filter?.date?.to? and this.filter.date.to != 0 then new Date moment(this.filter.date.to).toISOString() else this.maxDate
+
   setDate: () ->
     ctrl = this
     #  FROM

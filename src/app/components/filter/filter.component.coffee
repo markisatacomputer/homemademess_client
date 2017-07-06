@@ -30,7 +30,10 @@ class FilterCtrl
       ctrl.initFilters()
 
   $onChanges: () ->
+    #  update selected
     this.selected = this.filter.selected
+    #  update when changes come from elsewhere
+    this.initFilters()
 
   updateSelect: ->
     filter = angular.copy this.filter
