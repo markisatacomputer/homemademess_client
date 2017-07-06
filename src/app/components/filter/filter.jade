@@ -1,12 +1,12 @@
 .filter-body(ng-if="$ctrl.showFilters")
-  md-tabs.md-dynamic-height(md-selected="filterSelected")
-    md-tab#search
+  md-tabs.md-dynamic-height(md-selected="$ctrl.filterActive" md-center-tabs="true")
+    md-tab#search(md-on-select="$ctrl.updateActive()")
       md-tab-label(aria-label="Search Tags")
         md-icon.material-icons search
       md-tab-body
         searchbar(filter="$ctrl.filter" on-update="$ctrl.onUpdate({filter:filter})")
 
-    md-tab(ng-if="$ctrl.user.role == 'admin'")
+    md-tab(ng-if="$ctrl.user.role == 'admin'" md-on-select="$ctrl.updateActive()")
       md-tab-label(aria-label="Show Selected")
         md-icon.material-icons check_circle
       md-tab-body
@@ -15,7 +15,7 @@
           span(ng-show="$ctrl.filter.selected")  Showing only selected images
           span(ng-show="!$ctrl.filter.selected")  Showing all images
 
-    md-tab
+    md-tab(md-on-select="$ctrl.updateActive()")
       md-tab-label(aria-label="Date Range")
         md-icon.material-icons event
       md-tab-body

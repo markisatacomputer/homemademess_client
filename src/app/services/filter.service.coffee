@@ -17,6 +17,12 @@ filterService = ($resource, apiUrl, $cookies, broadcastService) ->
         when '1' then true
         else false
 
+    setActive: (i) ->
+      $cookies.put 'activeFilter', i
+
+    getActive: ->
+      $cookies.get 'activeFilter'
+
     toggleDisplay: ->
       display = !this.getDisplay()
       this.setDisplay display

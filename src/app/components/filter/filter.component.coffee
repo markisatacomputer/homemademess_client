@@ -5,6 +5,7 @@ class FilterCtrl
     this.filterService = filterService
     this.$scope = $scope
     this.showFilters = null
+    this.filterActive = 0
     this.selected = false
 
   $onInit: () ->
@@ -14,6 +15,8 @@ class FilterCtrl
 
     # filters start hidden
     this.showFilters = this.filterService.getDisplay()
+    # get active tab
+    this.filterActive = this.filterService.getActive()
     #  listen for filter toggle
     this.$scope.$on 'menu.toggleFilters', ->
       ctrl.showFilters = ctrl.filterService.toggleDisplay()
@@ -21,10 +24,14 @@ class FilterCtrl
   $onChanges: () ->
     this.selected = this.filter.selected
 
-  updateSelect: () ->
+  updateSelect: ->
     filter = angular.copy this.filter
     filter.selected = this.selected
     this.onUpdate {filter: filter}
+
+  updateActive: ->
+    this.filterService.setActive this.filterActive
+
 
 angular.module 'homemademessClient'
 .component 'filter',
