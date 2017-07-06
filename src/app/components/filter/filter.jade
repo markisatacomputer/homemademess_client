@@ -1,4 +1,13 @@
 .filter-body(ng-if="$ctrl.showFilters")
+  md-chips(
+    ng-model="$ctrl.filters"
+    md-removeable="true"
+    md-on-remove="$ctrl.removeFilter($chip)"
+  )
+    md-chip-template
+      span
+        strong {{$chip.name}}
+
   md-tabs.md-dynamic-height(md-selected="$ctrl.filterActive" md-center-tabs="true")
     md-tab#search(md-on-select="$ctrl.updateActive()")
       md-tab-label(aria-label="Search Tags")
