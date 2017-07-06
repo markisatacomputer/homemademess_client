@@ -1,13 +1,17 @@
-.filter {
+.filter-body {
   position: fixed;
+  top: 0;
   z-index: 50;
-  width: 90%;
-  padding: 5%;
+  width: 100%;
+
   background: rgba(255,255,255,0.7);
   md-tabs {
     overflow: visible;
-    md-tab-content.md-active {
-      overflow: visible;
+    md-tab-content {
+      padding: 2% 3%;
+      &.md-active {
+        overflow: visible;
+      }
     }
   }
 }
