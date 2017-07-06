@@ -10,17 +10,15 @@ angular.module 'homemademessClient'
   'Slides'
   'Tags'
   'Auth'
-  'filterService'
   'paramService'
   'broadcastService'
   'socketService'
-  ($scope, $window, view, user, tag, Slides, Tags, Auth, filterService, paramService, broadcastService, socketService) ->
+  ($scope, $window, view, user, tag, Slides, Tags, Auth, paramService, broadcastService, socketService) ->
     # init view
     $scope.view = view
     # add user
     $scope.user = user
-    # filters start hidden
-    $scope.showFilters = filterService.getDisplay()
+
     # populate tags for searchbar
     $scope.view.filter.tag.tags = tag
 
@@ -95,10 +93,6 @@ angular.module 'homemademessClient'
       $scope.user = user
     $scope.$on 'auth.logout', (e, user) ->
       $scope.user = user
-
-    #  listen for filter toggle
-    $scope.$on 'menu.toggleFilters', ->
-      $scope.showFilters = filterService.toggleDisplay()
 
     #  listen for login/logout
     $scope.$on 'menu.toggleAuth', ->

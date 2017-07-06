@@ -1,14 +1,22 @@
 'use strict'
 
 class FilterCtrl
-  constructor: (filterService) ->
+  constructor: (filterService, $scope) ->
     this.filterService = filterService
+    this.$scope = $scope
+    this.showFilters = null
     this.selected = false
 
   $onInit: () ->
     ctrl = this
 
     this.selected = this.filter.selected
+
+    # filters start hidden
+    this.showFilters = this.filterService.getDisplay()
+    #  listen for filter toggle
+    this.$scope.$on 'menu.toggleFilters', ->
+      ctrl.showFilters = ctrl.filterService.toggleDisplay()
 
   $onChanges: () ->
     this.selected = this.filter.selected
@@ -25,4 +33,4 @@ angular.module 'homemademessClient'
     user: '<'
     onUpdate: '&'
   templateUrl: 'app/components/filter/filter.html'
-  controller: ['filterService', FilterCtrl]
+  controller: ['filterService', '$scope', FilterCtrl]

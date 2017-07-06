@@ -3,8 +3,7 @@
   .admin(ng-if="user.role=='admin'")
     admin(user="user" view="view")
 
-  .filter(ng-if="showFilters")
-    filter(filter="view.filter" user="user" on-update="recieveFilter(filter)")
+  filter(filter="view.filter" user="user" on-update="recieveFilter(filter)")
 
   menu(user="user")
 
