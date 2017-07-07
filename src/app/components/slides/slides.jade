@@ -16,6 +16,7 @@
       ng-init='ratio= $ctrl.ratio(image)'
       ng-class='{vertical: (ratio > 1), horizontal: (ratio<1), square: (ratio ==1), selected: image.selected, deleting: image.delete}'
       ng-attr-id="{{image._id}}"
+      on-long-press="$ctrl.broadcastService.send('slide.select',image)"
     )
       div.img-container
         a(ng-href='{{$ctrl.getLink(image._id)}}' )

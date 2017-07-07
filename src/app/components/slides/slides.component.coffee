@@ -7,7 +7,7 @@ class SlidesCtrl
     this.broadcastService = broadcastService
     this.$mdMedia = $mdMedia
     this.cols =
-      xs: 24
+      xs: 12
       sm: 24
       md: 36
       lg: 48
