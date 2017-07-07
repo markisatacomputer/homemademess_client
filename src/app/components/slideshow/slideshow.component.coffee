@@ -1,12 +1,11 @@
 'use strict'
 
 class SlideshowCtrl
-  constructor: ($state, $document, debounce, $stateParams, paramService, $window) ->
+  constructor: ($state, $document, debounce, $stateParams, swipe, $window) ->
     this.$state = $state
     this.$document = $document
     this.debounce = debounce
     this.stateParams = $stateParams
-    this.paramService = paramService
     this.window = $window
     this.bounce = 400   # debounce in ms
 
@@ -73,4 +72,4 @@ angular.module 'homemademessClient'
   bindings:
     view: '<'
   templateUrl: 'app/components/slideshow/slideshow.html'
-  controller: ['$state', '$document', 'debounce', '$stateParams', 'paramService', '$window', SlideshowCtrl]
+  controller: ['$state', '$document', 'debounce', '$stateParams', 'swipe', '$window', SlideshowCtrl]

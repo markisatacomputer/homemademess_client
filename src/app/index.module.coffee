@@ -5,9 +5,9 @@ angular.module 'homemademessClient', [
   'ui.router'
   'ngMaterial'
   'ngTagsInput'
-  'hmTouchEvents'
   'ngLodash'
   'debounce'
   'oc.lazyLoad'
   'btford.socket-io'
+  'swipe'
 ]
