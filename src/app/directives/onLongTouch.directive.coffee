@@ -13,7 +13,9 @@ angular.module 'homemademessClient'
       timeoutHandler = $timeout ->
         fn scope, {$event: event}
       , delay
-      #if event.preventDefault then event.preventDefault()
+
+    elem.bind 'touchmove', (event) ->
+      $timeout.cancel timeoutHandler
 
     elem.bind 'touchend', (event) ->
       $timeout.cancel timeoutHandler
