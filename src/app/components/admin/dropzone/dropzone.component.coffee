@@ -25,7 +25,6 @@ class DZCtrl
       angular.element(args.file.previewElement).attr 'id', 'dz-' + args.res._id
     #  map values to component
     this.$scope.$on 'dropzone.update', (e, args) ->
-      console.log e, args
       angular.forEach args, (arg, key) ->
         ctrl[key] = arg
       ctrl.$scope.$apply()
@@ -34,7 +33,7 @@ class DZCtrl
       ctrl.total = total
 
     #  upload complete, process begins
-    this.$scope.$on 'image.upload.begin', (e, img) ->
+    this.$scope.$on 'image.upload.init', (e, img) ->
       ctrl.inprocess = img
     #  upload and process complete
     this.$scope.$on 'image.upload.complete', (e, img) ->
