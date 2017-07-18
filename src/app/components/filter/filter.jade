@@ -1,4 +1,4 @@
-.filter-body(ng-if="$ctrl.showFilters")
+.filter-body(ng-if="$ctrl.showFilters" ng-swipe-up="$ctrl.showFilters = $ctrl.filterService.toggleDisplay()")
   md-chips(
     ng-model="$ctrl.filters"
     md-removeable="true"
