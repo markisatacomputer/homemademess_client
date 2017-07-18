@@ -28,4 +28,8 @@
       md-tab-label(aria-label="Date Range")
         md-icon.material-icons event
       md-tab-body
-        date-range(filter="$ctrl.filter" on-update="$ctrl.onUpdate({filter:filter})")
+        date-range(filter="$ctrl.filter" on-update="$ctrl.showFilters = $ctrl.onUpdate({filter:filter})")
+
+  .close
+    md-button(ng-click="$ctrl.showFilters = $ctrl.filterService.toggleDisplay()")
+      md-icon.material-icons close
