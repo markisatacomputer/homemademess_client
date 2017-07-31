@@ -11,6 +11,9 @@ angular.module 'homemademessClient'
     elem.bind 'touchstart', (event) ->
       scope.longTouchTriggered = false
       timeoutHandler = $timeout ->
+        #  prevent other touch handlers
+        if scope.longTouchTriggered and event.preventDefault then event.preventDefault()
+        #  call callback
         fn scope, {$event: event}
       , delay
 
@@ -18,7 +21,6 @@ angular.module 'homemademessClient'
       $timeout.cancel timeoutHandler
 
     elem.bind 'touchend', (event) ->
-      $timeout.cancel timeoutHandler
       scope.longTouchTriggered = true
-      if scope.longTouchTriggered and event.preventDefault then event.preventDefault()
+      $timeout.cancel timeoutHandler
 ]
