@@ -68,3 +68,23 @@
     }
   }
 }
+body.touch {
+  md-grid-list md-grid-tile {
+    div.edit-actions {
+      .edit-slide,
+      .delete-slide {
+        display: none;
+      }
+    }
+  }
+  &.has-selected {
+    md-grid-list md-grid-tile {
+      div.edit-actions {
+        .select-slide {
+          opacity: 1;
+          background: rgba(255,255,255, 0.7);
+        }
+      }
+    }
+  }
+}
