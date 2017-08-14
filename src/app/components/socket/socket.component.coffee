@@ -21,11 +21,11 @@ class SocketCtrl
 
       #  after upload to api, upload to cloud begins
       s.socket.on 'image:upload:begin', (img) ->
-        broadcastService.send 'image.upload.begin', img
+        ctrl.broadcastService.send 'image.upload.begin', img
 
       #  processing/upload to cloud successful
       s.socket.on 'image:upload:complete', (img) ->
-        broadcastService.send 'image.upload.complete', img
+        ctrl.broadcastService.send 'image.upload.complete', img
 
 
 angular.module 'homemademessClient'
