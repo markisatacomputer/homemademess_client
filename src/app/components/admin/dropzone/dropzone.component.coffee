@@ -1,9 +1,10 @@
 'use strict'
 
 class DZCtrl
-  constructor: (dropzoneService, broadcastService, $scope) ->
+  constructor: (dropzoneService, broadcastService, queueService, $scope) ->
     this.dropzoneService = dropzoneService
     this.broadcastService = broadcastService
+    this.queueService = queueService
     this.$scope = $scope
     this.processing = []
     this.rejected = []
@@ -16,8 +17,11 @@ class DZCtrl
 
   $onInit: () ->
     ctrl = this
+
     #  INIT SERVICES
     this.dropzoneService.toggle 'init'
+    this.queueService.get().then (q) ->
+      console.log 'q', q
 
     #  LISTEN TO SCOPE EVENTS
     #  on successful upload to api, add record id to the element
@@ -52,4 +56,4 @@ class DZCtrl
 angular.module 'homemademessClient'
 .component 'dropzone',
   templateUrl: 'app/components/admin/dropzone/dropzone.html'
-  controller: ['dropzoneService', 'broadcastService', '$scope', DZCtrl]
+  controller: ['dropzoneService', 'broadcastService', 'queueService', '$scope', DZCtrl]
