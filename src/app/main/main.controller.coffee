@@ -12,8 +12,7 @@ angular.module 'homemademessClient'
   'Auth'
   'paramService'
   'broadcastService'
-  'socketService'
-  ($scope, $window, view, user, tag, Slides, Tags, Auth, paramService, broadcastService, socketService) ->
+  ($scope, $window, view, user, tag, Slides, Tags, Auth, paramService, broadcastService) ->
     # init view
     $scope.view = view
     # add user
@@ -36,6 +35,7 @@ angular.module 'homemademessClient'
       if filter? then paramService.updateParams params
       # now call api to update view
       Slides.get params, (s) ->
+        #  only updated slides that have changed
         s.images.forEach (slide, i) ->
           n = $scope.view.map.indexOf slide._id
           if n == -1
@@ -46,10 +46,13 @@ angular.module 'homemademessClient'
             $scope.view.map.splice i, 1, slide._id
             $scope.view.images.splice n, 1
             $scope.view.map.splice n, 1
+        #  if new view has less slides lets not leave any extra slides out there hanging around
         if s.images.length < $scope.view.images.length
           $scope.view.images = $scope.view.images.slice 0, s.images.length
           $scope.view.map = $scope.view.map.slice 0, s.images.length
+        #  copy filter to view
         $scope.view.filter = s.filter
+        #  broadcast
         broadcastService.send 'updateView', s
 
     #  test object equality
@@ -98,27 +101,16 @@ angular.module 'homemademessClient'
     $scope.$on 'menu.toggleAuth', ->
       Auth.toggle()
 
-    socketService.then (s) ->
-      #  mark image as in process of deletion
-      s.socket.on 'image:delete:begin', (id) ->
-        i = $scope.view.map.indexOf id
-        if i > -1 then $scope.view.images[i].delete = true
-
-      #  refresh view after successful delete operation
-      s.socket.on 'image:delete:complete', (id) ->
-        i = $scope.view.map.indexOf id
-        if i > -1 then updateView()
-
-      #  temp image is saved as perm
-      s.socket.on 'image:upload:begin', (img) ->
-        #  broadcast
-        broadcastService.send 'image.upload.begin', img
-
-      #  temp image is saved as perm
-      s.socket.on 'image:upload:complete', (img) ->
-        #  broadcast
-        broadcastService.send 'image.upload.complete', img
-        #  refresh slides
-        updateView()
+    #  mark image as in process of deletion
+    $scope.$on 'image.delete.begin', (e, id) ->
+      i = $scope.view.map.indexOf id
+      if i > -1 then $scope.view.images[i].delete = true
+    #  refresh view after successful delete operation
+    $scope.$on 'image.delete.complete', (e, id) ->
+      i = $scope.view.map.indexOf id
+      if i > -1 then updateView()
+    #  refresh slides after successful upload
+    $scope.$on 'image.upload.complete', (e, img) ->
+      updateView()
 
 ]

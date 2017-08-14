@@ -30,5 +30,4 @@ class SocketCtrl
 
 angular.module 'homemademessClient'
 .component 'socket',
-  templateUrl: 'app/components/socket/socket.html'
   controller: ['socketService', 'broadcastService', '$scope', SocketCtrl]
