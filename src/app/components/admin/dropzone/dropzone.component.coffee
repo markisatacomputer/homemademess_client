@@ -22,7 +22,7 @@ class DZCtrl
     #  LISTEN TO SCOPE EVENTS
     #  on successful upload to api, add record id to the element
     this.$scope.$on 'dropzone.success', (e, args) ->
-      angular.element(args.file.previewElement).attr 'id', 'dz-' + args.res._id
+      angular.element(args.file.previewElement).attr 'id', 'dz-' + args.res.Key
     #  map values to component
     this.$scope.$on 'dropzone.update', (e, args) ->
       angular.forEach args, (arg, key) ->
