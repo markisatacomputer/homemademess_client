@@ -1,6 +1,6 @@
 'use strict'
 
-selectService = (Auth, $resource, apiUrl, paramService, broadcastService) ->
+selectService = ($resource, apiUrl, paramService, broadcastService) ->
   api =  $resource apiUrl + '/select/:id',
     {id: @id},
     get:
@@ -92,4 +92,4 @@ selectService = (Auth, $resource, apiUrl, paramService, broadcastService) ->
   selectService
 
 angular.module 'homemademessClient'
-.factory 'selectService', ['Auth', '$resource', 'apiUrl', 'paramService', 'broadcastService', selectService]
+.factory 'selectService', ['$resource', 'apiUrl', 'paramService', 'broadcastService', selectService]
