@@ -1,7 +1,12 @@
 'use strict'
 
 filterService = ($resource, apiUrl, $cookies, broadcastService) ->
-  api =  $resource apiUrl + '/info/:id', {id: @id}
+  api =
+    $resource apiUrl + '/info/:id',
+    {id: @id},
+    getArray:
+      method: 'GET'
+      isArray: true
 
   filterService =
     setDisplay: (set) ->
@@ -31,6 +36,13 @@ filterService = ($resource, apiUrl, $cookies, broadcastService) ->
 
     getDateBoundaries: ->
       api.get {id: 'dates'}, (r) ->
+        r
+      , (e) ->
+        console.log e
+      .$promise
+
+    getUploadDates: ->
+      api.getArray {id: 'up'}, (r) ->
         r
       , (e) ->
         console.log e

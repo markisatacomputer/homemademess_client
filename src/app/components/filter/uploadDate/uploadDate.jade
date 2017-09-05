@@ -1,0 +1,7 @@
+.up
+  md-chips(
+    ng-model="$ctrl.dates"
+    readonly="true"
+  )
+    md-chip-template(ng-click="$ctrl.addDate($chip.date)")
+      span {{$chip.date}}

@@ -58,6 +58,8 @@ class FilterCtrl
           ctrl.filters.push {'name': "Date >= " + moment(parseInt(v)).format('D.M.YY'), 'key': k}
         when "end"
           ctrl.filters.push {'name': "Date <= " + moment(parseInt(v)).format('D.M.YY'), 'key': k}
+        when "up"
+          ctrl.filters.push {'name': "Uploaded: " + v, 'key': k}
 
   removeFilter: (filter) ->
     updateFilter = angular.copy this.filter
@@ -71,6 +73,8 @@ class FilterCtrl
         updateFilter.date.from = 0
       when "end"
         updateFilter.date.to = 0
+      when "up"
+        updateFilter.date.up = null
     # send update
     this.onUpdate {filter: updateFilter}
 

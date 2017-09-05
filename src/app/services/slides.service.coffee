@@ -1,6 +1,6 @@
 'use strict'
 
-Slides = ($cookies, $resource, apiUrl, $location) ->
+Slides = ($resource, apiUrl, $location) ->
 
   #  get query param and return value -> default value -> null
   getParam = (q, defaultVal) ->
@@ -25,9 +25,11 @@ Slides = ($cookies, $resource, apiUrl, $location) ->
       getParam 'start'
     end: ()->
       getParam 'end'
+    up: ()->
+      getParam 'up'
     selected: ()->
       getParam 'selected'
     id: @id
 
 angular.module 'homemademessClient'
-.factory 'Slides', ['$cookies', '$resource', 'apiUrl', '$location', Slides]
+.factory 'Slides', ['$resource', 'apiUrl', '$location', Slides]

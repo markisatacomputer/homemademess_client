@@ -13,6 +13,7 @@
       md-tab-label(aria-label="Search Tags")
         md-icon.material-icons search
       md-tab-body
+        p Filter by tag.
         searchbar(filter="$ctrl.filter" on-update="$ctrl.onUpdate({filter:filter})")
 
     md-tab(ng-if="$ctrl.user.role == 'admin'" md-on-select="$ctrl.updateActive()")
@@ -24,10 +25,18 @@
           span(ng-show="$ctrl.filter.selected")  Showing only selected images
           span(ng-show="!$ctrl.filter.selected")  Showing all images
 
+    md-tab(ng-if="$ctrl.user.role == 'admin'" md-on-select="$ctrl.updateActive()")
+      md-tab-label(aria-label="Upload Date")
+        md-icon.material-icons cloud_upload
+      md-tab-body
+        p Filter by upload date.
+        upload-date(filter="$ctrl.filter" on-update="$ctrl.showFilters = $ctrl.onUpdate({filter:filter})")
+
     md-tab(md-on-select="$ctrl.updateActive()")
       md-tab-label(aria-label="Date Range")
         md-icon.material-icons event
       md-tab-body
+        p Filter by date range.
         date-range(filter="$ctrl.filter" on-update="$ctrl.showFilters = $ctrl.onUpdate({filter:filter})")
 
   .close

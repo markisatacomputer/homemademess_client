@@ -16,19 +16,20 @@ paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) -
     getParamsObject: (filter) ->
       params = {}
       if typeof filter is 'object'
-        params.tagtext = if filter.tag.tagtext.length > 0 then this.tagsToParam filter.tag.tagtext else null
+        params.tagtext = if filter.tag.tagtext.length > 0 then this.arrayToParam filter.tag.tagtext, '~~' else null
         params.page = if filter.pagination.page > 0 then filter.pagination.page else null
         params.per = if filter.pagination.per != 60 then filter.pagination.per else null
         params.selected = if filter.selected then filter.selected else null
         params.start = if filter.date.from != 0 then filter.date.from else null
         params.end = if filter.date.to != 0 then filter.date.to else null
+        params.up = if filter.date.up then filter.date.up else null
       params
 
     #  Map tags to simple array
-    tagsToParam: (tags) ->
+    arrayToParam: (arr, glue) ->
       param = ''
-      angular.forEach tags, (val, key) ->
-        if param.length > 0 then param += '~~'
+      angular.forEach arr, (val, key) ->
+        if param.length > 0 then param += glue
         param += val.replace /\s/g, '_'
       param
 
