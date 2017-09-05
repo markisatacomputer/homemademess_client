@@ -9,6 +9,7 @@ class FilterCtrl
     this.showFilters = null
     this.filterActive = 0
     this.selected = false
+    this.dateFormat = 'M.D.YY'
 
   $onInit: () ->
     ctrl = this
@@ -55,11 +56,11 @@ class FilterCtrl
         when "selected"
           ctrl.filters.push {'name': "Only Selected", 'key': k}
         when "start"
-          ctrl.filters.push {'name': "Date >= " + moment(parseInt(v)).format('D.M.YY'), 'key': k}
+          ctrl.filters.push {'name': "Date >= " + moment(parseInt(v)).format(ctrl.dateFormat), 'key': k}
         when "end"
-          ctrl.filters.push {'name': "Date <= " + moment(parseInt(v)).format('D.M.YY'), 'key': k}
+          ctrl.filters.push {'name': "Date <= " + moment(parseInt(v)).format(ctrl.dateFormat), 'key': k}
         when "up"
-          ctrl.filters.push {'name': "Uploaded: " + v, 'key': k}
+          ctrl.filters.push {'name': "Uploaded: " + moment(v).format(ctrl.dateFormat), 'key': k}
 
   removeFilter: (filter) ->
     updateFilter = angular.copy this.filter

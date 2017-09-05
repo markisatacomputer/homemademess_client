@@ -16,7 +16,7 @@
         p Filter by tag.
         searchbar(filter="$ctrl.filter" on-update="$ctrl.onUpdate({filter:filter})")
 
-    md-tab(ng-if="$ctrl.user.role == 'admin'" md-on-select="$ctrl.updateActive()")
+    md-tab#selected(ng-if="$ctrl.user.role == 'admin'" md-on-select="$ctrl.updateActive()")
       md-tab-label(aria-label="Show Selected")
         md-icon.material-icons check_circle
       md-tab-body

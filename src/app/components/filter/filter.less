@@ -15,13 +15,19 @@
       }
     }
   }
-  .md-chips {
-    //box-shadow: none;
-    cursor: default;
-    padding-right: 60px;
-  }
   .md-chip-input-container {
     display: none;
+  }
+  upload-date {
+    md-chips {
+      md-chip {
+        cursor: pointer;
+        &:hover {
+          background: green;
+          color: white;
+        }
+      }
+    }
   }
   .close {
     text-align: center;
