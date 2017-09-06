@@ -1,14 +1,14 @@
 'use strict'
 
 class TouchCtrl
-  constructor: (touchService, $window, menuService, $scope) ->
-    this.touchService = touchService
+  constructor: ($cookies, $window, menuService, $scope) ->
+    this.$cookies = $cookies
     this.$window = $window
     this.menuService = menuService
     this.$scope = $scope
     this.menuConfig =
       registerID: 'TouchCtrl'
-      menuExtra: [
+      menuMiddle: [
         {
           label: 'Upload'
           src: 'cloud_upload'
@@ -19,10 +19,12 @@ class TouchCtrl
       ]
 
   $onInit: () ->
+    ctrl = this
     #  If touch
-    this.touch = this.touchService.get
-    if this.touch then this.firstTouch() else
-      this.$window.addEventListener 'touchstart', this.firstTouch
+    this.touch = this.$cookies.get 'touch'
+    if this.touch? then ctrl.firstTouch() else
+      this.$window.addEventListener 'touchstart', ->
+        ctrl.firstTouch()
 
     #  react to touchscreen upload menu item
     this.$scope.$on 'menu.dz-click', () ->
@@ -39,7 +41,7 @@ class TouchCtrl
     #  CSS
     angular.element(document.body).addClass 'touch'
     #  Cookie storage
-    this.touchService.store true
+    this.$cookies.put 'touch', 1
     #  REMOVE touch listener
     this.$window.removeEventListener 'touchstart', this.firstTouch, false
     #  add menu
@@ -48,4 +50,4 @@ class TouchCtrl
 
 angular.module 'homemademessClient'
 .component 'touch',
-  controller: ['touchService', '$window', 'menuService', '$scope', TouchCtrl]
+  controller: ['$cookies', '$window', 'menuService', '$scope', TouchCtrl]
