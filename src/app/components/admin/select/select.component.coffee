@@ -12,7 +12,7 @@ class SelectCtrl
       registerID: 'select'
       filterTrigger: (currentTrigger) ->
         if ctrl.selectService.isEmpty() then currentTrigger else "offline_pin"
-      menuExtra: [
+      menuMiddle: [
         {
           label: 'Deselect All'
           src: 'select_all'
