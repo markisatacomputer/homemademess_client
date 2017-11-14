@@ -11,7 +11,7 @@
     "angular-sanitize": "~1.6.0",
     "angular-ui-router": "~1.0.0-beta.3",
     "animate.css": "~3.4.0",
-    "dropzone": "^4.3.0",
+    "dropzone": "^5.1.1",
     "lodash": "~3.10.1",
     "moment": "^2.18.1",
     "ng-lodash": "~0.2.3",
