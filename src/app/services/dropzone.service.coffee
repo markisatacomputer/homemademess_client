@@ -9,7 +9,6 @@ dropzoneService = (apiUrl, broadcastService, Auth) ->
       headers:
         'Authorization': 'Bearer ' + Auth.getToken()
       parallelUploads: 1
-      acceptedFiles: 'image/*'
       previewsContainer: 'upload-info'
       init: () ->
         this.on 'drop', (e) ->
