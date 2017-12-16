@@ -45,7 +45,7 @@ class SlideActionCtrl
           src: 'file_download'
           action: 'slide.download'
           states: ['home', 'tagged']
-          roles: ['admin']
+          roles: ['admin', 'download']
           direction: 'top'
         }
         {
@@ -53,7 +53,7 @@ class SlideActionCtrl
           src: 'close'
           action: 'slideshow.exit'
           states: ['home', 'tagged']
-          roles: ['admin']
+          roles: ['admin', 'download', 'anon']
           direction: 'top'
         }
       ]
