@@ -6,7 +6,6 @@ class SlideInfoCtrl
     this.$scope = $scope
     this.$cookies = $cookies
     this.showSlideInfo = Boolean this.$cookies.get 'showSlideInfo'
-    console.log 'construct slide info', this.showSlideInfo
 
   $onInit: () ->
     ctrl = this
