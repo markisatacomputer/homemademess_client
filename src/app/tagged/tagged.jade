@@ -4,7 +4,7 @@
 
   h1.tag {{$ctrl.tag[0].text}}
 
-  div(ui-view="slideshow")
+  div(ui-view="slideshow" user="$ctrl.user" view="$ctrl.view")
 
   slides(view="$ctrl.view" user="$ctrl.user")
 
