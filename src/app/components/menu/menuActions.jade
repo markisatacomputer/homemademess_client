@@ -1,0 +1,4 @@
+md-fab-actions
+  md-button(ng-repeat="item in $ctrl.menu" aria-label="{{item.label}}" class="md-fab md-raised md-mini {{item.src}}" ng-class="item.action.split('.')" ng-click="$ctrl.act(item.action)" ng-href="{{item.href}}")
+    md-tooltip(md-direction="{{item.direction || 'left'}}") {{item.label}}
+    md-icon.material-icons {{item.src}}

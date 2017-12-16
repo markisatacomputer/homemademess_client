@@ -1,0 +1,36 @@
+.info-container(ng-class="{ display: $ctrl.showSlideInfo }")
+  .name(ng-if="$ctrl.slide.name")
+    label name
+    span {{$ctrl.slide.name}}
+  .description(ng-if="$ctrl.slide.description")
+    label description
+    span {{$ctrl.slide.description}}
+  .filename(ng-if="$ctrl.slide.filename")
+    label filename
+    span {{$ctrl.slide.filename}}
+  .dates
+    .createDate(ng-if="$ctrl.slide.createDate")
+      label created at
+      span {{$ctrl.slide.createDate | date:'medium'}}
+    .uploadDate(ng-if="$ctrl.slide.uploadDate")
+      label uploaded at
+      span {{$ctrl.slide.uploadDate | date:'medium'}}
+  .tags(ng-if="$ctrl.slide.tags.length > 0")
+    label tags
+    md-chips(
+      ng-model="$ctrl.slide.tags"
+      md-removeable="true"
+      md-on-remove="$ctrl.remove($chip)"
+    )
+      md-chip-template
+        label {{$chip._images.length}} count
+        span {{$chip.text}}
+  .exif(ng-if="$ctrl.slide.exif.length > 0")
+    label EXIF data
+    md-chips(
+      ng-model="$ctrl.slide.exif"
+      readonly="true"
+    )
+      md-chip-template
+        label {{$chip.name}}
+        span {{$chip.value}}

@@ -7,6 +7,9 @@ class SlideCtrl
     $element.addClass 'close-slide'
 
   $onInit: () ->
+    ctrl = this
+
+    #  get slide and and set derivative
     index = this.slideshow.view.map.indexOf this.$stateParams.slide
     this.slide = this.slideshow.view.images[index]
     size = this.getDerivative()
