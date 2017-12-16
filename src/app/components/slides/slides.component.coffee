@@ -1,11 +1,12 @@
 'use strict'
 
 class SlidesCtrl
-  constructor: ($scope, $state, broadcastService, $mdMedia) ->
+  constructor: ($scope, $state, broadcastService, $mdMedia, selectService) ->
     this.$scope = $scope
     this.$state = $state
     this.broadcastService = broadcastService
     this.$mdMedia = $mdMedia
+    this.selectService = selectService
     this.cols =
       xs: 12
       sm: 24
@@ -57,10 +58,14 @@ class SlidesCtrl
     aspect = [columns, rows]
     aspect[n]
 
+  # prevent slideshow if slides are selected
+  tryLink: (e) ->
+    if !this.selectService.isEmpty() then e.preventDefault()
+
 angular.module 'homemademessClient'
 .component 'slides',
   bindings:
     view: '<'
     user: '<'
   templateUrl: 'app/components/slides/slides.html'
-  controller: ['$scope', '$state', 'broadcastService', '$mdMedia', SlidesCtrl]
+  controller: ['$scope', '$state', 'broadcastService', '$mdMedia', 'selectService', SlidesCtrl]
