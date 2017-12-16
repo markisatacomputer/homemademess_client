@@ -25,7 +25,7 @@ class SlideActionCtrl
           direction: 'top'
         }
         {
-          label: 'Tag/Untag Selected'
+          label: 'Tag/Untag'
           src: 'add_circle'
           action: 'slide.tag'
           states: ['home', 'tagged']
@@ -33,9 +33,25 @@ class SlideActionCtrl
           direction: 'top'
         }
         {
-          label: 'Edit Selected'
+          label: 'Edit'
           src: 'edit'
           action: 'slide.edit'
+          states: ['home', 'tagged']
+          roles: ['admin']
+          direction: 'top'
+        }
+        {
+          label: 'Download Original'
+          src: 'file_download'
+          action: 'slide.download'
+          states: ['home', 'tagged']
+          roles: ['admin']
+          direction: 'top'
+        }
+        {
+          label: 'Close Slideshow'
+          src: 'close'
+          action: 'slideshow.exit'
           states: ['home', 'tagged']
           roles: ['admin']
           direction: 'top'

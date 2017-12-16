@@ -1,8 +1,9 @@
 'use strict'
 
 class SlideshowCtrl
-  constructor: ($state, $document, debounce, $stateParams, swipe, $window) ->
+  constructor: ($state, $scope, $document, debounce, $stateParams, swipe, $window) ->
     this.$state = $state
+    this.$scope = $scope
     this.$document = $document
     this.debounce = debounce
     this.stateParams = $stateParams
@@ -40,6 +41,9 @@ class SlideshowCtrl
         ctrl.showClose()
     , ctrl.bounce, true
 
+    this.$scope.$on 'slideshow.exit', (e) ->
+      ctrl.showClose()
+
   $onDestroy: () ->
     angular.element document.querySelector 'body'
     .removeClass 'slideshow'
@@ -73,4 +77,4 @@ angular.module 'homemademessClient'
     view: '<'
     user: '<'
   templateUrl: 'app/components/slideshow/slideshow.html'
-  controller: ['$state', '$document', 'debounce', '$stateParams', 'swipe', '$window', SlideshowCtrl]
+  controller: ['$state', '$scope', '$document', 'debounce', '$stateParams', 'swipe', '$window', SlideshowCtrl]
