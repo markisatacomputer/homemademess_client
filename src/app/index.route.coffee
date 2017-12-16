@@ -59,6 +59,8 @@ angular.module 'homemademessClient'
               (t) ->
                 t.data
             .$promise
+          previous: ($transition$) ->
+            $transition$.params 'from'
       .state 'tagged.slideshow',
         url: 'slide/'
         views:

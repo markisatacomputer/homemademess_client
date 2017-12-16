@@ -7,10 +7,10 @@ class TaggedCtrl
     this.$state = $state
     this.menuConfig =
       registerID: 'TaggedCtrl'
-      menuExtra: [
+      menuMiddle: [
         {
-          label: 'Home'
-          src:   'home'
+          label: 'Return'
+          src:   'arrow_back'
           action:  'home'
           states: ['tagged']
           roles: ['anon','admin','download']
@@ -29,7 +29,7 @@ class TaggedCtrl
 
     #  listen for action
     this.$scope.$on 'menu.home', ->
-      ctrl.$state.go 'home'
+      ctrl.$state.go 'home', ctrl.previous
 
   $onDestroy: ->
     # remove menu
@@ -41,5 +41,6 @@ angular.module 'homemademessClient'
     view: '<'
     user: '<'
     tag: '<'
+    previous: '<'
   templateUrl: 'app/tagged/tagged.html'
   controller: ['menuService', '$scope', '$state', TaggedCtrl]
