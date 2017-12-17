@@ -72,7 +72,7 @@ menuService = ($state, broadcastService, Auth, lodash) ->
       #  extra filters
       if i.length > 0
         lodash.each ctrl.filterMenu, (f, k) ->
-          i = f item, i
+          i = f item, i, k
       i.length
 
   getTrigger: ->
