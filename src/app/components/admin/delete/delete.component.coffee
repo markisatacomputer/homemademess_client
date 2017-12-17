@@ -1,17 +1,35 @@
 'use strict'
 
 class DeleteCtrl
-  constructor: ($scope, Slides) ->
-    this.$scope = $scope
-    this.Slides = Slides
+  constructor: (menuService) ->
+    this.menuService = menuService
+    this.menuConfig =
+      registerID: 'DeleteCtrl'
+      menuSelectAction: [
+        {
+          label: 'Delete Selected'
+          src: 'delete'
+          action: 'selected.delete'
+          states: ['home']
+          roles: ['admin']
+          direction: 'top'
+        }
+      ]
+      menuSlideAction: [
+        {
+          label: 'Delete Image'
+          src: 'delete'
+          action: 'slide.delete'
+          states: ['home']
+          roles: ['admin']
+          direction: 'top'
+        }
+      ]
 
   $onInit: () ->
-    ctrl = this
-
-    #  DELETE
-    this.$scope.$on 'slide.remove', (e, img) ->
-      ctrl.Slides.delete {id: img._id}, (r) ->
+    #  add menu
+    this.menuService.registerMenu this.menuConfig
 
 angular.module 'homemademessClient'
 .component 'deleteControl',
-  controller: ['$scope', 'Slides', DeleteCtrl]
+  controller: ['menuService', DeleteCtrl]

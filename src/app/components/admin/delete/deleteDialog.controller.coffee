@@ -23,8 +23,6 @@ class DeleteDialogCtrl
     else
       this.additional = ''
 
-    console.log this.additional
-
     #  get first selected images
     ctrl = this
     selectService.getSelectedImages({per: this.cards}).then (imgs) ->
