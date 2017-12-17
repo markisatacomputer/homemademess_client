@@ -81,6 +81,7 @@ selectService = ($resource, apiUrl, paramService, broadcastService) ->
             ctrl.selected.push id
             broadcastService.send 'select.on', id
             broadcastService.send 'menu.reload'
+        .$promise
       #  Deselect
       else
         api.deselect {id: id}, (s) ->
@@ -88,6 +89,7 @@ selectService = ($resource, apiUrl, paramService, broadcastService) ->
             ctrl.selected.splice i, 1
             broadcastService.send 'select.off', id
             broadcastService.send 'menu.reload'
+        .$promise
 
   selectService
 

@@ -1,31 +1,44 @@
 'use strict'
 
 class SelectCtrl
-  constructor: (selectService, menuService, $scope, Auth) ->
+  constructor: (selectService, menuService, $scope) ->
     this.menuService = menuService
     this.$scope = $scope
     this.selectService = selectService
-    this.Auth = Auth
 
     ctrl = this
     this.menuConfig =
       registerID: 'select'
       filterTrigger: (currentTrigger) ->
-        if ctrl.selectService.isEmpty() then currentTrigger else "offline_pin"
+        if selectService.isEmpty() then currentTrigger else "offline_pin"
+      filterMenu: (item, itemArray, registerID) ->
+        if item.action is 'select.all' and registerID is 'select' and !selectService.isEmpty() then return []
+        itemArray
       menuMiddle: [
-        {
-          label: 'Deselect All'
-          src: 'select_all'
-          action: 'select.none'
-          states: ['home']
-          roles: ['admin']
-        }
         {
           label: 'Select All (on all pages)'
           src: 'done_all'
           action: 'select.all'
           states: ['home']
           roles: ['admin']
+        }
+      ]
+      menuSelectAction: [
+        {
+          label: 'Deselect All'
+          src: 'select_all'
+          action: 'menu.select.none'
+          states: ['home']
+          roles: ['admin']
+          direction: 'top'
+        }
+        {
+          label: 'Select All (on all pages)'
+          src: 'done_all'
+          action: 'menu.select.all'
+          states: ['home']
+          roles: ['admin']
+          direction: 'top'
         }
       ]
 
@@ -39,22 +52,18 @@ class SelectCtrl
     angular.forEach this.view.images, (img, i) ->
       ctrl.view.images[i].selected = value
 
-  drawSelected: () ->
-    ctrl = this
-    this.selectService.getSelected().then (s) ->
-      angular.forEach ctrl.view.images, (img, i) ->
-        if s.indexOf(img._id) > -1
-          ctrl.view.images[i].selected = true
-
   $onInit: () ->
     ctrl = this
 
-    #  Draw Selected on page load since slides will come before jwt sometimes
-    user = this.Auth.getCurrentUser()
-    if user.hasOwnProperty '$promise'
-      user.$promise.then (u) ->
-        if u.role is 'admin'
-          ctrl.drawSelected()
+    #register menu
+    ctrl.menuService.registerMenu ctrl.menuConfig
+
+    #  init select service
+    this.selectService.getSelected().then (s) ->
+      #  draw selected
+      angular.forEach ctrl.view.images, (img, i) ->
+        if ctrl.selectService.selected.indexOf(img._id) > -1
+          ctrl.view.images[i].selected = true
 
     #  slide action
     this.$scope.$on 'slide.select', (e, slide) ->
@@ -77,16 +86,8 @@ class SelectCtrl
       ctrl.toggleSelectAll false
     this.$scope.$on 'auth.logout', () ->
       ctrl.toggleSelectAll false
-    this.$scope.$on 'auth.login', () ->
-      ctrl.drawSelected()
-
-    #  init selectService and add menu
-    this.selectService.getSelected().then (s) ->
-      ctrl.menuConfig.filterMenu = (item, itemArray) ->
-        if item.action is 'select.none' and ctrl.selectService.isEmpty() then return []
-        if item.action is 'select.all' and ctrl.selectService.isFull(ctrl.view.filter.pagination.count) then return []
-        itemArray
-      ctrl.menuService.registerMenu ctrl.menuConfig
+    this.$scope.$on 'auth.logout', () ->
+      ctrl.toggleSelectAll false
 
   $onDestroy: () ->
     # remove menu
