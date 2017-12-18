@@ -18,7 +18,7 @@ selectService = ($resource, apiUrl, paramService, broadcastService) ->
 
   selectService =
     selected: []
-    getSelected: ->
+    init: ->
       ctrl = this
       api.get (s) ->
         ctrl.selected = s
@@ -26,22 +26,8 @@ selectService = ($resource, apiUrl, paramService, broadcastService) ->
         console.log e
       .$promise
 
-    getSelectedImages: (filter) ->
-      ctrl = this
-      if filter then filter.returnImages = 1 else filter = {returnImages: 1}
-      api.get filter, (s) ->
-        s
-      , (e) ->
-        console.log e
-      .$promise
-
-    deleteSelectedImages: ->
-      ctrl = this
-      api.delete {id: 'images'}, (r) ->
-        r
-      , (e) ->
-        console.log e
-      .$promise
+    getSelected: ->
+      this.selected
 
     isEmpty: ->
       answer = if this.selected.length is 0 then true else false
@@ -64,7 +50,8 @@ selectService = ($resource, apiUrl, paramService, broadcastService) ->
       ctrl = this
 
       api.selectAll { query: paramService.getParams() }, (s) ->
-        ctrl.selected = s
+        ctrl.selected = ctrl.selected.concat s.filter (item) ->
+          ctrl.selected.indexOf(item) < 0
         broadcastService.send 'select.all'
         broadcastService.send 'menu.reload', true
       , (e) ->

@@ -4,6 +4,7 @@ class SelectActionsCtrl
   constructor: ($scope, $mdDialog, selectService) ->
     this.$scope = $scope
     this.$mdDialog = $mdDialog
+    this.selectService = selectService
 
   $onInit: () ->
     ctrl = this
@@ -24,7 +25,7 @@ class SelectActionsCtrl
         controller: 'DeleteDialogCtrl'
         controllerAs: 'ctrl'
         locals:
-          selected: ctrl.selectService.selected
+          images: ctrl.selectService.getSelected()
         bindToController: true
 
 angular.module 'homemademessClient'

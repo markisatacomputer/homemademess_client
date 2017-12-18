@@ -59,7 +59,7 @@ class SelectCtrl
     ctrl.menuService.registerMenu ctrl.menuConfig
 
     #  init select service
-    this.selectService.getSelected().then (s) ->
+    this.selectService.init().then (s) ->
       #  draw selected
       angular.forEach ctrl.view.images, (img, i) ->
         if ctrl.selectService.selected.indexOf(img._id) > -1
