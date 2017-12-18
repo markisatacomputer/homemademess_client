@@ -26,6 +26,11 @@ class SelectActionsCtrl
           images: ctrl.selectService.getSelected()
         bindToController: true
 
+    #  Listen for image deletes
+    this.$scope.$on 'image.delete.complete', (e, id) ->
+      i = ctrl.selectService.selected.indexOf id
+      if i >= 0 then ctrl.selectService.selected.splice i, 1
+
 angular.module 'homemademessClient'
 .component 'selectActions',
   controller: ['$scope', '$mdDialog', 'selectService', SelectActionsCtrl]
