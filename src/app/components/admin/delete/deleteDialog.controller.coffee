@@ -1,14 +1,12 @@
 'use strict'
 
 class DeleteDialogCtrl
-  constructor: (selectService, $mdDialog, $mdMedia) ->
-    this.selectService = selectService
-    this.$mdDialog = $mdDialog
+  constructor: (Slides, $mdMedia, $mdDialog, $q) ->
+    this.Slides = Slides
     this.$mdMedia = $mdMedia
-
-    #  total number of selected images
-    this.count = this.selectService.selected.length
-
+    this.$mdDialog = $mdDialog
+    this.$q = $q
+    this.count = this.images.length
     this.cards =
       switch
         when this.$mdMedia 'xs' then 2
@@ -23,15 +21,21 @@ class DeleteDialogCtrl
     else
       this.additional = ''
 
-    #  get first selected images
     ctrl = this
-    selectService.getSelectedImages({per: this.cards}).then (imgs) ->
-      ctrl.selectedImages = imgs
+
+    #  get first selected images
+    this.Slides.get {per: this.cards, ids: this.images}, (r) ->
+      ctrl.selectedImages = r.images
 
   removeAll: ->
     ctrl = this
-    this.selectService.deleteSelectedImages().then (res) ->
+
+    promises = []
+    this.images.forEach (img, i) ->
+      promises.push ctrl.Slides.delete({id: img}).$promise
+
+    this.$q.all(promises).then ->
       ctrl.$mdDialog.hide()
 
 angular.module 'homemademessClient'
-.controller 'DeleteDialogCtrl', ['selectService', '$mdDialog', '$mdMedia', DeleteDialogCtrl]
+.controller 'DeleteDialogCtrl', ['Slides', '$mdMedia', '$mdDialog', '$q', DeleteDialogCtrl]
