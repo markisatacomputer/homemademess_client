@@ -25,11 +25,11 @@ class SlideActionCtrl
       confirm = ctrl.$mdDialog.confirm()
       .title 'Do you really want to delete this image?'
       .ok 'Yes please'
-      .cancel 'oops - no dont!'
+      .cancel 'Oops - no dont!'
       .multiple true
 
       ctrl.$mdDialog.show(confirm).then () ->
-        ctrl.Slides.delete {id: img._id}, (r) ->
+        ctrl.Slides.delete {id: ctrl.slide._id}, (r) ->
           ctrl.broadcastService.send 'slideshow.exit'
       , () ->
         true

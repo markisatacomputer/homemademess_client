@@ -5,6 +5,8 @@
     title='{{$ctrl.label}}'
   )
   .loading-spinner
+  slide-action(slide="$ctrl.slide")
+
 slide-info(slide="$ctrl.slide" ng-if="$ctrl.slideshow.user.role=='admin'")
-slide-action(slide="$ctrl.slide")
+
 menu-actions(menuname="menuSlideAction")
