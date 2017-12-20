@@ -59,8 +59,11 @@ class SlidesCtrl
     aspect[n]
 
   # prevent slideshow if slides are selected
-  tryLink: (e) ->
-    if !this.selectService.isEmpty() then e.preventDefault()
+  tryLink: (e, img) ->
+    if !this.selectService.isEmpty()
+      e.preventDefault()
+      this.selectService.toggle img._id
+
 
 angular.module 'homemademessClient'
 .component 'slides',

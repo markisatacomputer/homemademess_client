@@ -19,7 +19,7 @@
       on-long-press="$ctrl.broadcastService.send('slide.select',image)"
     )
       div.img-container
-        a(ng-href='{{$ctrl.getLink(image._id)}}' ng-click="$ctrl.tryLink($event)")
+        a(ng-href='{{$ctrl.getLink(image._id)}}' ng-click="$ctrl.tryLink($event, image)")
           img.img-responsive(ng-src='{{image.derivative[$ctrl.derivative].uri}}')
       div.edit-actions(ng-if="$ctrl.user.role=='admin'")
         md-button.select-slide(ng-click="$ctrl.broadcastService.send('slide.select',image)")
