@@ -13,10 +13,11 @@ class SlideActionCtrl
     #  TAG
     this.$scope.$on 'slide.tag', (e) ->
       ctrl.$mdDialog.show
-        clickOutsideToClose: true
         templateUrl: 'app/components/admin/tag/tagDialog.html'
         controller: 'TagDialogCtrl'
         controllerAs: 'ctrl'
+        locals:
+          image: ctrl.slide
         multiple: true
 
     #  DELETE

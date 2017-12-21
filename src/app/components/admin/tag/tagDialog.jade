@@ -26,7 +26,7 @@
   md-button.md-raised(ng-click="ctrl.clearSelectedTags()") Clear Searched Tags
 
   md-chips.tagsInView(
-    ng-model="ctrl.tagsInView.objects"
+    ng-model="ctrl.tagsInView"
     md-transform-chip="ctrl.prepareTag($chip)"
     md-removeable="true"
     md-on-remove="ctrl.remove($chip)"
