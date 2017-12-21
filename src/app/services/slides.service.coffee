@@ -30,6 +30,18 @@ Slides = ($resource, apiUrl, $location) ->
     selected: ()->
       getParam 'selected'
     id: @id
+  ,
+    'get':
+      method: 'GET'
+    'save':
+      method: 'POST'
+    'query':
+      method: 'GET'
+      isArray: true
+    'delete':
+      method: 'DELETE'
+    'update':
+      method: 'PUT'
 
 angular.module 'homemademessClient'
 .factory 'Slides', ['$resource', 'apiUrl', '$location', Slides]
