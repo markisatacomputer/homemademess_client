@@ -15,16 +15,6 @@ class TagCtrl
           direction: 'top'
         }
       ]
-      menuSlideAction: [
-        {
-          label: 'Tag/Untag'
-          src: 'add_circle'
-          action: 'slide.tag'
-          states: ['home', 'tagged']
-          roles: ['admin']
-          direction: 'top'
-        }
-      ]
 
   $onInit: () ->
     #  add menu

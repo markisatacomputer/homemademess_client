@@ -10,16 +10,6 @@ class SlideActionCtrl
   $onInit: () ->
     ctrl = this
 
-    #  TAG
-    this.$scope.$on 'slide.tag', (e) ->
-      ctrl.$mdDialog.show
-        templateUrl: 'app/components/admin/tag/tagDialog.html'
-        controller: 'TagDialogCtrl'
-        controllerAs: 'ctrl'
-        locals:
-          image: ctrl.slide
-        multiple: true
-
     #  DELETE
     this.$scope.$on 'slide.delete', (e) ->
       # confirm delete
