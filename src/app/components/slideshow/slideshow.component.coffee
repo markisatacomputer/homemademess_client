@@ -74,4 +74,4 @@ angular.module 'homemademessClient'
     view: '<'
     user: '<'
   templateUrl: 'app/components/slideshow/slideshow.html'
-  controller: ['$state', '$document', 'debounce', '$stateParams', 'swipe', '$window', 'menuService', SlideshowCtrl]
+  controller: ['$state', '$document', 'debounce', '$stateParams', 'swipe', '$window', SlideshowCtrl]
