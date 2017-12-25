@@ -1,12 +1,13 @@
 'use strict'
 
 class TagDialogCtrl
-  constructor: (Auto, Tags, tagDialogService, $mdDialog) ->
+  constructor: (Auto, Tags, tagDialogService, selectService, $mdDialog) ->
     ctrl = this
 
     this.Auto = Auto
     this.Tags = Tags
     this.tagDialogService = tagDialogService
+    this.selectService = selectService
     this.$mdDialog = $mdDialog
     this.selectedTags = []
     this.searchText
@@ -60,4 +61,4 @@ class TagDialogCtrl
 
 
 angular.module 'homemademessClient'
-.controller 'TagDialogCtrl', ['Auto', 'Tags', 'tagDialogService', '$mdDialog', TagDialogCtrl]
+.controller 'TagDialogCtrl', ['Auto', 'Tags', 'tagDialogService', 'selectService', '$mdDialog', TagDialogCtrl]
