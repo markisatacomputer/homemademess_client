@@ -40,6 +40,15 @@ class SlideshowCtrl
         ctrl.showClose()
     , ctrl.bounce, true
 
+  $onChanges: (changes) ->
+    #  update slide if page has changed
+    if changes.view? and changes.view.previousValue.filter?
+      cpage = changes.view.currentValue.filter.pagination.page
+      ppage = changes.view.previousValue.filter.pagination.page
+      if cpage > ppage
+        this.window.location.href = this.$state.href(this.$state.current, {slide: this.view.images[0]._id})
+      if ppage > cpage
+        this.window.location.href = this.$state.href(this.$state.current, {slide: this.view.images[this.view.images.length-1]._id})
 
   $onDestroy: () ->
     angular.element document.querySelector 'body'
@@ -60,8 +69,22 @@ class SlideshowCtrl
           when 'slideleft'  then n = slideNumber-1
           when 'slideup'    then n = 0
           when 'slidedown'  then n = this.view.images.length-1
+      #  advance to slide on this page
       if this.view.images[n]?._id?
         this.window.location.href = this.$state.href(this.$state.current, {slide: this.view.images[n]._id})
+      #  change to previous page
+      else if n < 0 and this.view.filter.pagination.page > 0
+        filter = angular.copy this.view.filter
+        filter.pagination.page = filter.pagination.page - 1
+        this.onUpdate {filter: filter}
+      #  change to next page
+      else if n > (this.view.filter.pagination.per - 1)
+        filter = angular.copy this.view.filter
+        if (filter.pagination.count/filter.pagination.per) > filter.pagination.page
+          filter = angular.copy this.view.filter
+          filter.pagination.page = filter.pagination.page + 1
+          this.onUpdate {filter: filter}
+
     false
 
   # find parent state and go to there
@@ -73,5 +96,6 @@ angular.module 'homemademessClient'
   bindings:
     view: '<'
     user: '<'
+    onUpdate: '&'
   templateUrl: 'app/components/slideshow/slideshow.html'
   controller: ['$state', '$document', 'debounce', '$stateParams', 'swipe', '$window', SlideshowCtrl]
