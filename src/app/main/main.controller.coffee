@@ -35,25 +35,10 @@ angular.module 'homemademessClient'
       if filter? then paramService.updateParams params
       # now call api to update view
       Slides.get params, (s) ->
-        #  only updated slides that have changed
-        s.images.forEach (slide, i) ->
-          n = $scope.view.map.indexOf slide._id
-          if n == -1
-            $scope.view.images.splice i, 1, slide
-            $scope.view.map.splice i, 1, slide._id
-          else if n != i
-            $scope.view.images.splice i, 1, slide
-            $scope.view.map.splice i, 1, slide._id
-            $scope.view.images.splice n, 1
-            $scope.view.map.splice n, 1
-        #  if new view has less slides lets not leave any extra slides out there hanging around
-        if s.images.length < $scope.view.images.length
-          $scope.view.images = $scope.view.images.slice 0, s.images.length
-          $scope.view.map = $scope.view.map.slice 0, s.images.length
-        #  copy filter to view
-        $scope.view.filter = s.filter
+        $scope.view = s
+        mapImages()
         #  broadcast
-        broadcastService.send 'updateView', s
+        broadcastService.send 'updateView', $scope.view
 
     #  test object equality
     testEquality = (obj, obj2) ->
