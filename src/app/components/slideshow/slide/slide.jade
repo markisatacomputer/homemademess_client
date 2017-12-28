@@ -1,11 +1,11 @@
 .slide-wrapper
+  slide-action(slide="$ctrl.slide")
   img(
     ng-src='{{$ctrl.src}}'
     class='{{$ctrl.layclss}}'
     title='{{$ctrl.label}}'
   )
   .loading-spinner
-  slide-action(slide="$ctrl.slide")
 
 slide-info(slide="$ctrl.slide" ng-if="$ctrl.slideshow.user.role=='admin'")
 
