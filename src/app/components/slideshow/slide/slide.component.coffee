@@ -12,8 +12,11 @@ class SlideCtrl
     #  get slide and and set derivative
     index = this.slideshow.view.map.indexOf this.$stateParams.slide
     this.slide = this.slideshow.view.images[index]
+    #  get mime type
+    this.type = this.slide.mimeType.split('/')[0]
+    #  get derivative
     size = this.getDerivative()
-    img =  this.slide.derivative[size]
+    img = this.slide.derivative[size]
 
     # add layout class
     if (img.height > img.width)
@@ -27,13 +30,18 @@ class SlideCtrl
 
   #  which derivative should we use?
   getDerivative: ->
-    deriv = switch
-      when this.$mdMedia 'xs'
+    switch this.type
+      when 'image'
+        switch
+          when this.$mdMedia 'xs'
+            1
+          when this.$mdMedia 'sm'
+            1
+          else
+            2
+      when 'video'
         1
-      when this.$mdMedia 'sm'
-        1
-      else
-        2
+
 
 angular.module 'homemademessClient'
 .component 'slide',
