@@ -1,6 +1,17 @@
 .slide-wrapper
   slide-action(slide="$ctrl.slide")
+  video(
+    ng-if="$ctrl.type=='video'"
+    class='{{$ctrl.layclss}}'
+    controls
+    preload="auto"
+  )
+    source(
+      ng-src="{{$ctrl.src}}"
+      type="video/mp4"
+    )
   img(
+    ng-if="$ctrl.type=='image'"
     ng-src='{{$ctrl.src}}'
     class='{{$ctrl.layclss}}'
     title='{{$ctrl.label}}'
