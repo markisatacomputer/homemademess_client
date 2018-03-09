@@ -1,10 +1,22 @@
-.filter-body {
+filter {
   position: fixed;
   top: 0;
   z-index: 50;
   width: 100%;
-
-  background: rgba(255,255,255,0.7);
+  div.filter-wrap.open {
+    background: rgba(255,255,255,0.7);
+  }
+  .md-chips .md-chip-input-container {
+    display: none;
+  }
+  div.filter-wrap.closed  md-chips.filters md-chips-wrap {
+    box-shadow: none;
+  }
+  md-chips.filters md-chips-wrap {
+    md-chip {
+      margin: 8px;
+    }
+  }
   md-tabs {
     z-index: 10;
     overflow: visible;
@@ -14,9 +26,6 @@
         overflow: visible;
       }
     }
-  }
-  .md-chip-input-container {
-    display: none;
   }
   upload-date {
     md-chips {
