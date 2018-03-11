@@ -13,10 +13,7 @@ class SlideCtrl
     index = this.slideshow.view.map.indexOf this.$stateParams.slide
     this.slide = this.slideshow.view.images[index]
     #  get mime type
-    if this.slide.mimeType?
-      this.type = this.slide.mimeType.split('/')[0]
-    else
-      this.type = 'image' # this is for legacy records
+    this.type = this.slide.mimeType.split('/')[0]
     #  get derivative
     size = this.getDerivative()
     img = this.slide.derivative[size]
