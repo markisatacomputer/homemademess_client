@@ -29,6 +29,8 @@ Slides = ($resource, apiUrl, $location) ->
       getParam 'up'
     selected: ()->
       getParam 'selected'
+    order: ()->
+      getParam 'order'
     id: @id
   ,
     'get':
