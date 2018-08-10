@@ -9,6 +9,8 @@
 
   menu(user="$ctrl.user")
 
+  tagged-menu(previous="$ctrl.previous")
+
   h1.tag {{$ctrl.tag[0].text}}
 
   div(ui-view="slideshow" user="$ctrl.user" view="$ctrl.view" on-update="$ctrl.recieveFilter(filter)")

@@ -1,8 +1,7 @@
 'use strict'
 
 class TaggedCtrl
-  constructor: (menuService, paramService, broadcastService, Slides, Auth, $window, $scope, $state) ->
-    this.menuService = menuService
+  constructor: (paramService, broadcastService, Slides, Auth, $window, $scope, $state) ->
     this.paramService = paramService
     this.broadcastService = broadcastService
     this.Slides = Slides
@@ -10,17 +9,6 @@ class TaggedCtrl
     this.$window = $window
     this.$scope = $scope
     this.$state = $state
-    this.menuConfig =
-      registerID: 'TaggedCtrl'
-      menuMiddle: [
-        {
-          label: 'Return'
-          src:   'arrow_back'
-          action:  'home'
-          states: ['tagged']
-          roles: ['anon','admin','download']
-        }
-      ]
 
   $onInit: ->
     ctrl = this
@@ -28,13 +16,6 @@ class TaggedCtrl
     #  map images
     this.view.map = this.view.images.map (i) ->
       return i._id
-
-    #  add menu
-    this.menuService.registerMenu this.menuConfig
-
-    #  listen for action
-    this.$scope.$on 'menu.home', ->
-      ctrl.$state.go 'home', ctrl.previous
 
     #  listen for user param changes
     this.$scope.$on 'params:update:recieve', (e, newParams) ->
@@ -67,10 +48,6 @@ class TaggedCtrl
     #  refresh slides after successful upload
     this.$scope.$on 'image.upload.complete', (e, img) ->
       ctrl.updateView()
-
-  $onDestroy: ->
-    # remove menu
-    this.menuService.removeMenu this.menuConfig.registerID
 
   mapImages: ->
     #  map images
@@ -141,4 +118,4 @@ angular.module 'homemademessClient'
     tag: '<'
     previous: '<'
   templateUrl: 'app/tagged/tagged.html'
-  controller: ['menuService',  'paramService', 'broadcastService', 'Slides', 'Auth', '$window', '$scope', '$state', TaggedCtrl]
+  controller: ['paramService', 'broadcastService', 'Slides', 'Auth', '$window', '$scope', '$state', TaggedCtrl]
