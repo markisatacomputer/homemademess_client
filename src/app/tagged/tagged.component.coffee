@@ -56,26 +56,39 @@ class TaggedCtrl
 
   # recieve new filters from componenet
   recieveFilter: (filter) ->
+    ctrl = this
+
+    # check for change - and update view
     oldFilter = angular.copy this.view.filter
     oldPagination = angular.copy oldFilter.pagination
     filterCopy = angular.copy filter
-    # check for change - and update view
     if !this.testEquality filterCopy, oldFilter
+
+      # make sure to start on page one IF filter outside of pagination has changed...
       delete oldFilter.pagination
       delete filterCopy.pagination
-      # make sure to start on page one IF filter outside of pagination has changed...
       if !this.testEquality filterCopy, oldFilter
         filter.pagination.page = 0
+
       #  scroll to the top of the page if we're on
       if !this.testEquality filter.pagination.page, oldPagination.page
-        this.$window.scrollTo 0,0
+        after =
+          if filter.pagination.page > oldPagination.page
+            () ->
+              ctrl.$window.scrollTo 0,0
+          else
+            () ->
+              ctrl.$window.scrollTo 0,999999
+      else
+        after = null
+
       # update view with new filter
       filter = this.filterTaggedFilter filter
       console.log 'recieveFilter', filter
-      this.updateView filter
+      this.updateView filter, after
 
   #  set slides to fit filter
-  updateView: (filter) ->
+  updateView: (filter, after) ->
     ctrl = this
 
     # get params
@@ -89,6 +102,8 @@ class TaggedCtrl
       ctrl.mapImages()
       #  broadcast
       ctrl.broadcastService.send 'updateView', ctrl.view
+      if after?
+        after()
 
   #  test object equality
   testEquality: (obj, obj2) ->
