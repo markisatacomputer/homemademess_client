@@ -6,10 +6,20 @@ paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) -
     getParams: ->
       $location.search()
 
+    # remove properties with null value
+    cleanParams: (params) ->
+      Object.keys(params).forEach (key) ->
+        if params[key] == null
+          delete params[key]
+      params
+
     #  set browser query params
     updateParams: (params) ->
+      params = this.cleanParams params
       angular.forEach params, (param, i) ->
         $location.search i, param
+      angular.forEach $location.search(), (v, k) ->
+        if !params[k] then $location.search k, null
       broadcastService.send 'params:update:push', params
 
     #  get params from view.filter and transform where necessary
@@ -24,7 +34,7 @@ paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) -
         params.start = if filter.date.from != 0 then filter.date.from else null
         params.end = if filter.date.to != 0 then filter.date.to else null
         params.up = if filter.date.up then filter.date.up else null
-      params
+      this.cleanParams params
 
     #  Map tags to simple array
     arrayToParam: (arr, glue) ->
@@ -40,9 +50,7 @@ paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) -
       angular.forEach ord, (val, key) ->
         if param.length > 0 then param += ','
         param += key
-        param += switch val
-          when 'desc' then '-'
-          when 'asc' then '+'
+        if val is 'desc' then param += '-'
       param
 
     paramsToString: ->
@@ -59,7 +67,8 @@ paramService = ($rootScope, $location, broadcastService, $httpParamSerializer) -
         $location.search()
       , (newSearch, oldSearch) ->
         if !angular.equals newSearch, oldSearch
-          broadcastService.send 'params:update:recieve', newSearch
+          params = ctrl.cleanParams newSearch
+          broadcastService.send 'params:update:recieve', params
       ctrl
 
   paramsService.init()

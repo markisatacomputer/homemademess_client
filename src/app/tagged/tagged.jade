@@ -1,14 +1,21 @@
 .container.main
 
-  menu(user="user")
+  touch
+
+  socket
+
+  .admin(ng-if="user.role=='admin'")
+    admin(user="user" view="view" touch="touch")
+
+  menu(user="$ctrl.user")
 
   h1.tag {{$ctrl.tag[0].text}}
 
-  div(ui-view="slideshow" user="$ctrl.user" view="$ctrl.view")
+  div(ui-view="slideshow" user="$ctrl.user" view="$ctrl.view" on-update="$ctrl.recieveFilter(filter)")
 
   slides(view="$ctrl.view" user="$ctrl.user")
 
-  pager(filter="$ctrl.view.filter" on-update="recieveFilter(filter)")
+  pager(filter="$ctrl.view.filter" on-update="$ctrl.recieveFilter(filter)")
 
   footer.footer
     .container

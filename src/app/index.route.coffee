@@ -48,13 +48,13 @@ angular.module 'homemademessClient'
         url: ':slide/'
         component: 'slide'
       .state 'tagged',
-        url: '/tagged/:tag/'
+        url: '/tagged/:tag/?{page:int}&{per:int}&{order}'
         component: 'taggedDisplay'
         resolve:
           user: (Auth) ->
             Auth.getCurrentUser().$promise
           view: (Slides, $transition$, user) ->
-            Slides.get {tagtext: $transition$.params().tag},
+            Slides.get {tagtext: $transition$.params().tag, order: 'createDate'},
               (s) ->
                 s.data
             .$promise
@@ -65,6 +65,13 @@ angular.module 'homemademessClient'
             .$promise
           previous: ($transition$) ->
             $transition$.params 'from'
+        params:
+          page:
+            dynamic: true
+          per:
+            dynamic: true
+          order:
+            dynamic: true
       .state 'tagged.slideshow',
         url: 'slide/'
         views:
