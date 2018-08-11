@@ -2,13 +2,13 @@
   "name": "homemademessclient",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.6.0",
-    "angular-aria": "~1.6.0",
-    "angular-cookies": "~1.6.0",
+    "angular": "~1.7.3",
+    "angular-aria": "~1.7.3",
+    "angular-cookies": "~1.7.3",
     "angular-deckgrid": "~0.5.0",
-    "angular-material": "~1.1.7",
-    "angular-resource": "~1.6.0",
-    "angular-sanitize": "~1.6.0",
+    "angular-material": "~1.1.10",
+    "angular-resource": "~1.7.3",
+    "angular-sanitize": "~1.7.3",
     "angular-ui-router": "~1.0.0-beta.3",
     "animate.css": "~3.4.0",
     "dropzone": "^5.1.1",
@@ -25,7 +25,7 @@
     "angular-mocks": "~1.6.0"
   },
   "resolutions": {
-    "angular": "~1.6.0",
-    "angular-material": "~1.1.1"
+    "angular": "~1.7.3",
+    "dropzone": "^5.1.1"
   }
 }
