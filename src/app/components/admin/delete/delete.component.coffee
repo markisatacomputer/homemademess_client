@@ -10,7 +10,7 @@ class DeleteCtrl
           label: 'Delete Selected'
           src: 'delete'
           action: 'selected.delete'
-          states: ['home']
+          states: ['home', 'tagged']
           roles: ['admin']
           direction: 'top'
         }
@@ -20,7 +20,7 @@ class DeleteCtrl
           label: 'Delete Image'
           src: 'delete'
           action: 'slide.delete'
-          states: ['home']
+          states: ['home', 'tagged']
           roles: ['admin']
           direction: 'top'
         }

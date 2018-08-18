@@ -4,8 +4,8 @@
 
   socket
 
-  .admin(ng-if="user.role=='admin'")
-    admin(user="user" view="view" touch="touch")
+  .admin(ng-if="$ctrl.user.role=='admin'")
+    admin(user="$ctrl.user" view="$ctrl.view" touch="touch")
 
   menu(user="$ctrl.user")
 

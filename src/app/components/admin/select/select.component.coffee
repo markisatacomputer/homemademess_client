@@ -19,7 +19,7 @@ class SelectCtrl
           label: 'Select All (on all pages)'
           src: 'done_all'
           action: 'select.all'
-          states: ['home']
+          states: ['home', 'tagged']
           roles: ['admin']
         }
       ]
@@ -28,7 +28,7 @@ class SelectCtrl
           label: 'Deselect All'
           src: 'select_all'
           action: 'menu.select.none'
-          states: ['home']
+          states: ['home', 'tagged']
           roles: ['admin']
           direction: 'top'
         }
@@ -36,7 +36,7 @@ class SelectCtrl
           label: 'Select All (on all pages)'
           src: 'done_all'
           action: 'menu.select.all'
-          states: ['home']
+          states: ['home', 'tagged']
           roles: ['admin']
           direction: 'top'
         }
