@@ -17,5 +17,6 @@ angular.module 'homemademessClient'
   bindings:
     user: '<'
     view: '<'
+    tag: '<'
   templateUrl: 'app/components/admin/admin.html'
   controller: AdminCtrl

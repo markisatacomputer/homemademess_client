@@ -47,7 +47,7 @@ class TaggedCtrl
       if i > -1 then ctrl.updateView()
     #  refresh slides after successful upload
     this.$scope.$on 'image.upload.complete', (e, img) ->
-      ctrl.updateView()
+      ctrl.updateView(ctrl.view.filter)
 
   mapImages: ->
     #  map images

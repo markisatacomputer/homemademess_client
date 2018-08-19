@@ -19,6 +19,8 @@ class DZCtrl
     ctrl = this
 
     #  INIT SERVICES
+    if this.tag?[0]?
+      this.dropzoneService.setHeaders { 'HMM-Tag' : ctrl.tag[0]._id }
     this.dropzoneService.toggle 'init'
     this.queueService.get().then (q) ->
       console.log 'q', q
@@ -56,4 +58,6 @@ class DZCtrl
 angular.module 'homemademessClient'
 .component 'dropzone',
   templateUrl: 'app/components/admin/dropzone/dropzone.html'
+  bindings:
+    tag: '<'
   controller: ['dropzoneService', 'broadcastService', 'queueService', '$scope', DZCtrl]

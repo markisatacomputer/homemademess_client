@@ -2,12 +2,15 @@
 
 dropzoneService = (apiUrl, broadcastService, Auth) ->
 
+  headers:
+    'Authorization': 'Bearer ' + Auth.getToken()
+
   init: () ->
     ctrl = this
     this.dropzone = new Dropzone 'body',
       url: apiUrl + '/up'
       headers:
-        'Authorization': 'Bearer ' + Auth.getToken()
+        ctrl.headers
       parallelUploads: 1
       previewsContainer: 'upload-info'
       init: () ->
@@ -47,6 +50,11 @@ dropzoneService = (apiUrl, broadcastService, Auth) ->
       rejected: this.dropzone.getRejectedFiles()
       queued: this.dropzone.getQueuedFiles()
       uploading: this.dropzone.getUploadingFiles()
+
+  setHeaders: (headers) ->
+    ctrl = this
+    angular.forEach headers, (v, k) ->
+      ctrl.headers[k] =  v
 
   toggle: (op) ->
     #  set operation
