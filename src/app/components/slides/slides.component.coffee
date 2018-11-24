@@ -20,7 +20,10 @@ class SlidesCtrl
 
   ratio: (img) ->
     #  Get aspect ratio as decimal
-    Math.round((img.height/img.width)*100)/100
+    if img.mimeType.search('video') >= 0
+      Math.round((img.derivative[0].height/img.derivative[0].width)*100)/100
+    else
+      Math.round((img.height/img.width)*100)/100
 
   aspect: (img,n) ->
     ctrl = this
