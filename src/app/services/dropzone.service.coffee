@@ -13,6 +13,8 @@ dropzoneService = (apiUrl, broadcastService, Auth) ->
         ctrl.headers
       parallelUploads: 1
       previewsContainer: 'upload-info'
+      maxFilesize: 999
+      timeout: 90000
       init: () ->
         this.on 'drop', (e) ->
           ctrl.update()
