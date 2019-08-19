@@ -48,7 +48,7 @@ angular.module 'homemademessClient'
         url: ':slide/'
         component: 'slide'
       .state 'tagged',
-        url: '/tagged/:tag/?{page:int}&{per:int}&{order}'
+        url: '/tagged/:tag/?{page:int}&{per:int}&{order}&{eagle}'
         component: 'taggedDisplay'
         resolve:
           user: (Auth) ->

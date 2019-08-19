@@ -7,11 +7,17 @@
   .admin(ng-if="$ctrl.user.role=='admin'")
     admin(user="$ctrl.user" view="$ctrl.view" tag="$ctrl.tag" touch="touch")
 
+  .download(ng-if="$ctrl.user.role=='download'")
+    download-control
+
   menu(user="$ctrl.user")
 
   tagged-menu(previous="$ctrl.previous")
 
   h1.tag {{$ctrl.tag[0].text}}
+
+  .download-link(ng-if="$ctrl.user.role=='admin'")
+    a(href="/#!/tagged/{{$ctrl.tag[0].text | taglink }}/?eagle={{$ctrl.tag[0]._id}}") Download Link
 
   div(ui-view="slideshow" user="$ctrl.user" view="$ctrl.view" on-update="$ctrl.recieveFilter(filter)")
 

@@ -17,6 +17,14 @@ class TaggedCtrl
     this.view.map = this.view.images.map (i) ->
       return i._id
 
+    #  attempt to login download user if we see the eagle param
+    params = this.paramService.getParams()
+    if typeof user is 'undefined' and params.eagle?
+      this.Auth.login {
+        email: this.tag[0].text,
+        password: params.eagle
+      }
+
     #  listen for user param changes
     this.$scope.$on 'params:update:recieve', (e, newParams) ->
       #  test to make sure params really are different - not just missing values - tagged special case

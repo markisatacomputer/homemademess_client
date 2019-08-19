@@ -11,7 +11,7 @@ class DownloadCtrl
           src: 'cloud_download'
           action: 'selected.download'
           states: ['home','tagged']
-          roles: ['admin']
+          roles: ['admin', 'download']
           direction: 'top'
         }
       ]
@@ -21,7 +21,7 @@ class DownloadCtrl
           src: 'file_download'
           action: 'slide.download'
           states: ['home', 'tagged']
-          roles: ['admin']
+          roles: ['admin', 'download']
           direction: 'top'
         }
       ]
