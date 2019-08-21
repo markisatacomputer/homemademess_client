@@ -4,9 +4,6 @@
 
   socket
 
-  .admin(ng-if="user.role=='admin'")
-    admin(user="user" view="view" touch="touch")
-
   filter(filter="view.filter" user="user" on-update="recieveFilter(filter)")
 
   menu(user="user")
@@ -17,7 +14,11 @@
 
   slides(view="view" user="user")
 
-  pager(filter="view.filter" on-update="recieveFilter(filter)")
+  #bottom
+    pager(filter="view.filter" on-update="recieveFilter(filter)")
+
+    .admin(ng-if="user.role=='admin'")
+      admin(user="user" view="view" touch="touch")
 
   footer.footer
     .container
