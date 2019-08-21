@@ -4,7 +4,7 @@ authService = ($http, User, $cookies, $mdDialog, apiUrl, broadcastService) ->
   currentUser = if $cookies.get 'token' then User.get(
     {}
     (u) ->
-      if u.role = 'admin'
+      if u.role = 'admin' or u.role = 'download'
         $http.defaults.headers.common.Authorization = 'Bearer ' + $cookies.get 'token'
     (e) ->
       $cookies.remove 'token'
