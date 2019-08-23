@@ -1,10 +1,11 @@
 'use strict'
 
 class SelectActionsCtrl
-  constructor: ($scope, $mdDialog, selectService) ->
+  constructor: ($scope, $mdDialog, selectService, Download) ->
     this.$scope = $scope
     this.$mdDialog = $mdDialog
     this.selectService = selectService
+    this.Download = Download
 
   $onInit: () ->
     ctrl = this
@@ -26,6 +27,21 @@ class SelectActionsCtrl
           images: ctrl.selectService.getSelected()
         bindToController: true
 
+    #  DOWNLOAD
+    this.$scope.$on 'selected.download', (e) ->
+      selected = ctrl.selectService.getSelected()
+      dl = (url) ->
+        ifrm = document.createElement 'iframe'
+        ifrm.setAttribute 'style', 'display:none;'
+        ifrm.setAttribute 'src', url
+        ifrm.style.width = '0px'
+        ifrm.style.height = '0px'
+        document.body.appendChild ifrm
+      ctrl.Download.many {download: selected}, (data) ->
+        links = data.response.split('\r')
+        links.forEach (l, i) ->
+          if l.length then dl l
+
     #  Listen for image deletes
     this.$scope.$on 'image.delete.complete', (e, id) ->
       i = ctrl.selectService.selected.indexOf id
@@ -33,4 +49,4 @@ class SelectActionsCtrl
 
 angular.module 'homemademessClient'
 .component 'selectActions',
-  controller: ['$scope', '$mdDialog', 'selectService', SelectActionsCtrl]
+  controller: ['$scope', '$mdDialog', 'selectService', 'Download', SelectActionsCtrl]
