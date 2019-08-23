@@ -123,8 +123,10 @@ class TaggedCtrl
   #  filter params for tagged view
   filterTaggedParams: (params) ->
     taggedParams = angular.copy params
+    windowParams = this.paramService.getParams()
     delete taggedParams.tagtext
     if taggedParams.order is "createDate" then delete taggedParams.order
+    if windowParams.eagle then taggedParams.eagle = windowParams.eagle
     taggedParams
 
   #  filter params for tagged view

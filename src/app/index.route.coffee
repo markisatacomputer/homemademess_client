@@ -72,6 +72,8 @@ angular.module 'homemademessClient'
             dynamic: true
           order:
             dynamic: true
+          eagle:
+            dynamic: true
       .state 'tagged.slideshow',
         url: 'slide/'
         views:
