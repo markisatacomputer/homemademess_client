@@ -8,13 +8,12 @@
   .filename(ng-if="$ctrl.slide.filename")
     label filename
     span {{$ctrl.slide.filename}}
-  .dates
-    .createDate(ng-if="$ctrl.slide.createDate")
-      label created at
-      span {{$ctrl.slide.createDate | date:'medium'}}
-    .uploadDate(ng-if="$ctrl.slide.uploadDate")
-      label uploaded at
-      span {{$ctrl.slide.uploadDate | date:'medium'}}
+  .createDate(ng-if="$ctrl.slide.createDate")
+    label created at
+    span {{$ctrl.slide.createDate | date:'medium'}}
+  .uploadDate(ng-if="$ctrl.slide.uploadDate")
+    label uploaded at
+    span {{$ctrl.slide.uploadDate | date:'medium'}}
   .tags(ng-if="$ctrl.slide.tags.length > 0")
     label tags
     md-chips(

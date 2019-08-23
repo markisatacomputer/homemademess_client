@@ -102,8 +102,8 @@ slideshow > div {
   background: rgba(50,50,50,0.6);
 
   slide {
-    width: 80%;
-    height: 80%;
+    width: 98%;
+    height: 95%;
     position: relative;
 
     &.transition-in {
@@ -149,32 +149,35 @@ slideshow > div {
       > div {
         margin: .2em 0;
         padding: 0 .4em;
+        width: 100%;
+        clear: both;
+        display: grid;
+
       }
       label {
         text-transform: uppercase;
         font-weight: 700;
         font-size: 80%;
         padding-top: .2em;
-        width: 15%;
-        float: left;
-        margin-right: .4em;
+        width: 100%;
       }
       md-chip {
         label {
           font-size: 40%;
           position: relative;
           padding-top: 0;
-          top: -1em;
+          top: -2em;
         }
         span {
           position: relative;
           top: .2em;
+          left: -1em;
         }
       }
     }
     menu-actions {
       position: absolute;
-      bottom: -3em;
+      bottom: -3%;
       width: 100%;
       text-align: center;
     }
