@@ -20,7 +20,7 @@ class SelectCtrl
           src: 'done_all'
           action: 'select.all'
           states: ['home', 'tagged']
-          roles: ['admin']
+          roles: ['admin', 'download']
         }
       ]
       menuSelectAction: [
@@ -29,7 +29,7 @@ class SelectCtrl
           src: 'select_all'
           action: 'menu.select.none'
           states: ['home', 'tagged']
-          roles: ['admin']
+          roles: ['admin', 'download']
           direction: 'top'
         }
         {
@@ -37,7 +37,7 @@ class SelectCtrl
           src: 'done_all'
           action: 'menu.select.all'
           states: ['home', 'tagged']
-          roles: ['admin']
+          roles: ['admin', 'download']
           direction: 'top'
         }
       ]
