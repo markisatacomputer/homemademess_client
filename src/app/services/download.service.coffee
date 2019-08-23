@@ -12,6 +12,8 @@ Download = ($resource, apiUrl) ->
         response: data
     many:
       method: 'POST'
+      transformResponse: (data, headers) ->
+        response: data
 
 
 angular.module 'homemademessClient'
