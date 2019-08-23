@@ -21,7 +21,7 @@
     pager(filter="$ctrl.view.filter" on-update="$ctrl.recieveFilter(filter)")
 
     .admin(ng-if="$ctrl.user.role=='admin'")
-      admin(user="$ctrl.user" view="$ctrl.view" touch="touch")
+      admin(user="$ctrl.user" view="$ctrl.view" tag="$ctrl.tag" touch="touch")
 
     .download(ng-if="$ctrl.user.role=='download'")
       download-control

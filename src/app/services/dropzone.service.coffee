@@ -7,6 +7,11 @@ dropzoneService = (apiUrl, broadcastService, Auth) ->
 
   init: () ->
     ctrl = this
+
+    #  Add tag header if present
+    if this.tag then this.headers.HMMTag = this.tag._id
+
+    #  Construct dropzone
     this.dropzone = new Dropzone 'body',
       url: apiUrl + '/up'
       headers:
@@ -57,6 +62,9 @@ dropzoneService = (apiUrl, broadcastService, Auth) ->
     ctrl = this
     angular.forEach headers, (v, k) ->
       ctrl.headers[k] =  v
+
+  removeHeader: (name) ->
+    if this.headers[name] then delete this.headers[name]
 
   toggle: (op) ->
     #  set operation
