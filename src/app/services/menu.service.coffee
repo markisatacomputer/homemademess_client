@@ -19,7 +19,7 @@ menuService = ($state, broadcastService, Auth, lodash) ->
         src:   'settings'
         action:  'settings'
         states: ['home', 'tagged']
-        roles: ['admin','download']
+        roles: ['admin']
       }
       {
         label: 'Log In'
@@ -33,7 +33,7 @@ menuService = ($state, broadcastService, Auth, lodash) ->
         src:   'exit_to_app'
         action:  'toggleAuth'
         states: ['home', 'tagged']
-        roles: ['admin','download']
+        roles: ['admin']
       }
     ]
   filterMenu: {}
